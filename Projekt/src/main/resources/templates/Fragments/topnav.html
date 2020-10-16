@@ -8,6 +8,15 @@
             <div id="hornavZIndex" class="text-center visible-lg">
                 <ul id="hornavmenu" class="nav navbar-nav">
 
+                    <div th:if="${!ListPlatformy.isEmpty()}"
+                         th:each="platforma : ${ListPlatformy} ">
+                        <!-- Blog Item Header -->
+
+
+
+                        <li> <a th:text="${platforma.getNazev()}" th:href="@{'SeznamHer'(id=${platforma.getPlatforma_ID()})}"></a></li>
+
+                    </div>
 
                 </ul>
             </div>

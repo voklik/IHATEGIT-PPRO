@@ -68,6 +68,10 @@ public class Produkt implements Serializable {
         this.platforma = platforma;
     }
 
+    public Platforma getPlatforma() {
+        return platforma;
+    }
+
     // @OneToOne(mappedBy = "ucet", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @ManyToOne(cascade = CascadeType.PERSIST)
    private Platforma platforma;

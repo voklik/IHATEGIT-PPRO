@@ -6,11 +6,8 @@ import com.PPROHORAK.Projekt.Model.Seznamy.SeznamStavu;
 import com.PPROHORAK.Projekt.Model.Stav;
 import lombok.Data;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Map;
 @Controller
 @Data

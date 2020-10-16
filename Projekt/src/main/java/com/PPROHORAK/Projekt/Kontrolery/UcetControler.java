@@ -53,7 +53,7 @@ public class UcetControler {
         model.put("ListUcet", ucty.getSeznamUctu());
 
 
-            return "Sprava_Ucty";
+            return "Spravy/Sprava_Ucty";
 
 
 
@@ -125,9 +125,11 @@ ucet.setHeslo("test");
 ;*/
 
 
-        return "redirect:/Sprava_Ucty";
+        return "redirect:/Spravy/Sprava_Ucty";
 
     }
+
+
     @RequestMapping(value = "/registrace", method = RequestMethod.POST)
     public String Registrace(@Valid @ModelAttribute("ucet") Ucet ucet,
                              BindingResult result, ModelMap model) {
@@ -137,6 +139,6 @@ ucet.setHeslo("test");
         model.put("ListUcet", ucty.getSeznamUctu());
 
 
-        return "Sprava_Ucty";
+        return "Spravy/Sprava_Ucty";
     }
 }

@@ -2,17 +2,13 @@ package com.PPROHORAK.Projekt.Kontrolery;
 
 import com.PPROHORAK.Projekt.DAO.PlatformyDao;
 import com.PPROHORAK.Projekt.DAO.ProduktyDao;
-import com.PPROHORAK.Projekt.Model.Platforma;
 import com.PPROHORAK.Projekt.Model.Produkt;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamPlatforem;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamProduktu;
 import lombok.Data;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Map;
 @Controller
 @Data
@@ -22,28 +18,83 @@ public class ProduktControler {
     private final ProduktyDao seznamProduktu;
 
     @RequestMapping("/Sprava_Produkty")
-    public String showAll(Map<String, Object> model){
+    public String AdminShowALL(Map<String, Object> model){
         SeznamProduktu produkty = new SeznamProduktu();
         produkty.getSeznamProduktu().addAll(seznamProduktu.findAll());
 
         model.put("ListProdukty", produkty.getSeznamProduktu());
 
-        SeznamPlatforem platformy = new SeznamPlatforem();
-        platformy.getSeznamPlatformy().addAll(seznamPlatformy.findAll());
+        new UtilControler().GetPlatformList(model,seznamPlatformy);
 
-        model.put("ListPlatformy", platformy.getSeznamPlatformy());
-
-        return "Sprava_Produkty";
+        return "Spravy/Sprava_Produkty";
 
 
 
     }
 
 
+    @RequestMapping("/DetailProduktu")
+    public String DetailHry(
+            @RequestParam(value="produktID") Integer ProduktID,
+            Map<String, Object> model )
+    {
+        SeznamProduktu produkty = new SeznamProduktu();
+        produkty.getSeznamProduktu().add(seznamProduktu.findById(ProduktID));
+        model.put("ListProdukty", produkty.getSeznamProduktu());
+
+        new UtilControler().GetPlatformList(model,seznamPlatformy);
+
+            return "Prodej/DetailProduktu";
+       }
+
+
+
+    @RequestMapping("/SeznamHer")
+    public String ShowAllByPlatforma(
+                     @RequestParam(value="id",required = false) Integer platformaID,
+Map<String, Object> model )
+    {
+
+        if(platformaID==null)
+        {
+            SeznamProduktu produkty = new SeznamProduktu();
+            produkty.getSeznamProduktu().addAll(seznamProduktu.findAll());
+
+            model.put("ListProdukty", produkty.getSeznamProduktu());
+
+            new UtilControler().GetPlatformList(model,seznamPlatformy);
+
+            return "Prodej/SeznamHer";
+        }
+        else
+        {
+        SeznamProduktu produkty = new SeznamProduktu();
+        produkty.getSeznamProduktu().addAll(seznamProduktu.findByPlatforma(platformaID));
+
+        model.put("ListProdukty", produkty.getSeznamProduktu());
+
+        new UtilControler().GetPlatformList(model,seznamPlatformy);
+
+        return "Prodej/SeznamHer";
+    }}
+
+    @RequestMapping("/Slevy")
+    public String ShowVeSleve(
+                        Map<String, Object> model )
+    {
+        SeznamProduktu produkty = new SeznamProduktu();
+        produkty.getSeznamProduktu().addAll(seznamProduktu.findVeSleve());
+
+        model.put("ListProdukty", produkty.getSeznamProduktu());
+
+        new UtilControler().GetPlatformList(model,seznamPlatformy);
+
+        return "Prodej/SeznamHer";
+    }
 
 
     @PostMapping("/Sprava_ProduktyUpdate")
-    public String updateUcetSprava(
+    public String AdminChange(
             @RequestParam("produktID") Integer produktID,
             @RequestParam("action") String akce ,@RequestParam("nazev") String nazev,
             @RequestParam("cena") Integer cena, @RequestParam("sleva") Integer sleva,

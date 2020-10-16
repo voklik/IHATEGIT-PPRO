@@ -41,7 +41,7 @@
 
 
 <!-- Top Menu -->
-
+<div th:replace="~{fragments/topnav :: navbar}"></div>
 <!-- End Top Menu -->
 <div id="post_header" class="container" style="height: 40px">
     <!-- Spacing below header -->
@@ -90,10 +90,11 @@
                                             <div th:if="${!ListPlatformy.isEmpty()}"
                                                  th:each="platforma : ${ListPlatformy} ">
 
-                                                <option  th:value="${platforma.getPlatforma_ID()}"  th:text="${platforma.getNazev()}"></option>
+                                                <option  th:value="${platforma.getPlatforma_ID()}" th:selected="${platforma.getPlatforma_ID()==produkt.getPlatforma().getPlatforma_ID()}"  th:text="${platforma.getNazev()}"></option>
 
 
                                             </div>
+
                                         </select></td>
                                         <td><input name="action" type="submit" value="Delete" /></td>
                                         <td><input  name="action" type="submit" value="Update" /></td>

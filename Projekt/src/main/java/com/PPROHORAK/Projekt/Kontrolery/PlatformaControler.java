@@ -5,11 +5,8 @@ import com.PPROHORAK.Projekt.Model.Platforma;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamPlatforem;
 import lombok.Data;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Map;
 @Controller
 @Data
@@ -20,13 +17,9 @@ public class PlatformaControler {
 
     @RequestMapping("/Sprava_Platformy")
     public String showAll(Map<String, Object> model){
-        SeznamPlatforem platformy = new SeznamPlatforem();
-        platformy.getSeznamPlatformy().addAll(seznamPlatformy.findAll());
+     new UtilControler().GetPlatformList(model,seznamPlatformy);
 
-        model.put("ListPlatformy", platformy.getSeznamPlatformy());
-
-
-        return "Sprava_Platformy";
+        return "Spravy/Sprava_Platformy";
 
 
 

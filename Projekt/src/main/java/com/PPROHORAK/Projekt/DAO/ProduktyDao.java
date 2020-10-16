@@ -29,6 +29,13 @@ public interface ProduktyDao  extends Repository<Produkt, Integer> {
     @Transactional(readOnly = true)
     Produkt findByNazev(@Param("nazev") String nazev);
 
+    @Query("SELECT DISTINCT produkt FROM Produkt  produkt WHERE produkt.platforma.platforma_ID =:id")
+    @Transactional(readOnly = true)
+    Collection<Produkt>  findByPlatforma(@Param("id") Integer id);
+
+    @Query("SELECT DISTINCT produkt FROM Produkt  produkt WHERE produkt.sleva >0")
+    @Transactional(readOnly = true)
+    Collection<Produkt>  findVeSleve();
 
 
     void save(Produkt produkt);

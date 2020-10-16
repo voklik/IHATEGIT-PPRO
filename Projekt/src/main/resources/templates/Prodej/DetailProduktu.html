@@ -1,0 +1,66 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
+
+<head>
+
+</head>
+
+
+<!-- Top Menu -->
+<div th:replace="~{fragments/topnav :: navbar}"></div>
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+<!-- === END HEADER === -->
+<!-- === BEGIN CONTENT === -->
+
+
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+
+                <div id="table-wrapper">
+                    <div id="table-scroll">
+
+                            <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                        <!-- Blog Item Header -->
+
+                        <div th:if="${!ListProdukty.isEmpty()}"
+                             th:each="produkt : ${ListProdukty} ">
+                        <br>
+                            Jméno:<label th:text="${produkt.getNazev()}"></label> <br>
+                                     Cena:<label th:text="${produkt.getCena()}" >Kč</label><br>
+                                    Sleva:<label  th:text="${produkt.getSleva()}" > %</label><br>
+                                Platforma:<label th:text="${produkt.getPlatforma().getNazev()}"></label><br>
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
