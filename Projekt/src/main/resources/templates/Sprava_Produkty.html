@@ -1,0 +1,158 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
+
+<head>
+    <style>
+        #table-wrapper {
+            position:relative;
+        }
+        #table-scroll {
+            height:auto;
+            overflow:auto;
+            margin-top:20px;
+        }
+        #table-wrapper table {
+            width:100%;
+
+        }
+        #table-wrapper table * {
+            background:yellow;
+            color:black;
+        }
+        #table-wrapper table thead th .text {
+            position:absolute;
+            top:-20px;
+            z-index:2;
+            height:20px;
+            width:35%;
+            border:1px solid red;
+        }
+
+    </style>
+</head>
+
+
+<!-- Top Menu -->
+
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+<!-- === END HEADER === -->
+<!-- === BEGIN CONTENT === -->
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+
+                <div id="table-wrapper">
+                    <div id="table-scroll">
+                        <table >
+
+                            <thead>
+                            <tr>
+                                <td>Id produktu</td>
+                                <td>Název</td>
+                                <td>Cena</td>
+                                <td>sleva</td>
+                                <td>Platforma</td>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                            <div th:if="${!ListProdukty.isEmpty()}"
+                                 th:each="produkt : ${ListProdukty} ">
+                                <!-- Blog Item Header -->
+
+                                <form id="UcetFormular" th:action="@{/Sprava_ProduktyUpdate}" th:object="${produkt}"
+                                      method="post" enctype="multipart/form-data">
+                                    <tr>
+                                        <td><input readonly  name="produktID" th:value="${produkt.getProdukt_ID()}">
+                                        <td> <input  th:value="${produkt.getNazev()}"
+                                                     name="nazev"></td>
+                                        <td> <input  th:value="${produkt.getCena()}" type="number" min="0" step="1"   name="cena"></td>
+                                        <td> <input  th:value="${produkt.getSleva()}" type="number" min="0" step="1"  max="100"  name="sleva"></td>
+                                        <td>
+                                        <select name="platforma" >
+                                            <div th:if="${!ListPlatformy.isEmpty()}"
+                                                 th:each="platforma : ${ListPlatformy} ">
+
+                                                <option  th:value="${platforma.getPlatforma_ID()}"  th:text="${platforma.getNazev()}"></option>
+
+
+                                            </div>
+                                        </select></td>
+                                        <td><input name="action" type="submit" value="Delete" /></td>
+                                        <td><input  name="action" type="submit" value="Update" /></td>
+                                    </tr>  </form>   </div>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                <H1>Nová Platforma</H1>
+                <table >
+
+                    <thead>
+                    <tr>
+                        <td>Název</td>
+                        <td>Cena</td>
+                        <td>sleva</td>
+                        <td>Platforma</td>
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                    <form id="RegistraceFormular" th:action="@{/Sprava_ProduktyUpdate}"
+                          method="post" enctype="multipart/form-data">
+                        <tr>
+                            <input hidden readonly  name="produktID" th:value="0">
+                            <td> <input  name="nazev"></td>
+                            <td> <input   type="number" min="0" step="1"   name="cena"></td>
+                            <td> <input   type="number" min="0" step="1"  max="100"  name="sleva"></td>
+                            <td>
+                            <select name="platforma" >
+                            <div th:if="${!ListPlatformy.isEmpty()}"
+                                 th:each="platforma : ${ListPlatformy} ">
+                                <!-- Blog Item Header -->
+
+
+                                <option  th:value="${platforma.getPlatforma_ID()}"  th:text="${platforma.getNazev()}"></option>
+
+
+                          </div>
+                            </select></td>
+                            <td><input name="action" type="submit" value="Create" /></td>
+
+                        </tr>  </form>
+                    </tbody>
+
+                </table>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

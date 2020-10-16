@@ -1,0 +1,175 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
+
+<head>
+    <style>
+        #table-wrapper {
+            position:relative;
+        }
+        #table-scroll {
+            height:auto;
+            overflow:auto;
+            margin-top:20px;
+        }
+        #table-wrapper table {
+            width:100%;
+
+        }
+        #table-wrapper table * {
+            background:yellow;
+            color:black;
+        }
+        #table-wrapper table thead th .text {
+            position:absolute;
+            top:-20px;
+            z-index:2;
+            height:20px;
+            width:35%;
+            border:1px solid red;
+        }
+
+    </style>
+</head>
+
+
+<!-- Top Menu -->
+
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+<!-- === END HEADER === -->
+<!-- === BEGIN CONTENT === -->
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+
+                <div id="table-wrapper">
+                    <div id="table-scroll">
+                <table >
+
+                    <thead>
+                    <tr>
+                        <td>ID Uctu</td>
+                        <td>Jmeno</td>
+                        <td>Prijmeni</td>
+                        <td>Login</td>
+                        <td>Heslo</td>
+                        <td>ID ADRESA</td>
+                        <td>Ulice</td>
+                        <td>CP</td>
+                        <td>Mesto</td>
+                        <td>PSC</td>
+                        <td>Typ Účtu</td>
+                        <td>PSC</td>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                <!-- Blog Post class="blog-post padding-bottom-20" -->
+                <div th:if="${!ListUcet.isEmpty()}"
+                     th:each="ucet : ${ListUcet} ">
+                    <!-- Blog Item Header -->
+
+                    <form id="UcetFormular" th:action="@{/UpdateUcetSprava}" th:object="${ucet}"
+                          method="post" enctype="multipart/form-data">
+                        <tr>
+                            <td><input readonly  name="ucetID" th:value="${ ucet.getUcet_ID()}">
+                            <td> <input  th:value="${ucet.getJmeno()}"
+                                         name="jmeno"></td>
+                            <td> <input  th:value="${ucet.getPrijmeni()}"
+                                         name="prijmeni"></td>
+                            <td> <input  th:value="${ucet.getUcet_login()}"
+                                         name="login"></td>
+                            <td><input  th:value="${ucet.getHeslo()}"
+                                        name="heslo"></td>
+                            <td> <input readonly id="adresaID" th:value="${ ucet.getAdresa().getAdresa_ID()}"></td>
+                            <td> <input  th:value="${ucet.getAdresa().getUlice()}"
+                                         name="ulice"></td>
+                            <td><input  th:value="${ucet.getAdresa().getCps()}"
+                                        name="cp"></td>
+                            <td> <input  th:value="${ucet.getAdresa().getMesto()}"
+                                         name="mesto"></td>
+                            <td> <input  th:value="${ucet.getAdresa().getPsc()}"
+                                         name="psc"></td>
+                            <td> <div th:text="${ ucet.getTypUctu().getNazev()}"></div></td>
+                            <td><input name="action" type="submit" value="Delete" /></td>
+                            <td><input  name="action" type="submit" value="Update" /></td>
+                        </tr>  </form>   </div>
+            </tbody>
+
+        </table>
+                    </div></div>
+
+                <H1>Nový účet</H1>
+                <table >
+
+                    <thead>
+                    <tr>
+                        <td>Jmeno</td>
+                        <td>Prijmeni</td>
+                        <td>Login</td>
+                        <td>Heslo</td>
+                        <td>Ulice</td>
+                        <td>CP</td>
+                        <td>Mesto</td>
+                        <td>PSC</td>
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                        <form id="RegistraceFormular" th:action="@{/UpdateUcetSprava}" th:object="${ucet}"
+                              method="post" enctype="multipart/form-data">
+                            <tr>
+                                <input hidden readonly  name="ucetID" th:value="0">
+                                <td> <input  name="jmeno"></td>
+                                <td> <input  name="prijmeni"></td>
+                                <td> <input  name="login"></td>
+                                <td> <input  name="heslo"></td>
+                                <td> <input  name="ulice"></td>
+                                <td> <input  name="cp"></td>
+                                <td> <input  name="mesto"></td>
+                                <td> <input  name="psc"></td>
+                                <td><input name="action" type="submit" value="Create" /></td>
+
+                            </tr>  </form>
+                    </tbody>
+
+                </table>
+
+<!--
+                    <div class="col-md-2">
+                        <a class="blog-item-header float-right-icon cursor" th:href="@{/admin/ucetUpdate/__${ucet.getUcet_ID()}__}">
+                            <i class="fa fa-pencil-square fa-lg"></i>
+                        </a>
+                        <a
+                                class="blog-item-header float-right-icon cursor" th:href="@{/admin/__${ucet.getUcet_ID()}__/delete}"
+                        >
+                            <i class="fa fa-trash-o fa-lg"></i>
+                        </a>
+                    </div>                  -->
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+        </div>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+     >
+<!--<![endif]-->
+<head th:replace="fragments/importHead :: importTop(title = 'Home')"></head>
+
+<body  onload="getNotifications()">
+<div id="body-bg">
+    <ul class="social-icons pull-right hidden-xs">
+        <li class="social-rss">
+            <a href="#" target="_blank" title="RSS"></a>
+        </li>
+        <li class="social-twitter">
+            <a href="#" target="_blank" title="Twitter"></a>
+        </li>
+        <li class="social-facebook">
+            <a href="#" target="_blank" title="Facebook"></a>
+        </li>
+        <li class="social-googleplus">
+            <a href="#" target="_blank" title="GooglePlus"></a>
+        </li>
+    </ul>
+    <div id="pre-header" class="container" style="height: 40px">
+        <!-- Spacing above header -->
+    </div>
+
+    <!-- Top Menu -->
+    <div th:replace="~{fragments/topnav :: navbar}"></div>
+    <!-- End Top Menu -->
+    <div id="post_header" class="container" style="height: 40px">
+        <!-- Spacing below header -->
+    </div>
+    <div id="content-top-border" class="container">
+    </div>
+    <!-- === END HEADER === -->
+    <!-- === BEGIN CONTENT === -->
+    <div id="content">
+        <div class="container background-white animate fadeIn animated">
+            <div class="row margin-vert-30">
+                <!-- Main Column -->
+                <div class="col-md-9">
+                    <!-- Blog Post -->
+                    <div th:if="${!tripsPaged.isEmpty()}"
+                         th:each="trip : ${tripsPaged}" class="blog-post padding-bottom-20">
+                        <!-- Blog Item Header -->
+                        <div class="blog-item-header">
+                            <!-- Title -->
+
+                            <h2 th:text="${trip.name}" class="float-left"></h2>
+                            <a th:if="${#authentication.name == trip.author}"
+                               class="blog-item-header float-right-icon cursor" th:href="@{/blog-update/__${trip.trip_id}__}">
+                                <i class="fa fa-pencil-square fa-lg"></i>
+                            </a>
+                            <a th:if="${#authentication.name == trip.author || #authentication.authorities[0].authority == 'ADMIN'}"
+                               class="blog-item-header float-right-icon cursor"
+                               th:href="@{/blog-list/__${trip.trip_id}__/delete}">
+                                <i class="fa fa-trash-o fa-lg"></i>
+                            </a>
+
+
+
+                            <div class="clearfix"></div>
+                            <!-- End Title -->
+                        </div>
+                        <!-- End Blog Item Header -->
+                        <!-- Blog Item Details -->
+                        <div class="blog-post-details">
+                            <!-- Author Name -->
+                            <div class="blog-post-details-item blog-post-details-item-left">
+                                <i class="fa fa-user color-gray-light"></i>
+                                <a th:text="${trip.getAuthor()}" href="#"></a>
+                            </div>
+                            <!-- End Author Name -->
+                            <!-- Date -->
+                            <div class="blog-post-details-item blog-post-details-item-left">
+                                <i class="fa fa-calendar color-gray-light"></i>
+                                <a th:text="${#dates.format(trip.getDateOfAddition(), 'dd-MM-yyyy')}" href="#"></a>
+                            </div>
+                            <!-- End Date -->
+                            <!-- Tags -->
+                            <div class="blog-post-details-item blog-post-details-item-left blog-post-details-tags">
+                                <i class="fa fa-tag color-gray-light"></i>
+                                <div th:each="tag : ${trip.getTags()}">
+
+                                    <a th:text="${tag.getName()}" href="#">Admin</a>
+
+                                </div>
+                            </div>
+                            <!-- End Tags -->
+                            <!-- # of Comments -->
+                            <div class="blog-post-details-item blog-post-details-item-left blog-post-details-item-last">
+                                <a th:text="${trip.getComments().size()}"  >
+                                    <i class="fa fa-comments color-gray-light"></i>
+
+                                </a>
+                                Comments
+                            </div>
+                            <!-- End # of Comments -->
+                        </div>
+                        <!-- End Blog Item Details -->
+                        <!-- Blog Item Body -->
+                        <div class="blog">
+                            <div class="clearfix"></div>
+                            <div class="blog-post-body row margin-top-15">
+                                <div class="col-md-5">
+                                    <img class="margin-bottom-20" src="../../static/assets/img/blog/image1.jpg" alt="thumb1">
+                                </div>
+                                <div class="col-md-7">
+                                    <p th:utext="${trip.getDescription()}"></p>
+                                    <!-- Read More -->
+                                    <a th:href="@{/blog-single/__${trip.getTrip_id()}__}" class="btn btn-primary">
+                                        Číst více
+                                        <i class="icon-chevron-right readmore-icon"></i>
+                                    </a>
+                                    <!-- End Read More -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Blog Item Body -->
+                    </div>
+                    <!-- End Blog Item -->
+
+                    <!-- Pagination -->
+                    <ul th:if="${tripsPaged.totalPages > 1}"
+                        th:each="pages , iterator: ${tripsPaged.totalPages}"  class="pagination">
+
+                        <li class="active pagination">
+                            <a th:text="${iterator.index+1}"
+                               th:href="@{/blog-list(page=${iterator.index+1})}"
+                               th:class="${ tripsPaged.pageable.getPageNumber() ==iterator.index+1} ? active"></a>
+                        </li>
+
+
+                    </ul>
+
+                    <!-- End Pagination -->
+                </div>
+                <!-- End Main Column -->
+                <!-- Side Column -->
+                <div class="col-md-3">
+                    <!-- Blog Tags -->
+                    <div th:if="${#authentication.name != 'anonymousUser'}" class="blog-tags">
+                        <a th:href="@{/blog-create}" class="btn btn-primary trip-create">
+                            Vytvořit Trip
+                            <i class="icon-chevron-right readmore-icon"></i>
+                        </a>
+                    </div>
+                    <div class="blog-tags">
+
+                            <a th:href="@{/blog-list}" class="btn btn-primary">Zrušit filtr</a>
+
+                        <h3>Filtr</h3>
+                        <ul th:if="${!stringsOfNamesOfCountries.isEmpty()}"
+                            class="blog-tags">
+                            <li  th:each="country : ${stringsOfNamesOfCountries}">
+                                <a th:text="${country}" th:href="@{/blog-list/__${country}__}" class="blog-tag"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Blog Tags -->
+
+                </div>
+                <!-- End Side Column -->
+            </div>
+        </div>
+    </div>
+    <!-- === END CONTENT === -->
+    <!-- === BEGIN FOOTER === -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <!-- End Footer Menu -->
+    <!-- JS -->
+    <script th:src="@{/static/assets/js/bootstrap.min.js}" type="text/javascript"></script>
+    <script type="text/javascript" th:src="@{/static/assets/js/scripts.js}"></script>
+    <!-- Isotope - Portfolio Sorting -->
+    <script th:src="@{/static/assets/js/jquery.isotope.js}" type="text/javascript"></script>
+    <!-- Mobile Menu - Slicknav -->
+    <script th:src="@{/static/assets/js/jquery.slicknav.js}" type="text/javascript"></script>
+    <!-- Animate on Scroll-->
+    <script charset="utf-8" th:src="@{/static/assets/js/jquery.visible.js}" type="text/javascript"></script>
+    <!-- Sticky Div -->
+    <script type="text/javascript" th:src="@{/static/assets/js/jquery.sticky.js}" charset="utf-8"></script>
+    <!-- Slimbox2-->
+    <script type="text/javascript" th:src="@{/static/assets/js/slimbox2.js}" charset="utf-8"></script>
+    <!-- Modernizr -->
+    <script th:src="@{/static/assets/js/modernizr.custom.js}" type="text/javascript"></script>
+    <!-- End JS -->
+</div>
+</body>
+</html>
+<!-- === END FOOTER === -->

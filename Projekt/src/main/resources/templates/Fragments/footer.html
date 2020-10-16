@@ -1,0 +1,84 @@
+<div
+      id="content-bottom-border" class="container" >
+
+<div id="base"
+     xmlns:th="https://www.thymeleaf.org"
+     th:fragment="footer"
+>
+    <div class="container padding-vert-30 margin-top-60">
+        <div class="row">
+            <!-- Contact Details -->
+            <div class="col-md-4 margin-bottom-20">
+                <h3 class="margin-bottom-10">Kontakt</h3>
+                <p>
+                    <span class="fa-phone">Telephone:</span>XXX XXX XXX
+                    <br>
+                    <span class="fa-envelope">Email:</span>
+                    <a href="mailto:info@joomla51.com">xxxxxxx@xxxx.com</a>
+                    <br>
+
+                </p>
+
+            </div>
+            <!-- End Contact Details -->
+            <!-- Sample Menu -->
+            <div class="col-md-3 margin-bottom-20">
+                <h3 class="margin-bottom-10">Menu</h3>
+                <ul class="menu">
+                    <li>
+                        <a th:href="@{/index}" class="fa-tasks" >Domů</a>
+                    </li>
+
+                    <li th:if="${#authentication.name == 'anonymousUser'}">
+                        <span>Registrace/Login</span>
+                        <ul>
+
+                            <li>
+                                <a class="fa-tasks" th:href="@{/login}">Login</a>
+                            </li>
+                            <li>
+                                <a class="fa-tasks" th:href="@{/pages-sign-up}">Registrace</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="fa-tasks" th:href="@{/blog-list}">Blog</a>
+                    </li>
+                    <li th:if="${#authentication.name != 'anonymousUser'}">
+                             <a href="/logout" class="fa-tasks">Logout</a>
+                    </li>
+
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <!-- End Sample Menu -->
+            <div class="col-md-1"></div>
+            <!-- Disclaimer -->
+            <div class="col-md-3 margin-bottom-20 ">
+                <h3 class="margin-bottom-10">Neváhejte a napište nám</h3>
+
+
+            </div>
+            <!-- End Disclaimer -->
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div class="container show">
+            <div class="row ">
+                <div id="footermenu" class="col-md-8">
+
+                </div>
+                <div id="copyright" class="col-md-4">
+                    <p class="pull-right">(c) 2020 Copyright Info</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Footer Menu -->
+
+</div>

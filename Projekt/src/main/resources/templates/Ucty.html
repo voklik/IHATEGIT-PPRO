@@ -1,0 +1,98 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif]-->
+
+<head th:replace="fragments/importHead :: importTop(title = 'Home')"></head>
+
+
+    <!-- Top Menu -->
+
+    <!-- End Top Menu -->
+    <div id="post_header" class="container" style="height: 40px">
+        <!-- Spacing below header -->
+    </div>
+    <div id="content-top-border" class="container">
+    </div>
+    <!-- === END HEADER === -->
+    <!-- === BEGIN CONTENT === -->
+    <div id="content">
+        <div class="container background-white">
+            <div class="row margin-vert-30">
+                <!-- Main Column -->
+                <div class="col-md-12">
+                    <!-- Blog Post -->
+                    <div th:if="${!ListUcet.isEmpty()}"
+                         th:each="ucet : ${ListUcet} " class="blog-post padding-bottom-20">
+                        <!-- Blog Item Header -->
+
+                            <div class="col-md-4 padding-top-20"
+                                 th:text="${'Jmeno: ' + ucet.getJmeno()}">
+
+                            </div>
+                            <div class="col-md-3 padding-top-20"
+                                 th:text="${'Přijmeni: ' + ucet.getPrijmeni()}">
+                            </div>
+
+                            <div class="col-md-3 padding-top-20"
+                                 th:text="${'Login: ' + ucet.getUcet_login()}">
+                            </div>
+                        <div class="col-md-3 padding-top-20"
+                             th:text="${'Heslo: ' + ucet.getHeslo()}">
+                        </div>
+
+                        <div class="col-md-3 padding-top-20"
+                             th:text="${'Ulice + CP: ' + ucet.getAdresa().getUlice() + ' '  + ucet.getAdresa().getCps()}">
+                        </div>
+                        <div class="col-md-3 padding-top-20"
+                             th:text="${'Mesto PSC: ' + ucet.getAdresa().getUlice() +'  '+ucet.getAdresa().getPsc()}">
+                        </div>
+
+                            <div class="col-md-2">
+                                <a class="blog-item-header float-right-icon cursor" th:href="@{/admin/ucetUpdate/__${ucet.getUcet_ID()}__}">
+                                    <i class="fa fa-pencil-square fa-lg"></i>
+                                </a>
+                                <a
+                                        class="blog-item-header float-right-icon cursor" th:href="@{/admin/__${ucet.getUcet_ID()}__/delete}"
+                                >
+                                    <i class="fa fa-trash-o fa-lg"></i>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- End Blog Item -->
+
+                    <!-- Pagination
+                    <ul th:if="${tripsPaged.totalPages > 1}"
+                        th:each="pages , iterator: ${tripsPaged.totalPages}"  class="pagination">
+
+                        <li class="active pagination">
+                            <a th:text="${iterator.index+1}"
+                               th:href="@{/blog-list(page=${iterator.index+1})}"
+                               th:class="${ tripsPaged.pageable.getPageNumber() ==iterator.index+1} ? active"></a>
+                        </li>
+
+
+                    </ul>
+
+                    End Pagination -->
+                </div>
+                <!-- End Main Column -->
+                <!-- Side Column -->
+
+                <!-- End Side Column -->
+            </div>
+        </div>
+    </div>
+    <!-- === END CONTENT === -->
+    <!-- === BEGIN FOOTER === -->
+
+</body>
+</html>
+<!-- === END FOOTER === -->

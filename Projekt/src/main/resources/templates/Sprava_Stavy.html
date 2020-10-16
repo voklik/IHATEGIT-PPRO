@@ -1,0 +1,130 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
+
+<head>
+    <style>
+        #table-wrapper {
+            position:relative;
+        }
+        #table-scroll {
+            height:auto;
+            overflow:auto;
+            margin-top:20px;
+        }
+        #table-wrapper table {
+            width:100%;
+
+        }
+        #table-wrapper table * {
+            background:yellow;
+            color:black;
+        }
+        #table-wrapper table thead th .text {
+            position:absolute;
+            top:-20px;
+            z-index:2;
+            height:20px;
+            width:35%;
+            border:1px solid red;
+        }
+
+    </style>
+</head>
+
+
+<!-- Top Menu -->
+
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+<!-- === END HEADER === -->
+<!-- === BEGIN CONTENT === -->
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+
+                <div id="table-wrapper">
+                    <div id="table-scroll">
+                        <table >
+
+                            <thead>
+                            <tr>
+                                <td>ID Stav</td>
+                                <td>Název</td>
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                            <div th:if="${!ListStavu.isEmpty()}"
+                                 th:each="stav : ${ListStavu} ">
+                                <!-- Blog Item Header -->
+
+                                <form id="UcetFormular" th:action="@{/Sprava_StavuUpdate}" th:object="${stav}"
+                                      method="post" enctype="multipart/form-data">
+                                    <tr>
+                                        <td><input readonly  name="stavID" th:value="${stav.getStav_ID()}">
+                                        <td> <input  th:value="${stav.getNazev()}"
+                                                     name="nazev"></td>
+
+                                        <td><input name="action" type="submit" value="Delete" /></td>
+                                        <td><input  name="action" type="submit" value="Update" /></td>
+                                    </tr>  </form>   </div>
+                            </tbody>
+
+                        </table>
+                    </div></div>
+
+                <H1>Nový Stav</H1>
+                <table >
+
+                    <thead>
+                    <tr>
+                        <td>Název</td>
+
+
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                    <form id="RegistraceFormular" th:action="@{/Sprava_StavuUpdate}" th:object="${stav}"
+                          method="post" enctype="multipart/form-data">
+                        <tr>
+                            <input hidden readonly  name="stavID" th:value="0">
+                            <td> <input  name="nazev"></td>
+
+
+                            <td><input name="action" type="submit" value="Create" /></td>
+
+                        </tr>  </form>
+                    </tbody>
+
+                </table>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
