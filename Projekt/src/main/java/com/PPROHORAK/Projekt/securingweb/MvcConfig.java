@@ -1,5 +1,4 @@
-package com.PPROHORAK.Projekt.Bezpecnost;
-
+package com.PPROHORAK.Projekt.securingweb;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
