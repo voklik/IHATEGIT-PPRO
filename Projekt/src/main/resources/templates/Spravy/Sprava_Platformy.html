@@ -41,7 +41,7 @@
 
 
 <!-- Top Menu -->
-<div th:replace="~{fragments/topnav :: navbar}"></div>
+<div th:replace="~{fragments/admintopnav :: navbar}"></div>
 <!-- End Top Menu -->
 <div id="post_header" class="container" style="height: 40px">
     <!-- Spacing below header -->
@@ -75,7 +75,7 @@
                                  th:each="platforma : ${ListPlatformy} ">
                                 <!-- Blog Item Header -->
 
-                                <form id="UcetFormular" th:action="@{/Sprava_PlatformyUpdate}" th:object="${platforma}"
+                                <form id="UcetFormular" th:action="@{/admin/Sprava_PlatformyUpdate}" th:object="${platforma}"
                                       method="post" enctype="multipart/form-data">
                                     <tr>
                                         <td><input readonly  name="platformaID" th:value="${platforma.getPlatforma_ID()}">
@@ -104,7 +104,7 @@
                     <tbody>
                     <!-- Blog Post class="blog-post padding-bottom-20" -->
 
-                    <form id="RegistraceFormular" th:action="@{/Sprava_PlatformyUpdate}"
+                    <form id="RegistraceFormular" th:action="@{/admin/Sprava_PlatformyUpdate}"
                           method="post" enctype="multipart/form-data">
                         <tr>
                             <input hidden readonly  name="platformaID" th:value="0">

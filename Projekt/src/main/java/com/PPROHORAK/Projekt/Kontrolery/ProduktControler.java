@@ -17,7 +17,7 @@ public class ProduktControler {
     private final PlatformyDao seznamPlatformy;
     private final ProduktyDao seznamProduktu;
 
-    @RequestMapping("/Sprava_Produkty")
+    @RequestMapping(value = {"/admin/Sprava_Produkty","/admin/sprava_produkty"})
     public String AdminShowALL(Map<String, Object> model){
         SeznamProduktu produkty = new SeznamProduktu();
         produkty.getSeznamProduktu().addAll(seznamProduktu.findAll());
@@ -33,7 +33,7 @@ public class ProduktControler {
     }
 
 
-    @RequestMapping("/DetailProduktu")
+    @RequestMapping(value = {"/DetailProduktu","/detailprodukt"})
     public String DetailHry(
             @RequestParam(value="produktID") Integer ProduktID,
             Map<String, Object> model )
@@ -49,7 +49,7 @@ public class ProduktControler {
 
 
 
-    @RequestMapping("/SeznamHer")
+    @RequestMapping(value = {"/SeznamHer","/seznamher"})
     public String ShowAllByPlatforma(
                      @RequestParam(value="id",required = false) Integer platformaID,
 Map<String, Object> model )
@@ -78,7 +78,7 @@ Map<String, Object> model )
         return "Prodej/SeznamHer";
     }}
 
-    @RequestMapping("/Slevy")
+    @RequestMapping(value = {"/Slevy","slevy"})
     public String ShowVeSleve(
                         Map<String, Object> model )
     {
@@ -93,7 +93,7 @@ Map<String, Object> model )
     }
 
 
-    @PostMapping("/Sprava_ProduktyUpdate")
+    @PostMapping(value = {"/admin/Sprava_ProduktyUpdate","/admin/sprava_produktyupdate"})
     public String AdminChange(
             @RequestParam("produktID") Integer produktID,
             @RequestParam("action") String akce ,@RequestParam("nazev") String nazev,
@@ -134,7 +134,7 @@ Map<String, Object> model )
 
 
 
-        return "redirect:/Sprava_Produkty";
+        return "redirect:/admin/Sprava_Produkty";
 
     }
 

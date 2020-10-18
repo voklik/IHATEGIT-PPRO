@@ -1,0 +1,21 @@
+<div th:fragment="navbar" id="hornav" class="container no-padding"
+     xmlns:th="https://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security3"
+
+>
+    <div class="row" >
+        <div class="col-md-12 no-padding">
+            <div id="hornavZIndex" class="text-center visible-lg">
+
+                <a text="Správa účtů" th:href="@{'/admin/Sprava_Ucty'}">Správa účtů</a>
+                <a text="Správa produktů" th:href="@{'/admin/Sprava_Produkty'}">Správa produktů</a>
+                <a text="Správa platforem" th:href="@{'/admin/Sprava_Platformy'}">Správa platforem</a>
+                <a text="Správa stavů" th:href="@{'/admin/Sprava_Stavy'}">Správa stavů</a>
+                <a text="Správa objednavek" th:href="@{'/admin/Sprava_Objednavek'}">Správa objednavek</a>
+                <a text="SeznamHer" th:href="@{'/SeznamHer'}">Zpět do obchodu</a>
+                <a text="Login" th:href="@{'/Login'}">Login</a>
+                <a text="registrace" th:href="@{'/Registrace'}">registrace</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -31,6 +31,7 @@ public interface UctyDao extends Repository<Ucet, Integer> {
     @Transactional(readOnly = true)
     Ucet findByPrijmeni(@Param("prijmeni") String prijmeni);
 
+
     @Query("SELECT DISTINCT ucet FROM Ucet ucet WHERE ucet.ucet_login  =:login")
     @Transactional(readOnly = true)
     Ucet findByLogin(@Param("login") String login);

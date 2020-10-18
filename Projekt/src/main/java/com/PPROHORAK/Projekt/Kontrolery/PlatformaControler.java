@@ -15,7 +15,7 @@ public class PlatformaControler {
     private final PlatformyDao seznamPlatformy;
 
 
-    @RequestMapping("/Sprava_Platformy")
+    @RequestMapping(value = {"/admin/Sprava_Platformy","/admin/sprava_platformy"})
     public String showAll(Map<String, Object> model){
      new UtilControler().GetPlatformList(model,seznamPlatformy);
 
@@ -28,7 +28,7 @@ public class PlatformaControler {
 
 
 
-    @PostMapping("/Sprava_PlatformyUpdate")
+    @PostMapping(value = {"/admin/Sprava_PlatformyUpdate","/admin/sprava_platformyupdate"})
     public String updateUcetSprava(
             @RequestParam("platformaID") Integer platformaID,
             @RequestParam("action") String akce ,@RequestParam("nazev") String nazev)
@@ -59,7 +59,7 @@ public class PlatformaControler {
 
 
 
-        return "redirect:/Sprava_Platformy";
+        return "redirect:/admin/Sprava_Platformy";
 
     }
 

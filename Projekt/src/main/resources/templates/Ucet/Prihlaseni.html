@@ -1,10 +1,57 @@
+<!-- === BEGIN HEADER === -->
 <!DOCTYPE html>
-<html lang="en">
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login Page</title>
 </head>
 <body>
 
+
+<!-- Top Menu -->
+
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+<!-- === END HEADER === -->
+<!-- === BEGIN CONTENT === -->
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+
+
+
+
+                <H1>Přihlášení</H1>
+
+                    <!-- Blog Post class="blog-post padding-bottom-20" -->
+                <p th:text="${hlaska} ?: ''"></p>
+                    <form id="LoginFormular" th:action="@{/LoginAkce}"
+                          method="post" enctype="multipart/form-data">
+
+                         jméno:   <input  name="login"> <br>
+                          heslo:  <input  name="heslo"> <br>
+                        <input name="action" type="submit" value="přihlásit se" />
+                 </form>
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -29,23 +29,8 @@ public class UcetControler {
         this.seznamyAdres = seznamyAdres;
     }
 
-    /*
-    @GetMapping
-    public String hello ()
-    {
-        return "hello youtube";
-    }
-    */
-    @RequestMapping("/admin")
-    public String showAllUsers(Map<String, Object> model){
-        SeznamUcet ucty = new SeznamUcet();
-        ucty.getSeznamUctu().addAll(seznamUcty.findAll());
 
-        model.put("ListUcet", ucty.getSeznamUctu());
-
-        return "Ucty";
-    }
-    @RequestMapping("/Sprava_Ucty")
+    @RequestMapping(value = {"/admin/Sprava_Ucty","/admin/sprava_ucty","/admin/"})
     public String showAll(Map<String, Object> model){
         SeznamUcet ucty = new SeznamUcet();
         ucty.getSeznamUctu().addAll(seznamUcty.findAll());
@@ -62,7 +47,7 @@ public class UcetControler {
 
 
 
-    @PostMapping("/UpdateUcetSprava")
+    @PostMapping(value = {"/admin/UpdateUcetSprava","/admin/updateucetsprav"})
     public String updateUcetSprava( @RequestParam("ucetID") Integer ucetID,
             @RequestParam("action") String akce ,@RequestParam("jmeno") String jmeno,
              @RequestParam("prijmeni") String prijmeni, @RequestParam("login") String login,
@@ -125,20 +110,108 @@ ucet.setHeslo("test");
 ;*/
 
 
-        return "redirect:/Spravy/Sprava_Ucty";
+        return "redirect:/admin/Sprava_Ucty";
 
     }
 
-
-    @RequestMapping(value = "/registrace", method = RequestMethod.POST)
-    public String Registrace(@Valid @ModelAttribute("ucet") Ucet ucet,
-                             BindingResult result, ModelMap model) {
-        SeznamUcet ucty = new SeznamUcet();
-        ucty.getSeznamUctu().addAll(seznamUcty.findAll());
-
-        model.put("ListUcet", ucty.getSeznamUctu());
+    @RequestMapping(value = {"/Login","/login"})
+    public String Login(  Map<String, Object> model) {
 
 
-        return "Spravy/Sprava_Ucty";
+
+        return "Ucet/Prihlaseni";
     }
+    @PostMapping(value = {"/LoginAkce","/loginakce"})
+    public String LoginAkce( Map<String, Object> model,
+            @RequestParam("login") String login,@RequestParam("heslo") String heslo
+    ) {
+
+
+
+        Ucet test= seznamUcty.findByLogin(login);
+        if(test!=null)
+        {
+            if(test.getHeslo().equals(heslo))
+            {
+                model.put("hlaska","Úspěšně jste se přihlásili");
+
+
+                return "Ucet/Prihlaseni";
+            }
+            else
+            {
+                model.put("hlaska","Heslo NESOUHLASÍ");
+                    return "Ucet/Prihlaseni";
+            }
+
+        }
+        else
+        {
+
+            model.put("hlaska","TAKOVÝ LOGIN  SE V ESHOPU NEVYSKYTUJE");
+            return "Ucet/Prihlaseni";
+        }
+
+
+
+    }
+    @RequestMapping(value = {"/Registrace","/registrace"})
+    public String Registrace( Map<String, Object> model) {
+
+
+
+        return "Ucet/Registrace";
+    }
+    @PostMapping(value = { "/RegistraceAkce","/registraceakce"})
+    public String RegistraceAkce( Map<String, Object> model
+                            ,@RequestParam("jmeno") String jmeno,@RequestParam("prijmeni") String prijmeni,
+                             @RequestParam("login") String login,@RequestParam("heslo") String heslo,
+                             @RequestParam("email") String email,@RequestParam("ulice") String ulice,
+                             @RequestParam("mesto") String mesto,@RequestParam("cp") String cp,
+                             @RequestParam("psc") String psc  ) {
+
+        Ucet novy = new Ucet();
+        Adresa nova = new Adresa();
+        nova.setUcet(novy);
+        novy.setAdresa(nova);
+        nova.setMesto(mesto);
+        nova.setPsc(psc);
+        nova.setCps(cp);
+        nova.setUlice(ulice);
+
+        novy.setHeslo(heslo);
+        novy.setPrijmeni(prijmeni);
+        novy.setJmeno(jmeno);
+        novy.setUcet_login(login);
+        novy.setEmail(email);
+
+        Ucet test= seznamUcty.findByLogin(login);
+        if(test!=null)
+        {
+            model.put("hlaska","TAKOVÝ LOGIN UŽ SE V ESHOPU VYSKYTUJE");
+
+            model.put("login",login);
+            model.put("heslo",heslo);
+            model.put("jmeno",jmeno);
+            model.put("prijmeni",prijmeni);
+            model.put("email",email);
+
+            model.put("ulice",ulice);
+            model.put("cp",cp);
+            model.put("mesto",mesto);
+            model.put("psc",psc);
+
+            return "Ucet/Registrace";
+        }
+        else
+        {
+            model.put("hlaska","Úspěšně jste se zaregistrovali a nyní se můžete přihlásit");
+           // seznamUcty.save(novy);
+            return "Ucet/Prihlaseni";
+        }
+
+
+
+    }
+
 }

@@ -20,7 +20,7 @@ public class StavControler {
 
 
 
-    @RequestMapping("/Sprava_Stavy")
+    @RequestMapping(value = {"/admin/Sprava_Stavy","/admin/sprava_stavy"})
     public String showAll(Map<String, Object> model){
         SeznamStavu stavy = new SeznamStavu();
         stavy.getSeznamStavu().addAll(seznamStavu.findAll());
@@ -28,7 +28,7 @@ public class StavControler {
         model.put("ListStavu", stavy.getSeznamStavu());
 
 
-        return "Sprava_Stavy";
+        return "Spravy/Sprava_Stavy";
 
 
 
@@ -37,7 +37,7 @@ public class StavControler {
 
 
 
-    @PostMapping("/Sprava_StavuUpdate")
+    @PostMapping(value = {"/admin/Sprava_StavuUpdate","/admin/sprava_stavuupdate"})
     public String updateUcetSprava(
         @RequestParam("stavID") Integer stavID,
         @RequestParam("action") String akce ,@RequestParam("nazev") String nazev)
@@ -68,7 +68,7 @@ public class StavControler {
 
 
 
-        return "redirect:/Sprava_Stavy";
+        return "redirect:/admin/Sprava_Stavy";
 
     }
 }

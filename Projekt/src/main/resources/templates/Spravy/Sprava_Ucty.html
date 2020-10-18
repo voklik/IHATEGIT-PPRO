@@ -41,7 +41,7 @@
 
 
 <!-- Top Menu -->
-
+<div th:replace="~{fragments/admintopnav :: navbar}"></div>
 <!-- End Top Menu -->
 <div id="post_header" class="container" style="height: 40px">
     <!-- Spacing below header -->
@@ -83,7 +83,7 @@
                      th:each="ucet : ${ListUcet} ">
                     <!-- Blog Item Header -->
 
-                    <form id="UcetFormular" th:action="@{/UpdateUcetSprava}" th:object="${ucet}"
+                    <form id="UcetFormular" th:action="@{/admin/UpdateUcetSprava}" th:object="${ucet}"
                           method="post" enctype="multipart/form-data">
                         <tr>
                             <td><input readonly  name="ucetID" th:value="${ ucet.getUcet_ID()}">
@@ -133,7 +133,7 @@
                     <tbody>
                     <!-- Blog Post class="blog-post padding-bottom-20" -->
 
-                        <form id="RegistraceFormular" th:action="@{/UpdateUcetSprava}" th:object="${ucet}"
+                        <form id="RegistraceFormular" th:action="@{/admin/UpdateUcetSprava}" th:object="${ucet}"
                               method="post" enctype="multipart/form-data">
                             <tr>
                                 <input hidden readonly  name="ucetID" th:value="0">

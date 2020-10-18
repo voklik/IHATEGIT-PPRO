@@ -30,8 +30,12 @@ public class Ucet implements Serializable{
     @NotBlank (message = "Hodnota musí být vyplněna")
     @Size(max=250)
     private  String prijmeni;
+    @NotBlank (message = "Hodnota musí být vyplněna")
+    @Size(max=250)
+    private  String email;
 
     @NotBlank (message = "Hodnota musí být vyplněna")
+    @Column(unique = true)
     @Size(max=250)
     private   String ucet_login;
 
@@ -48,6 +52,16 @@ public class Ucet implements Serializable{
     private TypUctu typUctu;
 
     private boolean aktivni=false;
+
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public boolean isAktivni() {
         return aktivni;

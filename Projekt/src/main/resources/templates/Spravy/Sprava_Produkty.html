@@ -41,7 +41,7 @@
 
 
 <!-- Top Menu -->
-<div th:replace="~{fragments/topnav :: navbar}"></div>
+<div th:replace="~{fragments/admintopnav :: navbar}"></div>
 <!-- End Top Menu -->
 <div id="post_header" class="container" style="height: 40px">
     <!-- Spacing below header -->
@@ -77,7 +77,7 @@
                                  th:each="produkt : ${ListProdukty} ">
                                 <!-- Blog Item Header -->
 
-                                <form id="UcetFormular" th:action="@{/Sprava_ProduktyUpdate}" th:object="${produkt}"
+                                <form id="UcetFormular" th:action="@{/admin/Sprava_ProduktyUpdate}" th:object="${produkt}"
                                       method="post" enctype="multipart/form-data">
                                     <tr>
                                         <td><input readonly  name="produktID" th:value="${produkt.getProdukt_ID()}">
@@ -121,7 +121,7 @@
                     <tbody>
                     <!-- Blog Post class="blog-post padding-bottom-20" -->
 
-                    <form id="RegistraceFormular" th:action="@{/Sprava_ProduktyUpdate}"
+                    <form id="RegistraceFormular" th:action="@{/admin/Sprava_ProduktyUpdate}"
                           method="post" enctype="multipart/form-data">
                         <tr>
                             <input hidden readonly  name="produktID" th:value="0">

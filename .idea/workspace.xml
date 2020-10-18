@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fc921b93-5ab3-4ecb-9771-694161025623" name="Default Changelist" comment="" />
+    <list default="true" id="fc921b93-5ab3-4ecb-9771-694161025623" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Projekt/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/securingweb/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/securingweb/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Ucet/Prihlaseni.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Ucet/Prihlaseni.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,6 +47,7 @@
       <option name="presentableId" value="Default" />
       <updated>1602837452169</updated>
       <workItem from="1602837454501" duration="52000" />
+      <workItem from="1603014578933" duration="104000" />
     </task>
     <servers />
   </component>

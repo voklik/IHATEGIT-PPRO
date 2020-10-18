@@ -41,7 +41,7 @@
 
 
 <!-- Top Menu -->
-
+<div th:replace="~{fragments/admintopnav :: navbar}"></div>
 <!-- End Top Menu -->
 <div id="post_header" class="container" style="height: 40px">
     <!-- Spacing below header -->
@@ -75,7 +75,7 @@
                                  th:each="stav : ${ListStavu} ">
                                 <!-- Blog Item Header -->
 
-                                <form id="UcetFormular" th:action="@{/Sprava_StavuUpdate}" th:object="${stav}"
+                                <form id="UcetFormular" th:action="@{/admin/Sprava_StavuUpdate}" th:object="${stav}"
                                       method="post" enctype="multipart/form-data">
                                     <tr>
                                         <td><input readonly  name="stavID" th:value="${stav.getStav_ID()}">
@@ -104,7 +104,7 @@
                     <tbody>
                     <!-- Blog Post class="blog-post padding-bottom-20" -->
 
-                    <form id="RegistraceFormular" th:action="@{/Sprava_StavuUpdate}" th:object="${stav}"
+                    <form id="RegistraceFormular" th:action="@{/admin/Sprava_StavuUpdate}" th:object="${stav}"
                           method="post" enctype="multipart/form-data">
                         <tr>
                             <input hidden readonly  name="stavID" th:value="0">
