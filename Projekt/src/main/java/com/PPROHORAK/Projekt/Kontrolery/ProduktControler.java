@@ -3,12 +3,13 @@ package com.PPROHORAK.Projekt.Kontrolery;
 import com.PPROHORAK.Projekt.DAO.PlatformyDao;
 import com.PPROHORAK.Projekt.DAO.ProduktyDao;
 import com.PPROHORAK.Projekt.Model.Produkt;
-import com.PPROHORAK.Projekt.Model.Seznamy.SeznamPlatforem;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamProduktu;
 import lombok.Data;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 @Controller
 @Data
@@ -136,6 +137,31 @@ Map<String, Object> model )
 
         return "redirect:/admin/Sprava_Produkty";
 
+    }
+
+
+    @GetMapping (value = {"/NaseptavacProdukty","/naseptavacprodukty"},
+            produces =  MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+   String naseptavacProdukty(
+            @RequestParam("nalezeno") String nalezeno) {
+        if (nalezeno != null)
+        {
+String hledany= "%"+nalezeno.toLowerCase()+"%";
+            ArrayList<Produkt> x =seznamProduktu.findByNazevSeznam(hledany);
+
+            String vrat="";
+            for (Produkt p:x
+                 ) {
+                http://localhost:9000/DetailProduktu?produktID=26
+                vrat+=" <a href='/DetailProduktu?produktID="+p.getProdukt_ID() +"' >"+p.getNazev()+ " "+p.getPlatforma().getNazev() +"</a><BR>";
+            }
+
+            return new String(vrat);
+        }
+
+else
+    return   new String("");
     }
 
 }

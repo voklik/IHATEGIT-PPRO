@@ -10,7 +10,9 @@ import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 public interface ProduktyDao  extends Repository<Produkt, Integer> {
 
@@ -28,6 +30,12 @@ public interface ProduktyDao  extends Repository<Produkt, Integer> {
     @Query("SELECT DISTINCT produkt FROM Produkt  produkt WHERE produkt.nazev LIKE :nazev%")
     @Transactional(readOnly = true)
     Produkt findByNazev(@Param("nazev") String nazev);
+
+   // @Query("SELECT DISTINCT  produkt.nazev FROM Produkt  produkt WHERE produkt.nazev LIKE :nazev%")
+
+    @Query("SELECT DISTINCT produkt  FROM Produkt produkt WHERE lower( produkt.nazev) LIKE:hledany")
+    @Transactional(readOnly = true)
+    ArrayList<Produkt> findByNazevSeznam(@Param("hledany") String hledany);
 
     @Query("SELECT DISTINCT produkt FROM Produkt  produkt WHERE produkt.platforma.platforma_ID =:id")
     @Transactional(readOnly = true)

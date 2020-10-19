@@ -81,7 +81,7 @@
                                     <tr>
 
                                         <td> <a th:text="${produkt.getNazev()}"
-                                                   th:href="@{'/DetailProduktu'('produktID'=${produkt.getProdukt_ID()})}" ></td>
+                                                                                                                              th:href="@{'/DetailProduktu'('produktID'=${produkt.getProdukt_ID()})}" ></td>
                                         <td> <span th:text="${produkt.getCena()}" ></td>
                                         <td> <span th:text="${produkt.getSleva()}" ></td>
                                         <td> <span th:text="${produkt.getPlatforma().getNazev()}"></td>

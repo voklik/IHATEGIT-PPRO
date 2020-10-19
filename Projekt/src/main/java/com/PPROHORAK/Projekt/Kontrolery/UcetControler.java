@@ -113,14 +113,23 @@ ucet.setHeslo("test");
         return "redirect:/admin/Sprava_Ucty";
 
     }
+    @GetMapping(value = {"/Login","/login"})
+    public String login(Map<String, Object> model, String error, String logout) {
+        if (error != null)
+            model.put("hlaska", "Your username and password is invalid.");
 
-    @RequestMapping(value = {"/Login","/login"})
+        if (logout != null)
+            model.put("hlaska", "You have been logged out successfully.");
+
+        return "Ucet/Prihlaseni";
+    }
+  /*  @RequestMapping(value = {"/Login","/login"})
     public String Login(  Map<String, Object> model) {
 
 
 
         return "Ucet/Prihlaseni";
-    }
+    }*/
     @PostMapping(value = {"/LoginAkce","/loginakce"})
     public String LoginAkce( Map<String, Object> model,
             @RequestParam("login") String login,@RequestParam("heslo") String heslo
