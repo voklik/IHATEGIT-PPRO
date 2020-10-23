@@ -7,10 +7,7 @@
 <html lang="en"
       xmlns:th="https://www.thymeleaf.org"
 >
-<head>
-    <meta charset="UTF-8">
-    <title>Register Page</title>
-</head>
+<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
 <body>
 
 
@@ -31,7 +28,7 @@
             <div class="col-md-12">
 
 
-
+                <a text="SeznamHer" th:href="@{'/'}">Zpět do obchodu</a>
 
                 <H1>Registrace nového uživatele</H1>
 

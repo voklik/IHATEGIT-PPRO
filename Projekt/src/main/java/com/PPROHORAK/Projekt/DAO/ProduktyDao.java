@@ -4,6 +4,8 @@ import com.PPROHORAK.Projekt.Model.Produkt;
 import com.PPROHORAK.Projekt.Model.Stav;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -27,9 +29,11 @@ public interface ProduktyDao  extends Repository<Produkt, Integer> {
     Produkt findById(Integer id);
 
 
+   /*
     @Query("SELECT DISTINCT produkt FROM Produkt  produkt WHERE produkt.nazev LIKE :nazev%")
     @Transactional(readOnly = true)
     Produkt findByNazev(@Param("nazev") String nazev);
+    */
 
    // @Query("SELECT DISTINCT  produkt.nazev FROM Produkt  produkt WHERE produkt.nazev LIKE :nazev%")
 
@@ -45,6 +49,19 @@ public interface ProduktyDao  extends Repository<Produkt, Integer> {
     @Transactional(readOnly = true)
     Collection<Produkt>  findVeSleve();
 
+
+    //strankovani
+    @Query("SELECT DISTINCT produkt FROM Produkt  produkt WHERE produkt.platforma.platforma_ID =:id")
+    @Transactional(readOnly = true)
+    Page findAllPagesByPlatforma(Pageable pageable, @Param("id") Integer id);
+
+    @Query("SELECT DISTINCT produkt FROM Produkt produkt")
+    @Transactional(readOnly = true)
+    Page findAllPagesProdukty(Pageable pageable);
+
+    @Query("SELECT DISTINCT produkt FROM Produkt  produkt WHERE produkt.sleva >0")
+    @Transactional(readOnly = true)
+    Page findAllPagesVeSleve(Pageable pageable);
 
     void save(Produkt produkt);
 

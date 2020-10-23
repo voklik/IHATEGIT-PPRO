@@ -29,11 +29,6 @@
                 <div id="table-wrapper">
                     <div id="table-scroll">
 
-                        <label>Tags: </label>
-                        <input name="nalezeno" type="text" id="nalezeno">
-                        <ul name="vysledky" type="text" id="vysledky">
-
-                        </ul>
 
                         <table >
 
@@ -50,14 +45,15 @@
                             <tbody>
                             <!-- Blog Post class="blog-post padding-bottom-20" -->
 
-                            <div th:if="${!ListProdukty.isEmpty()}"
-                                 th:each="produkt : ${ListProdukty} ">
+                            <div th:if="${!ProduktStranka.isEmpty()}"
+                                 th:each="produkt : ${ProduktStranka} ">
                                 <!-- Blog Item Header -->
 
                                 <form id="UcetFormular" th:action="@{/admin/Sprava_ProduktyUpdate}" th:object="${produkt}"
                                       method="post" enctype="multipart/form-data">
                                     <tr>
-                                        <td><input readonly  name="produktID" th:value="${produkt.getProdukt_ID()}">
+
+                                        <td><a th:href="@{'/DetailProduktu'('produktID'=${produkt.getProdukt_ID()})}" ><label readonly  name="produktID"  th:text="${produkt.getProdukt_ID()}"></label></a></td>
                                         <td> <input  th:value="${produkt.getNazev()}"
                                                      name="nazev"></td>
                                         <td> <input  th:value="${produkt.getCena()}" type="number" min="0" step="1"   name="cena"></td>
@@ -97,6 +93,26 @@
                     </thead>
                     <tbody>
                     <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                    <ul th:if="${ProduktStranka.totalPages > 0}">
+                        Nalezeno celkem stránek:
+
+                        <span th:text="${ProduktStranka.totalPages}"></span><BR>
+
+                        <span th:each="iterator : ${#numbers.sequence( 0, ProduktStranka.totalPages-1)}" class="pagination">
+                                    <li class="active pagination">
+
+                                    <a th:text="${iterator+1}"
+                                       th:href="@{/admin/sprava_produkty(page=${iterator})}"
+                                       th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
+                                       </a>
+                                    </li>
+                                </span>
+
+
+
+                    </ul>
+
 
                     <form id="RegistraceFormular" th:action="@{/admin/Sprava_ProduktyUpdate}"
                           method="post" enctype="multipart/form-data">

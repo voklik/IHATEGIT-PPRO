@@ -5,12 +5,21 @@ import com.PPROHORAK.Projekt.DAO.ProduktyDao;
 import com.PPROHORAK.Projekt.Model.Produkt;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamProduktu;
 import lombok.Data;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
+
 @Controller
 @Data
 public class ProduktControler {
@@ -18,15 +27,28 @@ public class ProduktControler {
     private final PlatformyDao seznamPlatformy;
     private final ProduktyDao seznamProduktu;
 
-    @RequestMapping(value = {"/admin/Sprava_Produkty","/admin/sprava_produkty"})
-    public String AdminShowALL(Map<String, Object> model){
-        SeznamProduktu produkty = new SeznamProduktu();
-        produkty.getSeznamProduktu().addAll(seznamProduktu.findAll());
 
-        model.put("ListProdukty", produkty.getSeznamProduktu());
+    @RequestMapping(value = {"/","/Index","/Home","/home","/index"})
+    public String Home(Map<String, Object> model){
 
         new UtilControler().GetPlatformList(model,seznamPlatformy);
 
+        return "Index";
+
+
+
+    }
+
+    @RequestMapping(value = {"/admin/Sprava_Produkty","/admin/sprava_produkty"})
+    public String AdminShowALL(Pageable pageable,
+                               @RequestParam("page") Optional<Integer> page,Map<String, Object> model){
+        final int currentPage = page.orElse(0);
+        final int size = 3;
+        Pageable customPageable = PageRequest.of(currentPage, size);
+        Page<Produkt> stranka = this.seznamProduktu.findAllPagesProdukty(customPageable);
+        model.put("ProduktStranka", stranka);
+
+        new UtilControler().GetPlatformList(model,seznamPlatformy);
         return "Spravy/Sprava_Produkty";
 
 
@@ -48,50 +70,84 @@ public class ProduktControler {
             return "Prodej/DetailProduktu";
        }
 
+    @RequestMapping(value = {"/HledaniProduktu","/hledaniproduktu"})
+    public String Hledani(
+            @RequestParam(value="nalezeno",required = false) String nazev,
+            Map<String, Object> model ) {
 
-
-    @RequestMapping(value = {"/SeznamHer","/seznamher"})
-    public String ShowAllByPlatforma(
-                     @RequestParam(value="id",required = false) Integer platformaID,
-Map<String, Object> model )
-    {
-
-        if(platformaID==null)
-        {
+        if (nazev!=null) {
+            nazev ='%'+nazev +'%';
             SeznamProduktu produkty = new SeznamProduktu();
-            produkty.getSeznamProduktu().addAll(seznamProduktu.findAll());
+            produkty.getSeznamProduktu().addAll(seznamProduktu.findByNazevSeznam(nazev));
 
             model.put("ListProdukty", produkty.getSeznamProduktu());
 
-            new UtilControler().GetPlatformList(model,seznamPlatformy);
+            new UtilControler().GetPlatformList(model, seznamPlatformy);
 
             return "Prodej/SeznamHer";
         }
         else
+
         {
-        SeznamProduktu produkty = new SeznamProduktu();
-        produkty.getSeznamProduktu().addAll(seznamProduktu.findByPlatforma(platformaID));
 
-        model.put("ListProdukty", produkty.getSeznamProduktu());
+            model.put("hlaska","Žádný produkt s takovým názvem nebyl nalezen");
 
-        new UtilControler().GetPlatformList(model,seznamPlatformy);
 
-        return "Prodej/SeznamHer";
-    }}
 
-    @RequestMapping(value = {"/Slevy","slevy"})
-    public String ShowVeSleve(
-                        Map<String, Object> model )
-    {
-        SeznamProduktu produkty = new SeznamProduktu();
-        produkty.getSeznamProduktu().addAll(seznamProduktu.findVeSleve());
+            return "Prodej/SeznamHer";
+        }
+    }
+//strankovani
+@RequestMapping(value = {"/Slevy","slevy"})
+    public String ShowAllVeSleve( Pageable pageable,
+                           @RequestParam("page") Optional<Integer> page,  Map<String, Object> model) {
 
-        model.put("ListProdukty", produkty.getSeznamProduktu());
 
-        new UtilControler().GetPlatformList(model,seznamPlatformy);
 
+
+
+
+    final int currentPage = page.orElse(0);
+        final int size = 3;
+        Pageable customPageable = PageRequest.of(currentPage, size);
+        Page<Produkt> stranka = this.seznamProduktu.findAllPagesVeSleve(customPageable);
+         model.put("ProduktStranka", stranka);
+    model.put("typ","SLEVY");
+    new UtilControler().GetPlatformList(model, seznamPlatformy);
         return "Prodej/SeznamHer";
     }
+
+
+
+    @RequestMapping(value = {"/SeznamHer","/seznamher"})
+    public String ShowAllByPlatforma(Pageable pageable,
+                                     @RequestParam("page") Optional<Integer> page,
+                     @RequestParam(value="id",required = false) Integer platformaID,
+Map<String, Object> model )
+    {
+        new UtilControler().GetPlatformList(model, seznamPlatformy);
+        if(platformaID==null)
+        {
+            final int currentPage = page.orElse(0);
+            final int size = 3;
+            Pageable customPageable = PageRequest.of(currentPage, size);
+            Page<Produkt> stranka = this.seznamProduktu.findAllPagesProdukty(customPageable);
+            model.put("ProduktStranka", stranka);
+            model.put("typ","ALL");
+            return "Prodej/SeznamHer";
+        }
+        else
+        {
+            final int currentPage = page.orElse(0);
+            final int size = 3;
+            Pageable customPageable = PageRequest.of(currentPage, size);
+            Page<Produkt> stranka = this.seznamProduktu.findAllPagesByPlatforma(customPageable,platformaID);
+            model.put("ProduktStranka", stranka);
+                model.put("typ","PLATFORMA");
+            model.put("id",platformaID);
+            return "Prodej/SeznamHer";
+    }}
+
 
 
     @PostMapping(value = {"/admin/Sprava_ProduktyUpdate","/admin/sprava_produktyupdate"})
@@ -149,13 +205,28 @@ Map<String, Object> model )
         {
 String hledany= "%"+nalezeno.toLowerCase()+"%";
             ArrayList<Produkt> x =seznamProduktu.findByNazevSeznam(hledany);
+    int max = x.size();
+            String vrat="Nalezeno polozek:" +x.size();
+    if (max>10)
+    {
+max=10;
+vrat+=" Tady máte prvních deset možností <BR>";
+    }
+    else
+    {
+        vrat+="<BR>";
+    }
 
-            String vrat="";
-            for (Produkt p:x
-                 ) {
-                http://localhost:9000/DetailProduktu?produktID=26
-                vrat+=" <a href='/DetailProduktu?produktID="+p.getProdukt_ID() +"' >"+p.getNazev()+ " "+p.getPlatforma().getNazev() +"</a><BR>";
-            }
+    for (int i=0;i<max;i++)
+    {
+        Produkt p = x.get(i);
+
+        vrat+=" <a href='/DetailProduktu?produktID="+p.getProdukt_ID() +"' >"
+                +p.getNazev()+ " "+p.getPlatforma().getNazev()
+                +" Aktuální cena "+p.getAktualniCena()+ " sleva "
+                + p.getSleva()+"%</a><BR>";
+    }
+          
 
             return new String(vrat);
         }
@@ -163,5 +234,10 @@ String hledany= "%"+nalezeno.toLowerCase()+"%";
 else
     return   new String("");
     }
+
+
+
+
+
 
 }

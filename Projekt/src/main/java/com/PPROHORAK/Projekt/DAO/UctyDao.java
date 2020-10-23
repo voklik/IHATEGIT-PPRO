@@ -6,6 +6,8 @@ import com.PPROHORAK.Projekt.Model.Ucet;
 
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
@@ -42,4 +44,11 @@ public interface UctyDao extends Repository<Ucet, Integer> {
     @Transactional
     @Modifying
     void deleteById(@Param("ucet_id") Integer ucet_id);
+
+////////////////////////////////////////////////////////////
+    @Query("SELECT DISTINCT ucet FROM Ucet ucet")
+    @Transactional(readOnly = true)
+     Page findAllPagesUcty(Pageable pageable);
+
+
 }

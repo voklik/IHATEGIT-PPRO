@@ -7,17 +7,17 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name="t_Polozky")
+@Table(name="t_PolozkyKosik")
 //@Getter
 //@Setter
 //@RequiredArgsConstructor
-public class Polozka implements Serializable {
+public class PolozkaKosik implements Serializable {
 
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private  Integer polozka_ID;
+    private  Integer polozkaKosiks_ID;
 
     @NotBlank(message = "Hodnota musí být vyplněna")
     @Size(max=250)
@@ -44,7 +44,7 @@ public class Polozka implements Serializable {
 
 
     public Integer getPolozka_ID() {
-        return polozka_ID;
+        return polozkaKosiks_ID;
     }
 
 
@@ -57,39 +57,24 @@ public class Polozka implements Serializable {
         this.pocet = pocet;
     }
 
-    public int getSleva() {
-        return sleva;
-    }
 
-    public void setSleva(int sleva) {
-        this.sleva = sleva;
-    }
-
-    public int getCena() {
-        return cena;
-    }
-
-    public void setCena(int cena) {
-        this.cena = cena;
-    }
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private Objednavka objednavka;
+    private Ucet ucet;
     @OneToOne(cascade = CascadeType.PERSIST)
     private Produkt produkt;
 
 
+    public Ucet getUcet() {
+        return ucet;
+    }
 
-    public void setObjednavka(Objednavka objednavka) {
-        this.objednavka = objednavka;
+    public void setUcet(Ucet ucet) {
+        this.ucet = ucet;
     }
 
     public void setProdukt(Produkt produkt) {
         this.produkt = produkt;
-    }
-
-    public Objednavka getObjednavka() {
-        return objednavka;
     }
 
     public Produkt getProdukt() {

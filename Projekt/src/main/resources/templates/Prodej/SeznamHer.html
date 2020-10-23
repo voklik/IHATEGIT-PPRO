@@ -8,36 +8,7 @@
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-
-<head>
-    <style>
-        #table-wrapper {
-            position:relative;
-        }
-        #table-scroll {
-            height:auto;
-            overflow:auto;
-            margin-top:20px;
-        }
-        #table-wrapper table {
-            width:100%;
-
-        }
-        #table-wrapper table * {
-            background:yellow;
-            color:black;
-        }
-        #table-wrapper table thead th .text {
-            position:absolute;
-            top:-20px;
-            z-index:2;
-            height:20px;
-            width:35%;
-            border:1px solid red;
-        }
-
-    </style>
-</head>
+<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
 
 
 <!-- Top Menu -->
@@ -58,6 +29,10 @@
 
                 <div id="table-wrapper">
                     <div id="table-scroll">
+                        <div th:if="${ProduktStranka.isEmpty()}" >
+                            <label>Nebyly nalezeny žádné produkty</label>
+                        </div>
+                        <div th:if="${!ProduktStranka.isEmpty()}" >
                         <table >
 
                             <thead>
@@ -73,15 +48,14 @@
                             <tbody>
                             <!-- Blog Post class="blog-post padding-bottom-20" -->
 
-                            <div th:if="${!ListProdukty.isEmpty()}"
-                                 th:each="produkt : ${ListProdukty} ">
+                            <div th:if="${!ProduktStranka.isEmpty()}"
+                                 th:each="produkt : ${ProduktStranka} ">
                                 <!-- Blog Item Header -->
 
 
                                     <tr>
 
-                                        <td> <a th:text="${produkt.getNazev()}"
-                                                                                                                              th:href="@{'/DetailProduktu'('produktID'=${produkt.getProdukt_ID()})}" ></td>
+                                        <td> <a th:text="${produkt.getNazev()}" th:href="@{'/DetailProduktu'('produktID'=${produkt.getProdukt_ID()})}" ></td>
                                         <td> <span th:text="${produkt.getCena()}" ></td>
                                         <td> <span th:text="${produkt.getSleva()}" ></td>
                                         <td> <span th:text="${produkt.getPlatforma().getNazev()}"></td>
@@ -89,7 +63,39 @@
                                     </tr>    </div>
                             </tbody>
 
-                        </table>
+                        </table></div>
+
+                        <ul th:if="${ProduktStranka.totalPages > 0}">
+                            Nalezeno celkem stránek:
+
+                            <span th:text="${ProduktStranka.totalPages}"></span><BR>
+
+                            <span th:each="iterator : ${#numbers.sequence( 0, ProduktStranka.totalPages-1)}" class="pagination">
+                                    <li class="active pagination">
+                                       <span th:if="${typ =='ALL'}">
+                                    <a th:text="${iterator+1}"
+                                       th:href="@{/SeznamHer(page=${iterator})}"
+                                       th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
+                                       </a>
+                                       </span>
+                                    <span th:if="${typ =='SLEVY'}">
+                                    <a th:text="${iterator+1}"
+                                       th:href="@{/Slevy(page=${iterator})}"
+                                       th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
+                                       </a>
+                                       </span>
+                                           <span th:if="${typ =='PLATFORMA'}">
+                                    <a th:text="${iterator+1}"
+                                       th:href="@{/SeznamHer(page=${iterator},id=${id})}"
+                                       th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
+                                       </a>
+                                       </span>
+                                    </li>
+                                </span>
+
+
+
+                        </ul>
                     </div>
                 </div>
 

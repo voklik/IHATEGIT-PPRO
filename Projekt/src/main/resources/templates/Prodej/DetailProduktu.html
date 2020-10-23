@@ -9,9 +9,7 @@
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
 
-<head>
-
-</head>
+<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
 
 
 <!-- Top Menu -->
@@ -45,9 +43,16 @@
                             Jméno:<label th:text="${produkt.getNazev()}"></label> <br>
                                      Cena:<label th:text="${produkt.getCena()}" >Kč</label><br>
                                     Sleva:<label  th:text="${produkt.getSleva()}" > %</label><br>
-                                Platforma:<label th:text="${produkt.getPlatforma().getNazev()}"></label><br>
+                            Aktuální cena:<label th:text="${produkt.getAktualniCena()}"></label><br>
 
+                            Platforma:<label th:text="${produkt.getPlatforma().getNazev()}"></label><br>
 
+                            <form id="KupProduktForm" th:action="@{/kosik/add}"
+                                  method="post" enctype="multipart/form-data">
+                                <input hidden readonly  name="id" th:value="${produkt.getProdukt_ID()}">
+                                <input   type="number" min="0" step="1" value="1"   name="pocet">
+                                <input name="action" type="submit" value="Koupit" />
+                            </form>
 
                         </div>
                     </div>

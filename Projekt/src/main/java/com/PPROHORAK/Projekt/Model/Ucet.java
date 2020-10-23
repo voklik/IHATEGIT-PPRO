@@ -47,6 +47,8 @@ public class Ucet implements Serializable{
 
     @OneToMany(mappedBy = "ucet", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Objednavka> objednavky;
+    @OneToMany(mappedBy = "ucet", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<PolozkaKosik> KosikPolozky;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private TypUctu typUctu;
@@ -122,6 +124,9 @@ public class Ucet implements Serializable{
         return objednavky;
     }
 
+    public List<PolozkaKosik> getKosikPolozky() {
+        return KosikPolozky;
+    }
 
     public TypUctu getTypUctu() {
         return typUctu;

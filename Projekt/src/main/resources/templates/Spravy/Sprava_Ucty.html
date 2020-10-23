@@ -8,36 +8,7 @@
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-
-<head>
-    <style>
-        #table-wrapper {
-            position:relative;
-        }
-        #table-scroll {
-            height:auto;
-            overflow:auto;
-            margin-top:20px;
-        }
-        #table-wrapper table {
-            width:100%;
-
-        }
-        #table-wrapper table * {
-            background:yellow;
-            color:black;
-        }
-        #table-wrapper table thead th .text {
-            position:absolute;
-            top:-20px;
-            z-index:2;
-            height:20px;
-            width:35%;
-            border:1px solid red;
-        }
-
-    </style>
-</head>
+<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
 
 
 <!-- Top Menu -->
@@ -79,8 +50,8 @@
                     </thead>
                     <tbody>
                 <!-- Blog Post class="blog-post padding-bottom-20" -->
-                <div th:if="${!ListUcet.isEmpty()}"
-                     th:each="ucet : ${ListUcet} ">
+                <div th:if="${!UcetStranka.isEmpty()}"
+                     th:each="ucet : ${UcetStranka} ">
                     <!-- Blog Item Header -->
 
                     <form id="UcetFormular" th:action="@{/admin/UpdateUcetSprava}" th:object="${ucet}"
@@ -112,6 +83,17 @@
 
         </table>
                     </div></div>
+
+                <span th:each="iterator : ${#numbers.sequence( 0, UcetStranka.totalPages-1)}" class="pagination">
+                                    <li class="active pagination">
+                                    <a th:text="${iterator+1}"
+                                       th:href="@{/admin/sprava_ucty(page=${iterator})}"
+                                       th:class="${ UcetStranka.pageable.getPageNumber() ==iterator} ? active">
+
+                                    </a>
+                                    </li>
+                                </span>
+
 
                 <H1>Nový účet</H1>
                 <table >

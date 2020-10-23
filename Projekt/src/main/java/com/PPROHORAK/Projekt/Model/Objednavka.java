@@ -50,6 +50,8 @@ public class Objednavka implements Serializable {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Ucet ucet;
 
+
+
     public void setCena(Integer cena) {
         this.cena = cena;
     }

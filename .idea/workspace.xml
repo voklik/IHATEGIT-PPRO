@@ -3,13 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" id="fc921b93-5ab3-4ecb-9771-694161025623" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/DAO/ProduktyDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/DAO/ProduktyDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/Kontrolery/ProduktControler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/Kontrolery/ProduktControler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/Kontrolery/UcetControler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/Kontrolery/UcetControler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/securingweb/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/securingweb/WebSecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Fragments/importHead.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Fragments/importHead.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/Model/Produkt.java" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/java/com/PPROHORAK/Projekt/Model/Produkt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Fragments/admintopnav.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Fragments/admintopnav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Fragments/topnav.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Fragments/topnav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Prodej/DetailProduktu.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Prodej/DetailProduktu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Prodej/SeznamHer.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Prodej/SeznamHer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Spravy/Sprava_Platformy.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Spravy/Sprava_Platformy.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Spravy/Sprava_Produkty.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Spravy/Sprava_Produkty.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Spravy/Sprava_Stavy.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Spravy/Sprava_Stavy.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Spravy/Sprava_Ucty.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Spravy/Sprava_Ucty.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Ucet/DetailUctu.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Ucet/DetailUctu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Ucet/Prihlaseni.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Ucet/Prihlaseni.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Ucet/Registrace.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Ucet/Registrace.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Ucty.html" beforeDir="false" afterPath="$PROJECT_DIR$/Projekt/src/main/resources/templates/Index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +62,7 @@
       <workItem from="1603014578933" duration="104000" />
       <workItem from="1603048890824" duration="134000" />
       <workItem from="1603050255401" duration="22000" />
+      <workItem from="1603212929622" duration="1203000" />
     </task>
     <servers />
   </component>

@@ -1,10 +1,78 @@
+<!-- === BEGIN HEADER === -->
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
 
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
+<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
+
+
+<!-- Top Menu -->
+<div th:replace="~{fragments/admintopnav :: navbar}"></div>
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+<!-- === END HEADER === -->
+<!-- === BEGIN CONTENT === -->
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+                <a text="SeznamHer" th:href="@{'/ucet/detail'}">Detail účtu</a>
+                <a text="SeznamHer" th:href="@{'/'}">historie objednávek</a>
+                <a text="SeznamHer" th:href="@{'/'}">Košík</a>
+                <p th:text="${hlaska} ?: ''"></p>
+                <H1>Změnit údaje</H1>
+                <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                    <form id="zmenudajeform" th:action="@{/ucet/detailUpdate}"
+                          method="post" enctype="multipart/form-data">
+                        login:   <input readonly th:value="${login} ?: ''" type="text"   required minlength="5" maxlength="30"  name="login"> <br>
+                        jmeno:  <input th:value="${jmeno} ?: ''"  type="text"   required minlength="5" maxlength="50" name="jmeno"> <br>
+                        prijmeni:  <input th:value="${prijmeni} ?: ''"  type="text"   required minlength="5" maxlength="50" name="prijmeni"> <br>
+                        email:  <input th:value="${email} ?: ''"  type="email"   required minlength="5" maxlength="50" name="email"> <br>
+                        ulice:  <input th:value="${ulice} ?: ''"  type="text"   required minlength="5" maxlength="50" name="ulice"> <br>
+                        číslo popisné:  <input th:value="${cp} ?: ''"  type="text"   required minlength="5" maxlength="50" name="cp"> <br>
+                        město:  <input th:value="${mesto} ?: ''"  type="text"   required minlength="5" maxlength="50" name="mesto"> <br>
+                        poštovní směrovací číslo:  <input th:value="${psc} ?: ''"  type="text"   required minlength="5" maxlength="30"  name="psc"> <br>
+                        <input name="action" type="submit" value="Změnit údaje" />
+                    </form>
+
+
+                <H1>Změnit heslo</H1>
+                <form id="zmenhesloForm" th:action="@{/ucet/hesloUpdate}"method="post" enctype="multipart/form-data">
+                staré heslo:            <input  type="password"   required minlength="5" maxlength="30" name="heslo"> <br>
+                nové heslo:             <input  type="password"   required minlength="5" maxlength="30"  name="nheslo"> <br>
+                <input name="action" type="submit" value="Změnit heslo" />
+                </form>
+
+
+                <!--
+                                    <div class="col-md-2">
+                                        <a class="blog-item-header float-right-icon cursor" th:href="@{/admin/ucetUpdate/__${ucet.getUcet_ID()}__}">
+                                            <i class="fa fa-pencil-square fa-lg"></i>
+                                        </a>
+                                        <a
+                                                class="blog-item-header float-right-icon cursor" th:href="@{/admin/__${ucet.getUcet_ID()}__/delete}"
+                                        >
+                                            <i class="fa fa-trash-o fa-lg"></i>
+                                        </a>
+                                    </div>                  -->
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
 </body>
 </html>

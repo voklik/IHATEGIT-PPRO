@@ -28,6 +28,11 @@ public class UserPrincipal implements UserDetails {
         return authorities;
     }
 
+    public Ucet getUcet()
+    {
+        return ucet;
+    }
+
     @Override
     public String getPassword() {
         return this.ucet.getHeslo();

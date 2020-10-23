@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name="t_Produkty")
@@ -78,6 +79,16 @@ public class Produkt implements Serializable {
 
     @OneToOne(mappedBy = "produkt", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Polozka polozka;
+    @OneToMany(mappedBy = "produkt", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<PolozkaKosik> KosikPolozky;
 
+    public float   getAktualniCena()
+    {
+        if (sleva!=0)
+        return Math.round(cena-((cena*sleva)/100f));
+        else
+            return
+            cena;
+    }
 }
 

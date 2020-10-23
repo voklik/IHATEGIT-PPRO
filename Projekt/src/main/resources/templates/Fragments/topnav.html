@@ -20,9 +20,35 @@
 
                 </ul>
 
+                <a text="SeznamHer" th:href="@{'/'}">Hlávní stránka</a>
+                <a text="SeznamHer" th:href="@{'/SeznamHer'}">Všechny produkty</a>
+                <a text="SeznamHer" th:href="@{'/Slevy'}">Slevy</a>
                 <a text="registrace" th:href="@{'Registrace'}">registrace</a>
-                <a text="Login" th:href="@{'Login'}">Login</a>
-                <a text="Sprava" th:href="@{'/admin/Sprava_Ucty'}">Sprava</a>
+                <div th:if="${#authentication.name == 'anonymousUser'}">
+                        <span>
+                           <a text="Login" th:href="@{'Login'}">Login</a>
+                        </span>
+                </div>
+
+
+                <div th:if="${#authentication.getPrincipal()!= 'anonymousUser'}">
+                        <span>
+                             <a text="SeznamHer" th:href="@{'/ucet/detail'}">Detail účtu</a>
+                                   <a text="Odhlasit" href="/logout">Odhlasit se</a>
+                                    <label th:text= "${#authentication.name}" >
+                                   <a text="Sprava" th:href="@{'/admin/Sprava_Ucty'}">Sprava</a>
+                        </span>
+                </div>
+                <BR>
+                <label>Hledejte produkty v naší nabídce: </label>
+                <form id="Hledani" th:action="@{/HledaniProduktu}" th:object="${produkt}"
+                      method="post" enctype="multipart/form-data">
+                    <input name="nalezeno" type="text" id="nalezeno">
+                    <input name="action" type="submit" value="Hledat všechny shody" />
+                </form>
+                <ul name="vysledky" type="text" id="vysledky">
+                </ul>
+                <p th:text="${hlaska} ?: ''"></p>
             </div>
         </div>
     </div>

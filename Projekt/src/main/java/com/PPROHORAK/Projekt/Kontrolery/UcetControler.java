@@ -4,45 +4,58 @@ import com.PPROHORAK.Projekt.DAO.AdresyDao;
 import com.PPROHORAK.Projekt.DAO.TypyUctuDao;
 import com.PPROHORAK.Projekt.DAO.UctyDao;
 import com.PPROHORAK.Projekt.Model.Adresa;
+import com.PPROHORAK.Projekt.Model.Produkt;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamUcet;
 import com.PPROHORAK.Projekt.Model.Ucet;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
-@Data
-public class UcetControler {
+public @Data
+ class UcetControler {
 
     private final UctyDao seznamUcty;
     private final TypyUctuDao seznamyTypyUcty;
     private final AdresyDao seznamyAdres;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UcetControler(UctyDao seznamUcty, TypyUctuDao seznamyTypyUcty, AdresyDao seznamyAdres) {
         this.seznamUcty = seznamUcty;
         this.seznamyTypyUcty = seznamyTypyUcty;
         this.seznamyAdres = seznamyAdres;
-    }
-
-
-    @RequestMapping(value = {"/admin/Sprava_Ucty","/admin/sprava_ucty","/admin/"})
-    public String showAll(Map<String, Object> model){
-        SeznamUcet ucty = new SeznamUcet();
-        ucty.getSeznamUctu().addAll(seznamUcty.findAll());
-
-        model.put("ListUcet", ucty.getSeznamUctu());
-
-
-            return "Spravy/Sprava_Ucty";
-
-
 
     }
+
+    //strankovani
+    @GetMapping(value = {"/admin/Sprava_Ucty","/admin/sprava_ucty","/admin/"})
+    public String ShowAllUcty(Pageable pageable,
+                           @RequestParam("page") Optional<Integer> page, Map<String, Object> model) {
+        final int currentPage = page.orElse(0);
+        final int size = 3;
+        Pageable customPageable = PageRequest.of(currentPage, size);
+        Page<Produkt> stranka = this.seznamUcty.findAllPagesUcty(customPageable);
+
+        model.put("UcetStranka", stranka);
+
+        return "Spravy/Sprava_Ucty";
+    }
+
 
 
 
@@ -57,8 +70,7 @@ public class UcetControler {
 
        )  {
 
-
-         if(akce.equals("Delete"))
+           if(akce.equals("Delete"))
          {
              System.out.println("Delete");
              seznamUcty.deleteById(ucetID);
@@ -70,7 +82,7 @@ public class UcetControler {
             ucet.setAdresa(new Adresa());
             ucet.setJmeno(jmeno);
             ucet.setPrijmeni(prijmeni);
-            ucet.setHeslo(heslo);
+            ucet.setHeslo(passwordEncoder.encode(heslo));
             ucet.setUcet_login(login);
             ucet.setTypUctu(seznamyTypyUcty.findById(3));
             ucet.getAdresa().setCps(cp);
@@ -89,7 +101,7 @@ public class UcetControler {
          Ucet ucet= seznamUcty.findById((ucetID));
          ucet.setJmeno(jmeno);
          ucet.setPrijmeni(prijmeni);
-         ucet.setHeslo(heslo);
+         ucet.setHeslo(passwordEncoder.encode(heslo));
          ucet.setUcet_login(login);
          ucet.getAdresa().setCps(cp);
          ucet.getAdresa().setUlice(ulice);
@@ -115,11 +127,12 @@ ucet.setHeslo("test");
     }
     @GetMapping(value = {"/Login","/login"})
     public String login(Map<String, Object> model, String error, String logout) {
-        if (error != null)
+        if (error != null) {
             model.put("hlaska", "Your username and password is invalid.");
-
-        if (logout != null)
+        }
+        if (logout != null) {
             model.put("hlaska", "You have been logged out successfully.");
+        }
 
         return "Ucet/Prihlaseni";
     }
@@ -167,8 +180,6 @@ ucet.setHeslo("test");
     @RequestMapping(value = {"/Registrace","/registrace"})
     public String Registrace( Map<String, Object> model) {
 
-
-
         return "Ucet/Registrace";
     }
     @PostMapping(value = { "/RegistraceAkce","/registraceakce"})
@@ -188,7 +199,7 @@ ucet.setHeslo("test");
         nova.setCps(cp);
         nova.setUlice(ulice);
 
-        novy.setHeslo(heslo);
+        novy.setHeslo(passwordEncoder.encode(heslo));
         novy.setPrijmeni(prijmeni);
         novy.setJmeno(jmeno);
         novy.setUcet_login(login);
@@ -215,7 +226,7 @@ ucet.setHeslo("test");
         else
         {
             model.put("hlaska","Úspěšně jste se zaregistrovali a nyní se můžete přihlásit");
-           // seznamUcty.save(novy);
+            seznamUcty.save(novy);
             return "Ucet/Prihlaseni";
         }
 
@@ -223,4 +234,71 @@ ucet.setHeslo("test");
 
     }
 
+    @RequestMapping(value = "/ucet/detail")
+    public String DetailUctu( Map<String, Object> model,@ModelAttribute("hlaska") String hlaska) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                Ucet ucet = seznamUcty.findByLogin(authentication.getName());
+
+        model.put("login",ucet.getUcet_login());
+        model.put("jmeno",ucet.getJmeno());
+        model.put("prijmeni",ucet.getPrijmeni());
+        model.put("email",ucet.getEmail());
+        model.put("ulice",ucet.getAdresa().getUlice());
+        model.put("cp",ucet.getAdresa().getCps());
+        model.put("mesto",ucet.getAdresa().getMesto());
+        model.put("psc",ucet.getAdresa().getPsc());
+        model.put("hlaska",hlaska);
+return"/Ucet/DetailUctu";
+
+    }
+    @PostMapping(value = "/ucet/detailUpdate")
+    public String DetailUctu( Map<String, Object> model
+            ,@RequestParam("jmeno") String jmeno,@RequestParam("prijmeni") String prijmeni,
+                              @RequestParam("login") String login,
+                              @RequestParam("email") String email,@RequestParam("ulice") String ulice,
+                              @RequestParam("mesto") String mesto,@RequestParam("cp") String cp,
+                              @RequestParam("psc") String psc , RedirectAttributes redirectAttributes ) {
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Ucet ucet = seznamUcty.findByLogin(authentication.getName());
+
+        ucet.setJmeno(jmeno);
+        ucet.setPrijmeni(prijmeni);
+        ucet.setEmail(email);
+        ucet.getAdresa().setUlice(ulice);
+        ucet.getAdresa().setCps(cp);
+        ucet.getAdresa().setMesto(mesto);
+        ucet.getAdresa().setPsc(psc);
+        seznamUcty.save(ucet);
+        redirectAttributes.addAttribute("hlaska","Údaje byly změněny");
+      return "redirect:/ucet/detail";
+
+    }
+
+    @PostMapping(value = "/ucet/hesloUpdate")
+    public String HesloUpdate(Map<String, Object> model
+            , @RequestParam("heslo") String heslo, @RequestParam("nheslo")String nheslo
+    , RedirectAttributes redirectAttributes) {
+
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Ucet ucet = seznamUcty.findByLogin(authentication.getName());
+        if (ucet.getHeslo().equals(passwordEncoder.encode(heslo)))
+        {
+            ucet.setHeslo(passwordEncoder.encode(nheslo));
+            seznamUcty.save(ucet);
+            redirectAttributes.addAttribute("hlaska","Heslo bylo změněno");
+        }
+        else
+        {
+            redirectAttributes.addAttribute("hlaska","Staré heslo nesouhlasí");
+        }
+
+        return "redirect:/ucet/detail";
+
+    }
 }
