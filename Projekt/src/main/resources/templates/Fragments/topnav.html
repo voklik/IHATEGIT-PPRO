@@ -48,6 +48,12 @@
                 </form>
                 <ul name="vysledky" type="text" id="vysledky">
                 </ul>
+                <a text="SeznamHer" th:href="@{'/kosikcookies'}">sušenka</a>
+                <a text="SeznamHer" th:href="@{'/kos'}" >košík</a>
+                <p th:text="${pocetpolozekvkosiku} ?: 'Nemáte nic v košíku'"></p>
+                <p th:text="${pocetpolozek} ?: ''"></p>
+                <span th:text="${hodnote}" ></span><BR>
+                <p th:text="${typuctu} ?: ''"></p>
                 <p th:text="${hlaska} ?: ''"></p>
             </div>
         </div>

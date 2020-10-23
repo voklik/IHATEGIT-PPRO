@@ -8,7 +8,7 @@
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'Susenka')">   </head>
 
 
 <!-- Top Menu -->
@@ -31,11 +31,41 @@
                         <div th:if="${kos==''}" >
                             <label>Nebyly nalezeny žádné produkty</label>
                         </div>
+                        <span th:text="${kos}" ></span>
 
                      Pocet polozek v kosiku   <span th:text="${pocetpolozekvkosiku}" ></span><br>
                      PocetPolozek v poli   <span th:text="${pocetpolozek}" ></span><BR>
-                        <span th:text="${kos}" ></span>
+                        <span th:text="${hodnote}" ></span><BR>
 
+                        <div th:if="${#authentication.getPrincipal()== 'anonymousUser'}">
+                        <span>
+
+                          <label th:text= "Anonym" >
+                         </span>
+                        </div>
+                        <div th:if="${#authentication.getPrincipal()!= 'anonymousUser'}">
+                            <div th:if="${#typUctu== 'Admin'}">
+                        <span>
+
+                                    <label text= "admin" >
+
+                        </span>
+                            </div>
+                            <div th:if="${#typUctu== 'Pracovnik'}">
+                        <span>
+
+                                    <label text= "Pracovnik" >
+
+                        </span>
+                            </div>
+                            <div th:if="${#typUctu== 'Zakaznik'}">
+                        <span>
+
+                                    <label text= "Zakaznik" >
+
+                        </span>
+                            </div>
+                        </div>
 
                     </div>
                 </div>

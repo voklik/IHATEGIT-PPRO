@@ -27,48 +27,27 @@ public class KosControler {
     private final PolozkyKosikDao seznamPolozekKosik;
     private final ProduktyDao seznamProduktu;
 
-    @RequestMapping("/kosik")
+    @RequestMapping(value = {"/kos"})
     public String show(@CookieValue(value = "kosik", defaultValue = "") String kos,
                        HttpServletResponse response, Map<String, Object> model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+        new UtilControler().GetPocetPolozekVkosiku(model,seznamProduktu,seznamUcty,kos);
         SeznamPolozekKosik pole=new SeznamPolozekKosik();
         if(authentication.getName().equals("anonymousUser"))
         {
-        String[] stary=kos.split("-");
-        for (String s:stary)
-        {
-           if (!s.equals(""))
-           {
-               boolean nalezeno=false;
-               for (PolozkaKosik pol:pole.getSeznamPolozekKosik()) {
-                   if (pol.getProdukt().getProdukt_ID().toString().equals(s))
-                   {pol.setPocet(pol.getPocet()+1);
-                       nalezeno=true;
-                       break;
-                   }
-
-               }
-               if(nalezeno==false)
-               {
-                   Produkt produkt= seznamProduktu.findById(Integer.parseInt(s));
-                   PolozkaKosik p =new PolozkaKosik();
-                   p.setProdukt(produkt);
-                   p.setPocet(1);
-                   pole.getSeznamPolozekKosik().add(p);
-               }
+        pole=new UtilControler().getPole(seznamProduktu,kos);
 
 
-
-           }
-
-
-        }
+        /*
         String novy="";
         for (String s:stary)
         {
             novy+="-"+s;
-        }}
+        }
+            Cookie kosik = new Cookie("kos", novy); //bake cookie
+            kosik.setMaxAge(60*60*24*3); //set expire time in sec
+            response.addCookie(kosik);*/
+        }
         else
         {
             pole.getSeznamPolozekKosik().addAll(seznamUcty.findByLogin(authentication.getName()).getKosikPolozky());
@@ -76,12 +55,10 @@ public class KosControler {
 
 
 model.put("SeznamPolozek",pole.getSeznamPolozekKosik());
-     //   Cookie kosik = new Cookie("kos", ""); //bake cookie
-    //    kosik.setMaxAge(60*60*24*3); //set expire time in sec
-     //   response.addCookie(kosik);
+
         return "/Prodej/Kos";
     }
-    @PostMapping("/kosik/add")
+    @PostMapping("/kosikadd")
     public String add(@RequestParam("id") Integer id,@RequestParam("pocet") Integer pocet,
                       @CookieValue(value = "kosik", defaultValue = "") String kos,
                       HttpServletResponse response) {
@@ -89,52 +66,46 @@ model.put("SeznamPolozek",pole.getSeznamPolozekKosik());
         SeznamPolozekKosik pole =new SeznamPolozekKosik();
         if(authentication.getName().equals("anonymousUser"))
         {
-            String[] stary=kos.split("-");
-            for (String s:stary)
+          pole= new UtilControler().getPole(seznamProduktu,kos);
+
+
+
+            if (pole.getSeznamPolozekKosik().size()==0)
             {
-                if (!s.equals(""))
-                {
-                    boolean nalezeno=false;
-                    for (PolozkaKosik pol:pole.getSeznamPolozekKosik()) {
-                        if (pol.getProdukt().getProdukt_ID().toString().equals(s))
-                        {pol.setPocet(pol.getPocet()+1);
-                            nalezeno=true;
-                            break;
-                        }
+                Produkt produkt = seznamProduktu.findById(id);
+                PolozkaKosik p = new PolozkaKosik();
+                p.setProdukt(produkt);
+                p.setPocet(pocet);
+                pole.getSeznamPolozekKosik().add(p);
+            }
+            else {
+                boolean nalezeno=false;
+            for (PolozkaKosik p :pole.getSeznamPolozekKosik()) {
+            if (p.getProdukt().getProdukt_ID()==id) {
 
-                    }
-                    if(nalezeno==false)
-                    {
-                        Produkt produkt= seznamProduktu.findById(Integer.parseInt(s));
-                        PolozkaKosik p =new PolozkaKosik();
-                        p.setProdukt(produkt);
-                        p.setPocet(1);
-                        pole.getSeznamPolozekKosik().add(p);
-                    }
-
-
-
-                }
-
+                nalezeno=true;
+                p.setPocet(pocet);
+break;
 
             }
 
-            String novy="";
-            for (PolozkaKosik p :pole.getSeznamPolozekKosik())
-            {
-                if(p.getProdukt().getProdukt_ID()==id)
-                {
-                    p.setPocet(pocet);
-                }
-                for (int x=1;x<=p.getPocet();x++) {
+            }
+            if(nalezeno==false) {
+                Produkt produkt = seznamProduktu.findById(id);
+                PolozkaKosik p = new PolozkaKosik();
+                p.setProdukt(produkt);
+                p.setPocet(pocet);
+                pole.getSeznamPolozekKosik().add(p);
+            }
 
-                novy+="-"+p.getProdukt().getProdukt_ID().toString();
-            }}
+            }
 
 
-            Cookie kosik = new Cookie("kosik", novy); //bake cookie
-            kosik.setMaxAge(60 * 60 * 24 * 3); //set expire time in sec
-            response.addCookie(kosik);
+            new UtilControler().zapisSusenkyKosik(response,pole);
+
+
+
+
         }
         else
         {
@@ -164,22 +135,27 @@ model.put("SeznamPolozek",pole.getSeznamPolozekKosik());
             }
 
         }
-        return "redirect:/kosik";
+        return "redirect:/kos";
     }
 
 
 
-    @GetMapping("/kosik/cookies")
+    @GetMapping("/kosikcookies")
     public String add(
     @CookieValue(value = "kosik", defaultValue = "") String kos,
                       HttpServletResponse response, Map<String, Object> model) {
-        new UtilControler().GetPocetPolozekVkosiku(model,seznamProduktu,kos);
+
+        new UtilControler().GetPocetPolozekVkosiku(model,seznamProduktu,seznamUcty,kos);
 model.put("kos",kos);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        model.put("hlaska",authentication.getAuthorities());
+
         return "cook";
     }
 
 
-    @PostMapping("/kosik/removeat")
+    @PostMapping("/kosikremoveat")
     public String removeOne(@RequestParam("id") Integer id,
                             @CookieValue(value = "kosik", defaultValue = "") String kos,
                             HttpServletResponse response) {
@@ -187,62 +163,40 @@ model.put("kos",kos);
         SeznamPolozekKosik pole =new SeznamPolozekKosik();
         if(authentication.getName().equals("anonymousUser"))
         {
-            String[] stary=kos.split("-");
-            for (String s:stary)
-            {
-                if (!s.equals(""))
-                {
-                    boolean nalezeno=false;
-                    for (PolozkaKosik pol:pole.getSeznamPolozekKosik()) {
-                        if (pol.getProdukt().getProdukt_ID().toString().equals(s))
-                        {pol.setPocet(pol.getPocet()+1);
-                            nalezeno=true;
-                            break;
-                        }
+            pole= new UtilControler().getPole(seznamProduktu,kos);
 
+
+
+
+                for (PolozkaKosik p :pole.getSeznamPolozekKosik()) {
+                    if (p.getProdukt().getProdukt_ID()==id) {
+
+                  pole.getSeznamPolozekKosik().remove(p);
+                break;
                     }
-                    if(nalezeno==false)
-                    {
-                        Produkt produkt= seznamProduktu.findById(Integer.parseInt(s));
-                        PolozkaKosik p =new PolozkaKosik();
-                        p.setProdukt(produkt);
-                        p.setPocet(1);
-                        pole.getSeznamPolozekKosik().add(p);
-                    }
-
-
 
                 }
 
 
-            }
 
-            String novy="";
-            for (PolozkaKosik p :pole.getSeznamPolozekKosik())
-            {
-                if(p.getProdukt().getProdukt_ID()!=id)
-            for (int x=1;x<=p.getPocet();x++) {
-                    novy+="-"+p.getProdukt().getProdukt_ID().toString();
-                }}
-
-
-            Cookie kosik = new Cookie("kosik", novy); //bake cookie
-            kosik.setMaxAge(60 * 60 * 24 * 3); //set expire time in sec
-            response.addCookie(kosik);
+            new UtilControler().zapisSusenkyKosik(response,pole);
         }
         else
         {
             seznamPolozekKosik.deleteByUserOne(id);
         }
-        return "redirect:/kosik";
+        return "redirect:/kos";
     }
 
-    @PostMapping("/kosik/removeall")
+    @PostMapping("/kosikremoveall")
     public String removeAll(HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication.getName().equals("anonymousUser")) {
+
             Cookie kosik = new Cookie("kosik", ""); //bake cookie
             kosik.setMaxAge(60 * 60 * 24 * 3); //set expire time in sec
+         //  kosik.setPath("/");
+
             response.addCookie(kosik);
         }
         else
@@ -250,6 +204,6 @@ model.put("kos",kos);
         seznamPolozekKosik.deleteByUserAll(seznamUcty.findByLogin(authentication.getName()).getUcet_ID());
         }
 
-        return "redirect:/kosik";
+        return "redirect:/kos";
     }
 }

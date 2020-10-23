@@ -8,7 +8,7 @@
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'Seznam Her')">   </head>
 
 
 <!-- Top Menu -->
@@ -75,6 +75,12 @@
                                        <span th:if="${typ =='ALL'}">
                                     <a th:text="${iterator+1}"
                                        th:href="@{/SeznamHer(page=${iterator})}"
+                                       th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
+                                       </a>
+                                       </span>
+                                         <span th:if="${typ =='HLEDANY'}">
+                                    <a th:text="${iterator+1}"
+                                       th:href="@{/HledaniProduktu(page=${iterator},nalezeno=${nalezeno})}"
                                        th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
                                        </a>
                                        </span>

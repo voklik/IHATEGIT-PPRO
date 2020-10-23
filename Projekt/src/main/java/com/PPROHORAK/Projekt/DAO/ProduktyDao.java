@@ -62,7 +62,9 @@ public interface ProduktyDao  extends Repository<Produkt, Integer> {
     @Query("SELECT DISTINCT produkt FROM Produkt  produkt WHERE produkt.sleva >0")
     @Transactional(readOnly = true)
     Page findAllPagesVeSleve(Pageable pageable);
-
+    @Query("SELECT DISTINCT produkt  FROM Produkt produkt WHERE lower( produkt.nazev) LIKE:hledany")
+    @Transactional(readOnly = true)
+    Page finHledanyPage(Pageable pageable,@Param("hledany") String hledany);
     void save(Produkt produkt);
 
     @Query("DELETE FROM Produkt produkt WHERE produkt.produkt_ID =:id")

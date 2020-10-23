@@ -2,6 +2,7 @@ package com.PPROHORAK.Projekt.Kontrolery;
 
 import com.PPROHORAK.Projekt.DAO.PlatformyDao;
 import com.PPROHORAK.Projekt.DAO.ProduktyDao;
+import com.PPROHORAK.Projekt.DAO.UctyDao;
 import com.PPROHORAK.Projekt.Model.Produkt;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamProduktu;
 import lombok.Data;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -23,14 +25,14 @@ import java.util.Optional;
 @Controller
 @Data
 public class ProduktControler {
-
+    private final UctyDao seznamUcty;
     private final PlatformyDao seznamPlatformy;
     private final ProduktyDao seznamProduktu;
 
 
     @RequestMapping(value = {"/","/Index","/Home","/home","/index"})
-    public String Home(Map<String, Object> model){
-
+    public String Home(@CookieValue(value = "kosik", defaultValue = "") String kos,Map<String, Object> model){
+        new UtilControler().GetPocetPolozekVkosiku(model,seznamProduktu,seznamUcty,kos);
         new UtilControler().GetPlatformList(model,seznamPlatformy);
 
         return "Index";
@@ -57,10 +59,11 @@ public class ProduktControler {
 
 
     @RequestMapping(value = {"/DetailProduktu","/detailprodukt"})
-    public String DetailHry(
+    public String DetailHry(@CookieValue(value = "kosik", defaultValue = "") String kos,
             @RequestParam(value="produktID") Integer ProduktID,
             Map<String, Object> model )
     {
+        new UtilControler().GetPocetPolozekVkosiku(model,seznamProduktu,seznamUcty,kos);
         SeznamProduktu produkty = new SeznamProduktu();
         produkty.getSeznamProduktu().add(seznamProduktu.findById(ProduktID));
         model.put("ListProdukty", produkty.getSeznamProduktu());
@@ -71,19 +74,27 @@ public class ProduktControler {
        }
 
     @RequestMapping(value = {"/HledaniProduktu","/hledaniproduktu"})
-    public String Hledani(
+    public String Hledani(Pageable pageable,
+                          @RequestParam("page") Optional<Integer> page,@CookieValue(value = "kosik", defaultValue = "") String kos,
             @RequestParam(value="nalezeno",required = false) String nazev,
             Map<String, Object> model ) {
-
+        new UtilControler().GetPocetPolozekVkosiku(model,seznamProduktu,seznamUcty,kos);
+        model.put("nalezeno",nazev);
         if (nazev!=null) {
+            model.put("nalezeno",nazev);
             nazev ='%'+nazev +'%';
+
+
             SeznamProduktu produkty = new SeznamProduktu();
             produkty.getSeznamProduktu().addAll(seznamProduktu.findByNazevSeznam(nazev));
 
-            model.put("ListProdukty", produkty.getSeznamProduktu());
-
-            new UtilControler().GetPlatformList(model, seznamPlatformy);
-
+            final int currentPage = page.orElse(0);
+            final int size = 3;
+            Pageable customPageable = PageRequest.of(currentPage, size);
+            Page<Produkt> stranka = this.seznamProduktu.finHledanyPage(customPageable,nazev);
+            model.put("ProduktStranka", stranka);
+            model.put("typ","HLEDANY");
+          //  model.put("nalezeno",nazev);
             return "Prodej/SeznamHer";
         }
         else
@@ -99,14 +110,12 @@ public class ProduktControler {
     }
 //strankovani
 @RequestMapping(value = {"/Slevy","slevy"})
-    public String ShowAllVeSleve( Pageable pageable,
-                           @RequestParam("page") Optional<Integer> page,  Map<String, Object> model) {
+    public String ShowAllVeSleve(@CookieValue(value = "kosik", defaultValue = "") String kos,
+                                 HttpServletResponse response, Pageable pageable,
+        @RequestParam("page") Optional<Integer> page, Map<String, Object> model)
+{
 
-
-
-
-
-
+    new UtilControler().GetPocetPolozekVkosiku(model,seznamProduktu,seznamUcty,kos);
     final int currentPage = page.orElse(0);
         final int size = 3;
         Pageable customPageable = PageRequest.of(currentPage, size);
@@ -120,11 +129,12 @@ public class ProduktControler {
 
 
     @RequestMapping(value = {"/SeznamHer","/seznamher"})
-    public String ShowAllByPlatforma(Pageable pageable,
+    public String ShowAllByPlatforma(@CookieValue(value = "kosik", defaultValue = "") String kos,Pageable pageable,
                                      @RequestParam("page") Optional<Integer> page,
                      @RequestParam(value="id",required = false) Integer platformaID,
 Map<String, Object> model )
     {
+        new UtilControler().GetPocetPolozekVkosiku(model,seznamProduktu,seznamUcty,kos);
         new UtilControler().GetPlatformList(model, seznamPlatformy);
         if(platformaID==null)
         {

@@ -28,10 +28,7 @@ public class UserPrincipal implements UserDetails {
         return authorities;
     }
 
-    public Ucet getUcet()
-    {
-        return ucet;
-    }
+
 
     @Override
     public String getPassword() {
@@ -62,4 +59,6 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
