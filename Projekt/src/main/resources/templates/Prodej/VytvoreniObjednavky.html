@@ -1,0 +1,108 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
+<head th:replace="fragments/importHead :: importTop(title = 'Potvrzeni Košiku')">   </head>
+
+
+<!-- Top Menu -->
+<div th:replace="~{fragments/topnav :: navbar}"></div>
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+
+                <div id="table-wrapper">
+                    <div id="table-scroll">
+                        <div th:if="${SeznamPolozek.isEmpty()}" >
+                            <label>Nebyly nalezeny žádné produkty</label>
+                        </div>
+                        <div th:if="${!SeznamPolozek.isEmpty()}" >
+                            <table >
+
+                                <thead>
+                                <tr>
+
+                                    <td>Název</td>
+                                    <td>Cena</td>
+                                    <td>sleva</td>
+                                    <td>Platforma</td>
+                                    <td>počet kopii této hry</td>
+                                    <td>Akce</td>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                                <div th:if="${!SeznamPolozek.isEmpty()}"
+                                     th:each="polozka : ${SeznamPolozek} ">
+                                    <!-- Blog Item Header -->
+
+
+                                    <tr>
+
+                                        <td> <a th:text="${polozka.getProdukt().getNazev()}" th:href="@{'/DetailProduktu'('produktID'=${polozka.getProdukt().getProdukt_ID()})}" ></span></td>
+                                        <td> <span th:text="${polozka.produkt.getCena()}" ></span></td>
+                                        <td> <span th:text="${polozka.produkt.getSleva()}" ></span></td>
+                                        <td> <span th:text="${polozka.getProdukt().getPlatforma().getNazev()}"></span></td>
+                                        <td> <span th:text="${polozka.getPocet()}"></span></td>
+
+                                </div>
+
+                        </div>
+
+
+                        </td>
+
+                        </tr>    </div>
+                    </tbody>
+                    </table></div>
+                <form id="LoginFormular" th:action="@{/dokonceniobjednavky}"
+                      method="post" enctype="multipart/form-data">
+
+                    jmeno:  <input th:value="${jmeno} ?: ''"  type="text"   required minlength="3" maxlength="50" name="jmeno"> <br>
+                    prijmeni:  <input th:value="${prijmeni} ?: ''"  type="text"   required minlength="3" maxlength="50" name="prijmeni"> <br>
+                    email:  <input th:value="${email} ?: ''"  type="email"   required minlength="3" maxlength="50" name="email"> <br>
+                    ulice:  <input th:value="${ulice} ?: ''"  type="text"   required minlength="3" maxlength="50" name="ulice"> <br>
+                    číslo popisné:  <input th:value="${cp} ?: ''"  type="text"   required minlength="3" maxlength="50" name="cp"> <br>
+                    město:  <input th:value="${mesto} ?: ''"  type="text"   required minlength="53" maxlength="50" name="mesto"> <br>
+                    poštovní směrovací číslo:  <input th:value="${psc} ?: ''"  type="text"   required minlength="3" maxlength="30"  name="psc"> <br>
+                    <label th:text="${hodnote}"> </label><label text="+ doprava a balné 100Kč"></label><BR>
+                    <label text="Doručujeme jenom přes českou poštu"></label><BR>
+
+                    <input name="action" type="submit" value="Objednat" />
+                </form>
+                <BR><BR>
+
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

@@ -51,6 +51,21 @@ public class Objednavka implements Serializable {
     private Ucet ucet;
 
 
+    public void setAdresa(Adresa adresa) {
+        this.adresa = adresa;
+    }
+
+    public void setPolozky(List<Polozka> polozky) {
+        this.polozky = polozky;
+    }
+
+    public void setStav(Stav stav) {
+        this.stav = stav;
+    }
+
+    public void setUcet(Ucet ucet) {
+        this.ucet = ucet;
+    }
 
     public void setCena(Integer cena) {
         this.cena = cena;

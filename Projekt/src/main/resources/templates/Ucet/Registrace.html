@@ -37,15 +37,15 @@
                 <form id="LoginFormular" th:action="@{/RegistraceAkce}"
                       method="post" enctype="multipart/form-data">
 
-                    login:   <input th:value="${login} ?: ''" type="text"   required minlength="5" maxlength="30"  name="login"> <br>
+                    login:   <input th:value="${login} ?: ''" type="text"   required minlength="3" maxlength="30"  name="login"> <br>
                     heslo:  <input th:value="${heslo} ?: ''" type="password"   required minlength="5" maxlength="30" name="heslo"> <br>
-                    jmeno:  <input th:value="${jmeno} ?: ''"  type="text"   required minlength="5" maxlength="50" name="jmeno"> <br>
-                    prijmeni:  <input th:value="${prijmeni} ?: ''"  type="text"   required minlength="5" maxlength="50" name="prijmeni"> <br>
-                    email:  <input th:value="${email} ?: ''"  type="email"   required minlength="5" maxlength="50" name="email"> <br>
-                    ulice:  <input th:value="${ulice} ?: ''"  type="text"   required minlength="5" maxlength="50" name="ulice"> <br>
-                    číslo popisné:  <input th:value="${cp} ?: ''"  type="text"   required minlength="5" maxlength="50" name="cp"> <br>
-                    město:  <input th:value="${mesto} ?: ''"  type="text"   required minlength="5" maxlength="50" name="mesto"> <br>
-                    poštovní směrovací číslo:  <input th:value="${psc} ?: ''"  type="text"   required minlength="5" maxlength="30"  name="psc"> <br>
+                    jmeno:  <input th:value="${jmeno} ?: ''"  type="text"   required minlength="3" maxlength="50" name="jmeno"> <br>
+                    prijmeni:  <input th:value="${prijmeni} ?: ''"  type="text"   required minlength="3" maxlength="50" name="prijmeni"> <br>
+                    email:  <input th:value="${email} ?: ''"  type="email"   required minlength="3" maxlength="50" name="email"> <br>
+                    ulice:  <input th:value="${ulice} ?: ''"  type="text"   required minlength="3" maxlength="50" name="ulice"> <br>
+                    číslo popisné:  <input th:value="${cp} ?: ''"  type="text"   required minlength="3" maxlength="50" name="cp"> <br>
+                    město:  <input th:value="${mesto} ?: ''"  type="text"   required minlength="3" maxlength="50" name="mesto"> <br>
+                    poštovní směrovací číslo:  <input th:value="${psc} ?: ''"  type="text"   required minlength="3" maxlength="30"  name="psc"> <br>
                     <input name="action" type="submit" value="přihlásit se" />
                 </form>
 

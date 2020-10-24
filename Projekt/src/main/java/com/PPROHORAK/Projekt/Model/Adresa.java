@@ -51,6 +51,9 @@ public class Adresa implements Serializable {
     @OneToOne(cascade = CascadeType.PERSIST)
     private Objednavka objednavka;
 
+    public void setObjednavka(Objednavka objednavka) {
+        this.objednavka = objednavka;
+    }
 
     public Integer  getAdresa_ID() {
         return adresa_ID;
