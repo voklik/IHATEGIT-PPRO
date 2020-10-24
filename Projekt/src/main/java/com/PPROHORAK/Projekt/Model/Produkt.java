@@ -77,8 +77,8 @@ public class Produkt implements Serializable {
     @ManyToOne(cascade = CascadeType.PERSIST)
    private Platforma platforma;
 
-    @OneToOne(mappedBy = "produkt", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private Polozka polozka;
+    @OneToMany(mappedBy = "produkt", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<Polozka> polozka;
     @OneToMany(mappedBy = "produkt", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<PolozkaKosik> KosikPolozky;
 

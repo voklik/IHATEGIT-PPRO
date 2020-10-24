@@ -35,12 +35,8 @@ public interface ObjednavkyDao extends Repository<Objednavka, Integer>
         @Modifying
         void deleteById(@Param("id") Integer id);
 
-        ////////////////////////////////////////////////////////////
-        @Query("SELECT DISTINCT produkt FROM Produkt produkt")
-        @Transactional(readOnly = true)
-        Page findAllPagesProdukty(Pageable pageable);
-
-        @Query("SELECT DISTINCT produkt FROM Produkt  produkt WHERE produkt.sleva >0")
-        @Transactional(readOnly = true)
-        Page findAllPagesVeSleve(Pageable pageable);
+        @Query("select distinct objednavka FROM Objednavka objednavka WHERE objednavka.ucet.ucet_ID=:id")
+        @Transactional
+        @Modifying
+        Collection<Objednavka> findByUcet(@Param("id") Integer id);
 }

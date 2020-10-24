@@ -75,7 +75,7 @@ public class Polozka implements Serializable {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Objednavka objednavka;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Produkt produkt;
 
 

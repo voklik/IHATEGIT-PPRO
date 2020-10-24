@@ -20,10 +20,10 @@ import java.util.*;
 @Data
 public class KosControler {
     private final UctyDao seznamUcty;
-    private final StavyDao seznamStavu;
     private final PlatformyDao seznamPlatformy;
     private final PolozkyKosikDao seznamPolozekKosik;
     private final ProduktyDao seznamProduktu;
+    private final StavyDao seznamStavu;
     private final ObjednavkyDao seznamObjednavek;
     private final PolozkyDao    seznamPolozek;
     @RequestMapping(value = {"/kos"})

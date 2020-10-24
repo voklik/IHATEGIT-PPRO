@@ -1,10 +1,10 @@
 package com.PPROHORAK.Projekt.Kontrolery;
 
-import com.PPROHORAK.Projekt.DAO.AdresyDao;
-import com.PPROHORAK.Projekt.DAO.TypyUctuDao;
-import com.PPROHORAK.Projekt.DAO.UctyDao;
+import com.PPROHORAK.Projekt.DAO.*;
 import com.PPROHORAK.Projekt.Model.Adresa;
+import com.PPROHORAK.Projekt.Model.Objednavka;
 import com.PPROHORAK.Projekt.Model.Produkt;
+import com.PPROHORAK.Projekt.Model.Seznamy.SeznamObjednavek;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamUcet;
 import com.PPROHORAK.Projekt.Model.Ucet;
 import lombok.Data;
@@ -32,15 +32,13 @@ public @Data
     private final UctyDao seznamUcty;
     private final TypyUctuDao seznamyTypyUcty;
     private final AdresyDao seznamyAdres;
+    private final StavyDao seznamStavu;
+    private final ObjednavkyDao seznamObjednavek;
+    private final PolozkyDao    seznamPolozek;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public UcetControler(UctyDao seznamUcty, TypyUctuDao seznamyTypyUcty, AdresyDao seznamyAdres) {
-        this.seznamUcty = seznamUcty;
-        this.seznamyTypyUcty = seznamyTypyUcty;
-        this.seznamyAdres = seznamyAdres;
 
-    }
 
     //strankovani
     @GetMapping(value = {"/admin/Sprava_Ucty","/admin/sprava_ucty","/admin/"})
@@ -252,6 +250,31 @@ ucet.setHeslo("test");
 return"/Ucet/DetailUctu";
 
     }
+
+    @RequestMapping(value = "/historie")
+    public String HistorieUctu( Map<String, Object> model,@ModelAttribute("hlaska") String hlaska) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Ucet ucet = seznamUcty.findByLogin(authentication.getName());
+
+        SeznamObjednavek seznam =new SeznamObjednavek();
+        seznam.getSeznamObjednavek().addAll( seznamObjednavek.findByUcet(ucet.getUcet_ID()));
+        model.put("seznam",seznam.getSeznamObjednavek());
+        return"/Ucet/HistorieUctu";
+
+    }
+    @PostMapping(value = "/detailobjednavky")
+    public String detailObjednavky(@RequestParam("id") Integer id, Map<String, Object> model,@ModelAttribute("hlaska") String hlaska) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Ucet ucet = seznamUcty.findByLogin(authentication.getName());
+
+       Objednavka objednavka= seznamObjednavek.findById(id);
+        model.put("objednavka",objednavka);
+        return"/Ucet/DetailObjednavky";
+
+    }
+
     @PostMapping(value = "/ucet/detailUpdate")
     public String DetailUctu( Map<String, Object> model
             ,@RequestParam("jmeno") String jmeno,@RequestParam("prijmeni") String prijmeni,

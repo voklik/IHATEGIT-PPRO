@@ -1,0 +1,103 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
+<head th:replace="fragments/importHead :: importTop(title = 'Historie Objednavek')">   </head>
+
+
+<!-- Top Menu -->
+<div th:replace="~{fragments/topnav :: navbar}"></div>
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+
+                <div id="table-wrapper">
+                    <div id="table-scroll">
+                        <div th:if="${seznam.isEmpty()}" >
+                            <label>Nebyly nalezeny žádné produkty</label>
+                        </div>
+                        <div th:if="${!seznam.isEmpty()}" >
+                            <table >
+
+                                <thead>
+                                <tr>
+
+                                    <td>ID objednávky</td>
+                                    <td>Cena</td>
+                                    <td>datum</td>
+                                    <td>stav</td>
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                                <div th:if="${!seznam.isEmpty()}"
+                                     th:each="polozka : ${seznam} ">
+                                    <!-- Blog Item Header -->
+
+
+                                    <tr>
+
+                                        <td> <span th:text="${polozka.getObjednavka_ID()}" ></span></td>
+                                        <td> <span th:text="${polozka.getCena()}" ></span></td>
+                                        <td> <span th:text="${polozka.getDatumObjednani()}" ></span></td>
+                                        <td> <span th:text="${polozka.getStav().getNazev()}"></span></td>
+                                        <td>
+                                            <form id="detailform" th:action="@{/detailobjednavky}"
+                                                  method="post" enctype="multipart/form-data">
+                                                <input readonly hidden name="id"  th:value="${polozka.getObjednavka_ID()}"  />
+                                                <input  name="action" type="submit" value="Detail objednavky" />
+                                            </form>
+                                        </td>
+                                </div>
+
+                        </div>
+
+
+                        </td>
+
+                        </tr>    </div>
+                    </tbody>
+                    </table>
+
+
+
+
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

@@ -123,7 +123,7 @@ public void zapisSusenkyKosik(HttpServletResponse response, SeznamPolozekKosik p
             int celkemPolozek=0;
             int cena =0;
             for (Polozka p:pole
-                 ) {cena+=p.getProdukt().getAktualniCena()*p.getPocet();
+                 ) {cena+=(p.getProdukt().getAktualniCena()*p.getPocet());
                 celkemPolozek+=p.getPocet();
             }
             model.put("pocetpolozekvkosiku"," Máte typu produktu v košíku "+pole.size());

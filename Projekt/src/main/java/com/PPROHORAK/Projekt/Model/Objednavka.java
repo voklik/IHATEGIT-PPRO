@@ -44,7 +44,7 @@ public class Objednavka implements Serializable {
 
     @OneToMany(mappedBy = "objednavka", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   private List<Polozka> polozky;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Stav stav;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
