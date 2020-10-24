@@ -14,24 +14,14 @@ import java.util.List;
 public class Stav implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "stav_id", updatable = false, nullable = false)
     private  Integer stav_ID;
 
     @NotBlank(message = "Hodnota musí být vyplněna")
     @Size(max=250)
     private  String nazev;
-
-    private boolean aktivni=false;
-
-    public boolean isAktivni() {
-        return aktivni;
-    }
-
-    public void setAktivni(boolean aktivni) {
-        this.aktivni = aktivni;
-    }
-    public Integer getStav_ID() {
+ public Integer getStav_ID() {
         return stav_ID;
     }
 

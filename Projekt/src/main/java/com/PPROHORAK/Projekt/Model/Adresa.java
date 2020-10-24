@@ -35,15 +35,8 @@ public class Adresa implements Serializable {
 
     public void setUcet(Ucet ucet) {
         this.ucet = ucet;
-    }  private boolean aktivni=false;
-
-    public boolean isAktivni() {
-        return aktivni;
     }
 
-    public void setAktivni(boolean aktivni) {
-        this.aktivni = aktivni;
-    }
 
     @OneToOne(cascade = CascadeType.PERSIST)
     private Ucet ucet;

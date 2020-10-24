@@ -290,6 +290,7 @@ else
             @RequestParam("cena") Integer cena,
             @RequestParam("sleva") Integer sleva,
             @RequestParam("platforma") Integer platformaID,
+            @RequestParam("aktivni")String aktivni,
             Map<String, Object> model
     )
     {
@@ -302,6 +303,13 @@ else
             produkt.setCena(cena);
             produkt.setSleva(sleva);
             produkt.setNazev(nazev);
+            if(aktivni.equals("true")){
+            produkt.setAktivni(true);
+            }
+            else
+            {
+                produkt.setAktivni(false);
+            }
             produkt.setPlatforma(seznamPlatformy.findById(platformaID));
             seznamProduktu.save(produkt);
 model.put("hlaska","Produkt byl upraven");

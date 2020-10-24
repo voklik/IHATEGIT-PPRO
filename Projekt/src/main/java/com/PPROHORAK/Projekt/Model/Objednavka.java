@@ -32,15 +32,6 @@ public class Objednavka implements Serializable {
 
     @OneToOne(mappedBy = "objednavka", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   private Adresa adresa;
-    private boolean aktivni=false;
-
-    public boolean isAktivni() {
-        return aktivni;
-    }
-
-    public void setAktivni(boolean aktivni) {
-        this.aktivni = aktivni;
-    }
 
     @OneToMany(mappedBy = "objednavka", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   private List<Polozka> polozky;

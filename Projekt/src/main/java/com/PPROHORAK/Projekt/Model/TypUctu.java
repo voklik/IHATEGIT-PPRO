@@ -23,15 +23,6 @@ public class TypUctu implements Serializable {
     @OneToMany(mappedBy = "typUctu", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Ucet> ucty;
 
-    private boolean aktivni=false;
-
-    public boolean isAktivni() {
-        return aktivni;
-    }
-
-    public void setAktivni(boolean aktivni) {
-        this.aktivni = aktivni;
-    }
 
     public Integer getTypUctu_ID() {
         return typUctu_ID;

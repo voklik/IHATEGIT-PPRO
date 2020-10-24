@@ -44,15 +44,11 @@ public class StavControler {
     {
 
 
-        if(akce.equals("Delete"))
-        {
-            System.out.println("Delete");
-            seznamStavu.deleteById(stavID);
-        }
-        else if(akce.equals("Create"))
+         if(akce.equals("Create"))
         {
             Stav nova = new Stav();
             nova.setNazev(nazev);
+
             seznamStavu.save(nova);
         }
         else  if (akce.equals("Update"))

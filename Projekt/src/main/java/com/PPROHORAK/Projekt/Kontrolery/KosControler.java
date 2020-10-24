@@ -146,7 +146,7 @@ model.put("SeznamPolozek",pole.getSeznamPolozekKosik());
             nova.setProdukt(p.getProdukt());
             nova.setPocet(p.getPocet());
             nova.setCena(Math.round(p.getProdukt().getAktualniCena()*p.getPocet()));
-            nova.setAktivni(true);
+
             nova.setObjednavka(objednavka);
             seznam.getSeznamPolozek().add(nova);
             cena+=nova.getCena();
@@ -156,7 +156,7 @@ model.put("SeznamPolozek",pole.getSeznamPolozekKosik());
         adresa.setMesto(mesto);
         adresa.setCps(cp);
         adresa.setUlice(ulice);
-        adresa.setAktivni(true);
+
         adresa.setObjednavka(objednavka);
         objednavka.setAdresa(adresa);
         objednavka.setDatumObjednani( new Date());

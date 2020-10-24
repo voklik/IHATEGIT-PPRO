@@ -47,13 +47,18 @@
 
                             Platforma:<label th:text="${produkt.getPlatforma().getNazev()}"></label><br>
 
+                            <div th:if="${produkt.isAktivni()}">
                             <form id="KupProduktForm" th:action="@{/kosikadd}"
                                   method="post" enctype="multipart/form-data">
                                 <input hidden readonly  name="id" th:value="${produkt.getProdukt_ID()}">
                                 <input   type="number" min="0" step="1" value="1"   name="pocet">
                                 <input name="action" type="submit" value="Koupit" />
                             </form>
-
+                            </div>
+                            <div th:if="${!produkt.isAktivni()}">
+                            <H2>Produkt už nelze zakoupit</H2>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

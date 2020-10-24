@@ -13,7 +13,7 @@
 
 
 <!-- Top Menu -->
-<div th:replace="~{fragments/topnav :: navbar}"></div>
+<div th:replace="~{fragments/admintopnav :: navbar}"></div>
 <!-- End Top Menu -->
 <div id="post_header" class="container" style="height: 40px">
     <!-- Spacing below header -->
@@ -48,7 +48,15 @@
                             Cena:<input name="cena" type="number" min="0" th:value="${produkt.getCena()}" ><br>
                             Sleva:<input name="sleva" type="number" min="0"  th:value="${produkt.getSleva()}" ><br>
                             Aktuální cena:<input readonly th:value="${produkt.getAktualniCena()}"><br>
+                                Je produkt aktivní ?:     <select name="aktivni" >
 
+                                <option  th:value="FALSE" th:selected="${!produkt.isAktivni()}"  th:text="neaktivni"></option>
+                                <option  th:value="TRUE" th:selected="${produkt.isAktivni()}"  th:text="aktivni"></option>
+
+
+
+
+                            </select><br>
                             Platforma:     <select name="platforma" >
                                 <div th:if="${!ListPlatformy.isEmpty()}"
                                      th:each="platforma : ${ListPlatformy} ">

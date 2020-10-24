@@ -29,15 +29,6 @@ public class Polozka implements Serializable {
     @Size(max=250)
     private  int cena;
 
-    private boolean aktivni=false;
-
-    public boolean isAktivni() {
-        return aktivni;
-    }
-
-    public void setAktivni(boolean aktivni) {
-        this.aktivni = aktivni;
-    }
 
    //@ManytoOne(mappedBy = "platforma", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   //  private Produkt produkt;

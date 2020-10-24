@@ -25,15 +25,6 @@ public class Platforma implements Serializable {
 
      @OneToMany(mappedBy = "platforma", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
       private List<Produkt> produkty;
-    private boolean aktivni=false;
-
-    public boolean isAktivni() {
-        return aktivni;
-    }
-
-    public void setAktivni(boolean aktivni) {
-        this.aktivni = aktivni;
-    }
 
     public Integer getPlatforma_ID() {
         return platforma_ID;
