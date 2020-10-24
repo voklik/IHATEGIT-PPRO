@@ -1,0 +1,106 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
+<head th:replace="fragments/importHead :: importTop(title = 'Sprava Objednavky')">   </head>
+
+
+<!-- Top Menu -->
+<div th:replace="~{fragments/admintopnav :: navbar}"></div>
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+<!-- === END HEADER === -->
+<!-- === BEGIN CONTENT === -->
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+
+                <form id="Hledani" th:action="@{/hledaniproduktu}"
+                      method="post" enctype="multipart/form-data">
+                    <input name="nalezeno" type="number" min="0" value="0" id="nalezeno">
+                    <input name="action" type="submit" value="Hledat přesně danout objednavku ID" />
+                </form>
+
+                <div id="table-wrapper">
+                    <div id="table-scroll">
+                        <table>
+
+                            <thead>
+                            <tr>
+                                <td>ID objednavky</td>
+                                <td>datum objednani</td>
+                                <td>stav</td>
+                                <td>detail</td>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Blog Post class="blog-post padding-bottom-20" -->
+                            <div th:if="${!stranka.isEmpty()}"
+                                 th:each="objednavka : ${stranka} ">
+                                <!-- Blog Item Header -->
+
+
+                                    <tr>
+                                        <td><input readonly  name="id" th:value="${objednavka.getObjednavka_ID()}">
+                                        <td> <input readonly th:value="${objednavka.getDatumObjednani()}"
+                                                     name="jmeno"></td>
+                                        <td> <input readonly th:value="${objednavka.getStav().getNazev()}"
+                                                     name="prijmeni"></td>
+
+<td> <form id="detailform" th:action="@{/admin/detailobjednavky}"
+           method="post" enctype="multipart/form-data">
+    <input readonly hidden name="id"  th:value="${objednavka.getObjednavka_ID()}"  />
+    <input  name="action" type="submit" value="Detail objednavky" />
+</form></td>
+                                    </tr>   </div>
+                            </tbody>
+
+                        </table>
+                    </div></div>
+
+                <span th:each="iterator : ${#numbers.sequence( 0, stranka.totalPages-1)}" class="pagination">
+                                    <li class="active pagination">
+                                    <a th:text="${iterator+1}"
+                                       th:href="@{/admin/Sprava_Objednavek(page=${iterator})}"
+                                       th:class="${ stranka.pageable.getPageNumber() ==iterator} ? active">
+
+                                    </a>
+                                    </li>
+                                </span>
+
+
+
+                <!--
+                                    <div class="col-md-2">
+                                        <a class="blog-item-header float-right-icon cursor" th:href="@{/admin/ucetUpdate/__${ucet.getUcet_ID()}__}">
+                                            <i class="fa fa-pencil-square fa-lg"></i>
+                                        </a>
+                                        <a
+                                                class="blog-item-header float-right-icon cursor" th:href="@{/admin/__${ucet.getUcet_ID()}__/delete}"
+                                        >
+                                            <i class="fa fa-trash-o fa-lg"></i>
+                                        </a>
+                                    </div>                  -->
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

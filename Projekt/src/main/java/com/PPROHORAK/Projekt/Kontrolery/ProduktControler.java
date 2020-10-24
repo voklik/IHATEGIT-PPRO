@@ -3,6 +3,7 @@ package com.PPROHORAK.Projekt.Kontrolery;
 import com.PPROHORAK.Projekt.DAO.PlatformyDao;
 import com.PPROHORAK.Projekt.DAO.ProduktyDao;
 import com.PPROHORAK.Projekt.DAO.UctyDao;
+import com.PPROHORAK.Projekt.Model.Objednavka;
 import com.PPROHORAK.Projekt.Model.Produkt;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamProduktu;
 import lombok.Data;
@@ -72,6 +73,19 @@ public class ProduktControler {
 
             return "Prodej/DetailProduktu";
        }
+    @RequestMapping(value = {"/admin/DetailProduktu","/admin/detailprodukt"})
+    public String DetailHryAdmin(
+                            @RequestParam(value="produktID") Integer ProduktID,
+                            Map<String, Object> model )
+    {
+        SeznamProduktu produkty = new SeznamProduktu();
+        produkty.getSeznamProduktu().add(seznamProduktu.findById(ProduktID));
+        model.put("ListProdukty", produkty.getSeznamProduktu());
+
+        new UtilControler().GetPlatformList(model,seznamPlatformy);
+
+        return "Spravy/DetailProdukt";
+    }
 
     @RequestMapping(value = {"/HledaniProduktu","/hledaniproduktu"})
     public String Hledani(Pageable pageable,
@@ -107,6 +121,29 @@ public class ProduktControler {
 
             return "Prodej/SeznamHer";
         }
+    }
+
+
+    @PostMapping(value = {"/admin/hledaniproduktu"})
+    public String HledaniAdmin(@RequestParam(value = "nalezeno", required = false) int hledany,
+                          Map<String, Object> model) {
+
+        Produkt produkt = seznamProduktu.findById(hledany);
+
+
+        if (produkt == null) {
+            model.put("hlaska", "Žádný produkt s takovým názvem nebyl nalezen");
+            return "/Spravy/Sprava_Produkty";
+        } else {
+
+SeznamProduktu seznam=new SeznamProduktu();
+seznam.getSeznamProduktu().add(produkt);
+          model.put("ListProdukty",seznam.getSeznamProduktu());
+          new UtilControler().GetPlatformList(model,seznamPlatformy);
+return "/Spravy/DetailProdukt";
+        }
+
+
     }
 //strankovani
 @RequestMapping(value = {"/Slevy","slevy"})
@@ -246,8 +283,31 @@ else
     }
 
 
+    @PostMapping(value = {"/admin/upravaprodukt"})
+    public String adminchangeDetail(
+            @RequestParam("id") Integer produktID,
+            @RequestParam("nazev") String nazev,
+            @RequestParam("cena") Integer cena,
+            @RequestParam("sleva") Integer sleva,
+            @RequestParam("platforma") Integer platformaID,
+            Map<String, Object> model
+    )
+    {
 
 
+
+
+
+            Produkt produkt = seznamProduktu.findById(produktID);
+            produkt.setCena(cena);
+            produkt.setSleva(sleva);
+            produkt.setNazev(nazev);
+            produkt.setPlatforma(seznamPlatformy.findById(platformaID));
+            seznamProduktu.save(produkt);
+model.put("hlaska","Produkt byl upraven");
+
+        return DetailHryAdmin(produktID,model);
+    }
 
 
 }

@@ -5,6 +5,7 @@ import com.PPROHORAK.Projekt.Model.Adresa;
 import com.PPROHORAK.Projekt.Model.Objednavka;
 import com.PPROHORAK.Projekt.Model.Produkt;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamObjednavek;
+import com.PPROHORAK.Projekt.Model.Seznamy.SeznamProduktu;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamUcet;
 import com.PPROHORAK.Projekt.Model.Ucet;
 import lombok.Data;
@@ -57,7 +58,51 @@ public @Data
 
 
 
+    @PostMapping(value = {"/admin/updateheslo"})
+    public String updateUcetDetailHeslo( @RequestParam("id") Integer ucetID,
+                                    @RequestParam("heslo") String heslo,Map<String, Object> model
 
+    )  {
+
+
+
+           Ucet ucet= seznamUcty.findById((ucetID));
+        ucet.setHeslo(passwordEncoder.encode(heslo));
+seznamUcty.save(ucet);
+        return DetailUctuAdmin(model,ucetID);
+
+    }
+    @PostMapping(value = {"/admin/updatedetailucet"})
+    public String updateUcetDetail( @RequestParam("id") Integer ucetID,
+                                   @RequestParam("jmeno") String jmeno,
+                                    @RequestParam("prijmeni") String prijmeni, @RequestParam("login") String login,
+                                  @RequestParam("ulice") String ulice,
+                                    @RequestParam("cp") String cp,@RequestParam("mesto") String mesto,
+                                    @RequestParam("psc") String psc,Map<String, Object> model
+
+    )  {
+
+
+
+            System.out.println("update");
+            System.out.println(jmeno+" "+prijmeni+" "+" "+ login+" "+ulice+" "+cp+" "+ mesto+" "+psc);
+
+            Ucet ucet= seznamUcty.findById((ucetID));
+            ucet.setJmeno(jmeno);
+            ucet.setPrijmeni(prijmeni);
+
+            ucet.setUcet_login(login);
+            ucet.getAdresa().setCps(cp);
+            ucet.getAdresa().setUlice(ulice);
+            ucet.getAdresa().setMesto(mesto);
+            ucet.getAdresa().setPsc(psc);
+
+
+
+seznamUcty.save(ucet);
+      return DetailUctuAdmin(model,ucetID);
+
+    }
     @PostMapping(value = {"/admin/UpdateUcetSprava","/admin/updateucetsprav"})
     public String updateUcetSprava( @RequestParam("ucetID") Integer ucetID,
             @RequestParam("action") String akce ,@RequestParam("jmeno") String jmeno,
@@ -180,6 +225,8 @@ ucet.setHeslo("test");
 
         return "Ucet/Registrace";
     }
+
+
     @PostMapping(value = { "/RegistraceAkce","/registraceakce"})
     public String RegistraceAkce( Map<String, Object> model
                             ,@RequestParam("jmeno") String jmeno,@RequestParam("prijmeni") String prijmeni,
@@ -251,6 +298,46 @@ return"/Ucet/DetailUctu";
 
     }
 
+    @RequestMapping(value = "/admin/ucetdetail")
+    public String DetailUctuAdmin( Map<String, Object> model,@RequestParam("id") Integer id) {
+
+         Ucet ucet = seznamUcty.findById(id);
+
+        model.put("login",ucet.getUcet_login());
+        model.put("jmeno",ucet.getJmeno());
+        model.put("prijmeni",ucet.getPrijmeni());
+        model.put("email",ucet.getEmail());
+        model.put("ulice",ucet.getAdresa().getUlice());
+        model.put("heslo",ucet.getHeslo());
+        model.put("cp",ucet.getAdresa().getCps());
+        model.put("mesto",ucet.getAdresa().getMesto());
+        model.put("psc",ucet.getAdresa().getPsc());
+model.put("id",id);
+        return"/Spravy/DetailUcet";
+
+    }
+
+
+    @PostMapping(value = {"/admin/hledaniuctu"})
+    public String HledaniAdmin(@RequestParam(value = "nalezeno", required = false) int hledany,
+                               Map<String, Object> model) {
+
+        Ucet ucet = seznamUcty.findById(hledany);
+
+
+        if (ucet == null) {
+            model.put("hlaska", "Žádný účet s takovým názvem nebyl nalezen");
+            return "/Spravy/Sprava_Ucty";
+        } else {
+
+            SeznamUcet seznam=new SeznamUcet();
+            seznam.getSeznamUctu().add(ucet);
+           return DetailUctuAdmin(model, ucet.getUcet_ID());
+        }
+
+
+    }
+
     @RequestMapping(value = "/historie")
     public String HistorieUctu( Map<String, Object> model,@ModelAttribute("hlaska") String hlaska) {
 
@@ -263,17 +350,7 @@ return"/Ucet/DetailUctu";
         return"/Ucet/HistorieUctu";
 
     }
-    @PostMapping(value = "/detailobjednavky")
-    public String detailObjednavky(@RequestParam("id") Integer id, Map<String, Object> model,@ModelAttribute("hlaska") String hlaska) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Ucet ucet = seznamUcty.findByLogin(authentication.getName());
-
-       Objednavka objednavka= seznamObjednavek.findById(id);
-        model.put("objednavka",objednavka);
-        return"/Ucet/DetailObjednavky";
-
-    }
 
     @PostMapping(value = "/ucet/detailUpdate")
     public String DetailUctu( Map<String, Object> model

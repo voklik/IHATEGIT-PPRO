@@ -8,11 +8,11 @@
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-<head th:replace="fragments/importHead :: importTop(title = 'Detail Objednavky')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'Detail Admin Objednavky')">   </head>
 
 
 <!-- Top Menu -->
-<div th:replace="~{fragments/topnav :: navbar}"></div>
+<div th:replace="~{fragments/admintopnav :: navbar}"></div>
 <!-- End Top Menu -->
 <div id="post_header" class="container" style="height: 40px">
     <!-- Spacing below header -->
@@ -26,16 +26,40 @@
             <!-- Main Column -->
             <div class="col-md-12">
 
-                <div id="table-wrapper">
-                    <div id="table-scroll">
+
                         <div th:if="${objednavka.getPolozky().isEmpty()}" >
                             <label>Nebyly nalezeny žádné produkty</label>
                         </div>
-                        <div th:if="${!objednavka.getPolozky().isEmpty()}" >
-                            <label th:text="${objednavka.getAdresa().getUlice()}"></label>
-                            <label th:text="${objednavka.getAdresa().getCps()}"></label><br>
-                            <label th:text="${objednavka.getAdresa().getMesto()}"></label>
-                            <label th:text="${objednavka.getAdresa().getPsc()}"></label><br>
+
+                <H1 th:text="'Objednávka číslo :  '+${objednavka.getObjednavka_ID()}"></H1>
+               <div th:if="${objednavka.getPolozky()!=null}">
+                        <form id="detailform" th:action="@{/admin/upravitadresu}"    method="post" enctype="multipart/form-data">
+
+
+
+                       Ulice     <input th:value="${objednavka.getAdresa().getUlice()}"type="text"   required minlength="3" maxlength="50" name="ulice"><br>
+                            CP<input th:value="${objednavka.getAdresa().getCps()}"type="text"   required minlength="3" maxlength="50" name="cp"><br>
+                            Mesto<input th:value="${objednavka.getAdresa().getMesto()}"type="text"   required minlength="3" maxlength="50" name="mesto"><br>
+                            PSC<input th:value="${objednavka.getAdresa().getPsc()}"type="text"   required minlength="3" maxlength="50" name="psc"><br>
+<input hidden readonly name="id" th:value="${objednavka.getObjednavka_ID()}">
+                                <select name="stav" >
+                                    <div th:if="${!stavy.isEmpty()}"
+                                         th:each="stav : ${stavy} ">
+
+                                        <option  th:value="${stav.getStav_ID()}" th:selected="${stav.getStav_ID()==objednavka.getStav().getStav_ID()}"  th:text="${stav.getNazev()}"></option>
+
+                                    </div>
+
+                                </select>
+
+                            <input readonly hidden name="id"  th:value="${objednavka.getObjednavka_ID()}"  />
+                            <input  name="action" type="submit" value="Upravit Adresu" />
+                        </form>
+
+
+                            <br>
+                            <div id="table-wrapper">
+                                <div id="table-scroll">
                             <table >
 
                                 <thead>
@@ -70,19 +94,20 @@
                                         </td>
                                 </div>
 
-                        </div>
+
 
 
                         </td>
 
-                        </tr>    </div>
+                        </tr>
+
+
                     </tbody>
                     </table>
 
 
 
 
-                </div>
 
 
 
@@ -94,12 +119,12 @@
 
 
 
+
+
+
     </div>
 
 </div>
-</div>
-</div>
-</div>
-
+    </div>  </div></div>
 </body>
 </html>

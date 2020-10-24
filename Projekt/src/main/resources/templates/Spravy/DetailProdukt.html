@@ -1,0 +1,81 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
+
+<head th:replace="fragments/importHead :: importTop(title = 'Detail Produktu')">   </head>
+
+
+<!-- Top Menu -->
+<div th:replace="~{fragments/topnav :: navbar}"></div>
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+<!-- === END HEADER === -->
+<!-- === BEGIN CONTENT === -->
+
+
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+
+                <div id="table-wrapper">
+                    <div id="table-scroll">
+
+                        <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                        <!-- Blog Item Header -->
+
+                        <div th:if="${!ListProdukty.isEmpty()}"
+                             th:each="produkt : ${ListProdukty} ">
+                            <br>
+
+                            <form id="KupProduktForm" th:action="@{/admin/upravaprodukt}"
+                                  method="post" enctype="multipart/form-data">
+                              ID:  <input  name="id" readonly th:value="${produkt.getProdukt_ID()}">
+                            Jméno:<input name="nazev"   type="text" min="3"max="50" th:value="${produkt.getNazev()}"> <br>
+                            Cena:<input name="cena" type="number" min="0" th:value="${produkt.getCena()}" ><br>
+                            Sleva:<input name="sleva" type="number" min="0"  th:value="${produkt.getSleva()}" ><br>
+                            Aktuální cena:<input readonly th:value="${produkt.getAktualniCena()}"><br>
+
+                            Platforma:     <select name="platforma" >
+                                <div th:if="${!ListPlatformy.isEmpty()}"
+                                     th:each="platforma : ${ListPlatformy} ">
+
+                                    <option  th:value="${platforma.getPlatforma_ID()}" th:selected="${platforma.getPlatforma_ID()==produkt.getPlatforma().getPlatforma_ID()}"  th:text="${platforma.getNazev()}"></option>
+
+
+                                </div>
+
+                            </select><br>
+
+
+                                <input name="action" type="submit" value="Změnit údaje" />
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

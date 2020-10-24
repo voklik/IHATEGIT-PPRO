@@ -1,0 +1,67 @@
+<!-- === BEGIN HEADER === -->
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+
+<html lang="en"
+      xmlns:th="https://www.thymeleaf.org"
+>
+<!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
+<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
+
+
+<!-- Top Menu -->
+<div th:replace="~{fragments/admintopnav :: navbar}"></div>
+<!-- End Top Menu -->
+<div id="post_header" class="container" style="height: 40px">
+    <!-- Spacing below header -->
+</div>
+<div id="content-top-border" class="container">
+</div>
+<!-- === END HEADER === -->
+<!-- === BEGIN CONTENT === -->
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-12">
+
+
+                    <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                    <form id="RegistraceFormular" th:action="@{/admin/updatedetailucet}" th:object="${ucet}"
+                          method="post" enctype="multipart/form-data">
+
+
+                          <H1 th:value="'Účet id: '+${id}"></H1>  <input hidden readonly  name="id" th:value="${id}">
+                        <br>  Jmeno:   <input th:value="${jmeno}" type="text" min="3" name="jmeno"><br>
+                         Prijmeni:   <input th:value="${prijmeni}" type="text" min="3" name="prijmeni"><br>
+                         Login   <input readonly th:value="${login}" type="text" min="3" name="login"><br>
+                         ulice   <input th:value="${ulice}" type="text" min="3" name="ulice"><br>
+                         cp   <input th:value="${cp}" type="text" min="3" name="cp"><br>
+                         mesto   <input th:value="${mesto}" type="text" min="3" name="mesto"><br>
+                         psc  <input th:value="${psc}" type="text" min="3" name="psc"><br>
+                           <input name="action" type="submit" value="Upravit" /><br>
+
+                      </form>
+
+<Br>
+                <H2>Změnit heslo</H2>
+                <form id="passwordform" th:action="@{/admin/updateheslo}"
+                      method="post" enctype="multipart/form-data">
+
+
+                   <input hidden readonly  name="id" th:value="${id}">
+                    Nové heslo   <input th:value="${heslo}" type="text" min="3" name="heslo"><br>
+
+                    <input name="action" type="submit" value="Upravit" /><br>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

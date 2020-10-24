@@ -26,7 +26,11 @@
         <div class="row margin-vert-30">
             <!-- Main Column -->
             <div class="col-md-12">
-
+                <form id="Hledani" th:action="@{/admin/hledaniuctu}"
+                      method="post" enctype="multipart/form-data">
+                    <input name="nalezeno" type="number" min="0" value="0" id="nalezeno">
+                    <input name="action" type="submit" value="Hledat přesně daný účet ID " />
+                </form>
                 <div id="table-wrapper">
                     <div id="table-scroll">
                 <table >
@@ -57,7 +61,8 @@
                     <form id="UcetFormular" th:action="@{/admin/UpdateUcetSprava}" th:object="${ucet}"
                           method="post" enctype="multipart/form-data">
                         <tr>
-                            <td><input readonly  name="ucetID" th:value="${ ucet.getUcet_ID()}">
+                             <td><a th:href="@{'/admin/ucetdetail'('id'=${ucet.getUcet_ID()})}" ><label readonly  name="id"  th:text="${ucet.getUcet_ID()}"></label></a></td>
+
                             <td> <input  th:value="${ucet.getJmeno()}"
                                          name="jmeno"></td>
                             <td> <input  th:value="${ucet.getPrijmeni()}"

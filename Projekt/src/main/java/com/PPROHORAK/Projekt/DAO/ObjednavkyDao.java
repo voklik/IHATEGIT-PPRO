@@ -39,4 +39,12 @@ public interface ObjednavkyDao extends Repository<Objednavka, Integer>
         @Transactional
         @Modifying
         Collection<Objednavka> findByUcet(@Param("id") Integer id);
+
+        @Query("SELECT DISTINCT objednavka FROM Objednavka objednavka ")
+        @Transactional(readOnly = true)
+        Page findAllPagesobjednavky(Pageable pageable);
+
+        @Query("SELECT DISTINCT objednavka FROM Objednavka objednavka where objednavka.objednavka_ID =:hledany ")
+        @Transactional(readOnly = true)
+        Objednavka FindObjednavka(@Param("hledany") Integer hledany);
 }
