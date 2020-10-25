@@ -74,7 +74,7 @@
                                                        th:value="${polozka.getProdukt().getProdukt_ID()}">
                                                 <input th:value="${polozka.getPocet()}" type="number" min="0" step="1"
                                                        value="1" name="pocet">
-                                                <input name="action" type="submit" value="zmenit mnozstvy"/>
+                                                <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="zmenit mnozstvy"/>
                                             </form>
                                         </td>
 
@@ -84,7 +84,7 @@
                                 <form id="updateform" th:action="@{/kosikremoveat}"
                                       method="post" enctype="multipart/form-data">
                                             <input hidden readonly name="id" th:value="${polozka.getPolozka_ID()}">
-                                                <input name="action" type="submit" value="smazat Položku"/>
+                                                <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="smazat Položku"/>
                                         </form>
                         </span>
                                             </div>
@@ -94,7 +94,7 @@
                                       method="post" enctype="multipart/form-data">
                                             <input hidden readonly name="id"
                                                    th:value="${polozka.getProdukt().getProdukt_ID()}">
-                                                <input name="action" type="submit" value="smazet Položku"/>
+                                                <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="smazet Položku"/>
                                         </form>
                         </span>
                                             </div>
@@ -113,13 +113,13 @@
                         <form th:if="${!SeznamPolozek.isEmpty()}" id="vytvoritorder" th:action="@{/kosikpotvrzeni}"
                               method="post" enctype="multipart/form-data">
 
-                            <input name="action" type="submit" value="Vytvořit objednávku"/>
+                            <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Vytvořit objednávku"/>
                         </form>
                         <BR><BR>
                         <form th:if="${!SeznamPolozek.isEmpty()}" id="smazatllform" th:action="@{/kosikremoveall}"
                               method="post" enctype="multipart/form-data">
 
-                            <input name="action" type="submit" value="Vymazat košík"/>
+                            <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Vymazat košík"/>
                         </form>
 
 

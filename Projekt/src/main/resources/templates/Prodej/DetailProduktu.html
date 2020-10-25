@@ -52,7 +52,7 @@
                                   method="post" enctype="multipart/form-data">
                                 <input hidden readonly  name="id" th:value="${produkt.getProdukt_ID()}">
                                 <input   type="number" min="0" step="1" value="1"   name="pocet">
-                                <input name="action" type="submit" value="Koupit" />
+                                <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Koupit" />
                             </form>
                             </div>
                             <div th:if="${!produkt.isAktivni()}">

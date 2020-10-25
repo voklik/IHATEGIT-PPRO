@@ -43,7 +43,7 @@
                         číslo popisné:  <input th:value="${cp} ?: ''"  type="text"   required minlength="5" maxlength="50" name="cp"> <br>
                         město:  <input th:value="${mesto} ?: ''"  type="text"   required minlength="5" maxlength="50" name="mesto"> <br>
                         poštovní směrovací číslo:  <input th:value="${psc} ?: ''"  type="text"   required minlength="5" maxlength="30"  name="psc"> <br>
-                        <input name="action" type="submit" value="Změnit údaje" />
+                        <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Změnit údaje" />
                     </form>
 
 
@@ -51,7 +51,7 @@
                 <form id="zmenhesloForm" th:action="@{/ucet/hesloUpdate}"method="post" enctype="multipart/form-data">
                 staré heslo:            <input  type="password"   required minlength="5" maxlength="30" name="heslo"> <br>
                 nové heslo:             <input  type="password"   required minlength="5" maxlength="30"  name="nheslo"> <br>
-                <input name="action" type="submit" value="Změnit heslo" />
+                <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Změnit heslo" />
                 </form>
 
 
