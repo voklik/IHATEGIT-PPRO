@@ -8,7 +8,7 @@
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'správa stavy')">   </head>
 
 
 <!-- Top Menu -->
@@ -29,7 +29,9 @@
 
                 <div id="table-wrapper">
                     <div id="table-scroll">
-                        <table >
+                        <div class="table-responsive">
+
+                            <table class="table">
 
                             <thead>
                             <tr>
@@ -53,16 +55,19 @@
                                         <td> <input  th:value="${stav.getNazev()}"
                                                      name="nazev"></td>
 
-                                        <td><input name="action" type="submit" value="Delete" /></td>
-                                        <td><input  name="action" type="submit" value="Update" /></td>
+
+                                        <td><input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Update" /></td>
                                     </tr>  </form>   </div>
                             </tbody>
 
                         </table>
+                        </div>
                     </div></div>
 
                 <H1>Nový Stav</H1>
-                <table >
+                <div class="table-responsive">
+
+                    <table class="table">
 
                     <thead>
                     <tr>
@@ -82,13 +87,13 @@
                             <td> <input  name="nazev"></td>
 
 
-                            <td><input name="action" type="submit" value="Create" /></td>
+                            <td><input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Create" /></td>
 
                         </tr>  </form>
                     </tbody>
 
                 </table>
-
+                </div>
 
 
             </div>

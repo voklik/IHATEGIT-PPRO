@@ -3,22 +3,43 @@
      xmlns:sec="http://www.thymeleaf.org/extras/spring-security3"
 
 >
-    <div class="row" >
-        <div class="col-md-12 no-padding">
-            <div id="hornavZIndex" class="text-center visible-lg">
-
-                <a text="Správa účtů" th:href="@{'/admin/Sprava_Ucty'}">Správa účtů</a>
-                <a text="Správa produktů" th:href="@{'/admin/Sprava_Produkty'}">Správa produktů</a>
-                <a text="Správa platforem" th:href="@{'/admin/Sprava_Platformy'}">Správa platforem</a>
-                <a text="Správa stavů" th:href="@{'/admin/Sprava_Stavy'}">Správa stavů</a>
-                <a text="Správa objednavek" th:href="@{'/admin/Sprava_Objednavek'}">Správa objednavek</a>
-                <a text="Zpět do obchodu" th:href="@{'/SeznamHer'}">Zpět do obchodu</a>
 
 
-                <Br>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+        <div class="navbar-expand-lg" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+
+
+                <li class="nav-item">
+                    <a class="nav-link" text="Správa účtů" th:href="@{'/admin/Sprava_Ucty'}">Správa účtů</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" text="Správa produktů" th:href="@{'/admin/Sprava_Produkty'}">Správa produktů</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" text="Správa platforem" th:href="@{'/admin/Sprava_Platformy'}">Správa platforem</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" text="Správa stavů" th:href="@{'/admin/Sprava_Stavy'}">Správa stavů</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" text="Správa objednavek" th:href="@{'/admin/Sprava_Objednavek'}">Správa objednavek</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" text="Zpět do obchodu" th:href="@{'/SeznamHer'}">Zpět do obchodu</a>
+                </li>
+
+                <li class="nav-item">
                 <p th:text="${hlaska} ?: ''"></p>
+                </li>
+            </ul>
 
-            </div>
         </div>
-    </div>
+    </nav>
+
+
+
 </div>

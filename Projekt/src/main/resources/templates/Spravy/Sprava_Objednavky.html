@@ -29,8 +29,8 @@
 
                 <form id="Hledani" th:action="@{/hledaniproduktu}"
                       method="post" enctype="multipart/form-data">
-                    <input name="nalezeno" type="number" min="0" value="0" id="nalezeno">
-                    <input name="action" type="submit" value="Hledat přesně danout objednavku ID" />
+                    <input class="form-control mr-sm-2" name="nalezeno" type="number" min="0" value="0" id="nalezeno">
+                    <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Hledat přesně danout objednavku ID" />
                 </form>
 
                 <div id="table-wrapper">
@@ -63,7 +63,7 @@
 <td> <form id="detailform" th:action="@{/admin/detailobjednavky}"
            method="post" enctype="multipart/form-data">
     <input readonly hidden name="id"  th:value="${objednavka.getObjednavka_ID()}"  />
-    <input  name="action" type="submit" value="Detail objednavky" />
+    <input class="btn btn-outline-success my-2 my-sm-0"  name="action" type="submit" value="Detail objednavky" />
 </form></td>
                                     </tr>   </div>
                             </tbody>
@@ -71,29 +71,27 @@
                         </table>
                     </div></div>
 
-                <span th:each="iterator : ${#numbers.sequence( 0, stranka.totalPages-1)}" class="pagination">
-                                    <li class="active pagination">
+                <div class="dropdown show">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Stránky
+                    </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+                        <span th:each="iterator : ${#numbers.sequence( 0, stranka.totalPages-1)}" class="pagination">
+
                                     <a th:text="${iterator+1}"
                                        th:href="@{/admin/Sprava_Objednavek(page=${iterator})}"
-                                       th:class="${ stranka.pageable.getPageNumber() ==iterator} ? active">
+                                       class="dropdown-item">
 
                                     </a>
-                                    </li>
+
                                 </span>
+                </div>
+                <p th:text="'Aktuální stránka je'+${stranka.getNumber()+1}"></p>
+            </div>
 
 
 
-                <!--
-                                    <div class="col-md-2">
-                                        <a class="blog-item-header float-right-icon cursor" th:href="@{/admin/ucetUpdate/__${ucet.getUcet_ID()}__}">
-                                            <i class="fa fa-pencil-square fa-lg"></i>
-                                        </a>
-                                        <a
-                                                class="blog-item-header float-right-icon cursor" th:href="@{/admin/__${ucet.getUcet_ID()}__/delete}"
-                                        >
-                                            <i class="fa fa-trash-o fa-lg"></i>
-                                        </a>
-                                    </div>                  -->
 
 
             </div>

@@ -83,6 +83,19 @@ public void zapisSusenkyKosik(HttpServletResponse response, SeznamPolozekKosik p
     kosik.setMaxAge(60 * 60 * 24 * 3); //set expire time in sec
     response.addCookie(kosik);
 }
+
+
+public void GetTypUcet(Map<String,Object> model,UctyDao seznamUctu)
+{
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if(authentication.getName().equals("anonymousUser"))
+    {model.put("typuctu","Anonym");}
+    else
+    {
+        Ucet ucet=seznamUctu.findByLogin(authentication.getName());
+        model.put("typuctu",ucet.getTypUctu().getNazev());
+    }
+}
     public void GetPocetPolozekVkosiku(Map<String,Object> model, ProduktyDao seznamProduktu,UctyDao seznamUctu,String cookies)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

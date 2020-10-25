@@ -1,14 +1,16 @@
 <!-- === BEGIN HEADER === -->
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
 
 <html lang="en"
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'Sprava účtu')"></head>
 
 
 <!-- Top Menu -->
@@ -28,80 +30,104 @@
             <div class="col-md-12">
                 <form id="Hledani" th:action="@{/admin/hledaniuctu}"
                       method="post" enctype="multipart/form-data">
-                    <input name="nalezeno" type="number" min="0" value="0" id="nalezeno">
-                    <input name="action" type="submit" value="Hledat přesně daný účet ID " />
+                    <input class="form-control mr-sm-2" name="nalezeno" type="number" min="0" value="0" id="nalezeno">
+                    <input class="btn btn-outline-success my-2 my-sm-0"  name="action" type="submit" value="Hledat přesně daný účet ID "/>
                 </form>
                 <div id="table-wrapper">
                     <div id="table-scroll">
-                <table >
+                        <div class="table-responsive">
 
-                    <thead>
-                    <tr>
-                        <td>ID Uctu</td>
-                        <td>Jmeno</td>
-                        <td>Prijmeni</td>
-                        <td>Login</td>
-                        <td>Heslo</td>
-                        <td>ID ADRESA</td>
-                        <td>Ulice</td>
-                        <td>CP</td>
-                        <td>Mesto</td>
-                        <td>PSC</td>
-                        <td>Typ Účtu</td>
-                        <td>PSC</td>
+                            <table class="table">
 
-                    </tr>
-                    </thead>
-                    <tbody>
-                <!-- Blog Post class="blog-post padding-bottom-20" -->
-                <div th:if="${!UcetStranka.isEmpty()}"
-                     th:each="ucet : ${UcetStranka} ">
-                    <!-- Blog Item Header -->
 
-                    <form id="UcetFormular" th:action="@{/admin/UpdateUcetSprava}" th:object="${ucet}"
-                          method="post" enctype="multipart/form-data">
-                        <tr>
-                             <td><a th:href="@{'/admin/ucetdetail'('id'=${ucet.getUcet_ID()})}" ><label readonly  name="id"  th:text="${ucet.getUcet_ID()}"></label></a></td>
+                            <thead>
+                            <tr>
+                                <td>ID Uctu</td>
+                                <td>Jmeno</td>
+                                <td>Prijmeni</td>
+                                <td>Login</td>
+                                <td>Heslo</td>
+                                <td>ID ADRESA</td>
+                                <td>Ulice</td>
+                                <td>CP</td>
+                                <td>Mesto</td>
+                                <td>PSC</td>
+                                <td>Typ Účtu</td>
+                                <td>PSC</td>
 
-                            <td> <input  th:value="${ucet.getJmeno()}"
-                                         name="jmeno"></td>
-                            <td> <input  th:value="${ucet.getPrijmeni()}"
-                                         name="prijmeni"></td>
-                            <td> <input  th:value="${ucet.getUcet_login()}"
-                                         name="login"></td>
-                            <td><input  th:value="${ucet.getHeslo()}"
-                                        name="heslo"></td>
-                            <td> <input readonly id="adresaID" th:value="${ ucet.getAdresa().getAdresa_ID()}"></td>
-                            <td> <input  th:value="${ucet.getAdresa().getUlice()}"
-                                         name="ulice"></td>
-                            <td><input  th:value="${ucet.getAdresa().getCps()}"
-                                        name="cp"></td>
-                            <td> <input  th:value="${ucet.getAdresa().getMesto()}"
-                                         name="mesto"></td>
-                            <td> <input  th:value="${ucet.getAdresa().getPsc()}"
-                                         name="psc"></td>
-                            <td> <div th:text="${ ucet.getTypUctu().getNazev()}"></div></td>
-                            <td><input name="action" type="submit" value="Delete" /></td>
-                            <td><input  name="action" type="submit" value="Update" /></td>
-                        </tr>  </form>   </div>
-            </tbody>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Blog Post class="blog-post padding-bottom-20" -->
+                            <div th:if="${!UcetStranka.isEmpty()}"
+                                 th:each="ucet : ${UcetStranka} ">
+                                <!-- Blog Item Header -->
 
-        </table>
-                    </div></div>
+                                <form id="UcetFormular" th:action="@{/admin/UpdateUcetSprava}" th:object="${ucet}"
+                                      method="post" enctype="multipart/form-data">
+                                    <tr>
+                                        <td><a th:href="@{'/admin/ucetdetail'('id'=${ucet.getUcet_ID()})}"><label
+                                                readonly name="id" th:text="${ucet.getUcet_ID()}"></label></a></td>
 
-                <span th:each="iterator : ${#numbers.sequence( 0, UcetStranka.totalPages-1)}" class="pagination">
-                                    <li class="active pagination">
+                                        <td><input th:value="${ucet.getJmeno()}"
+                                                   name="jmeno"></td>
+                                        <td><input th:value="${ucet.getPrijmeni()}"
+                                                   name="prijmeni"></td>
+                                        <td><input th:value="${ucet.getUcet_login()}"
+                                                   name="login"></td>
+                                        <td><input th:value="${ucet.getHeslo()}"
+                                                   name="heslo"></td>
+                                        <td><input readonly id="adresaID"
+                                                   th:value="${ ucet.getAdresa().getAdresa_ID()}"></td>
+                                        <td><input th:value="${ucet.getAdresa().getUlice()}"
+                                                   name="ulice"></td>
+                                        <td><input th:value="${ucet.getAdresa().getCps()}"
+                                                   name="cp"></td>
+                                        <td><input th:value="${ucet.getAdresa().getMesto()}"
+                                                   name="mesto"></td>
+                                        <td><input th:value="${ucet.getAdresa().getPsc()}"
+                                                   name="psc"></td>
+                                        <td>
+                                            <div th:text="${ ucet.getTypUctu().getNazev()}"></div>
+                                        </td>
+                                        <td><input class="btn btn-outline-success my-2 my-sm-0" th:if="${typuctu=='Admin'}" name="action" type="submit"
+                                                   value="Delete"/></td>
+                                    </tr>
+                                </form>
+                            </div>
+                            </tbody>
+
+                        </table>
+                    </div>
+                    </div>
+                </div>
+                <div class="dropdown show">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Stránky
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
+                        <span th:each="iterator : ${#numbers.sequence( 0, UcetStranka.totalPages-1)}"
+                              class="pagination">
+
                                     <a th:text="${iterator+1}"
                                        th:href="@{/admin/sprava_ucty(page=${iterator})}"
-                                       th:class="${ UcetStranka.pageable.getPageNumber() ==iterator} ? active">
+                                       class="dropdown-item">
 
                                     </a>
-                                    </li>
+
                                 </span>
+                    </div>
+                    <p th:text="'Aktuální stránka je'+${UcetStranka.getNumber()+1}"></p>
+                </div>
 
 
+                <div th:if="${typuctu=='Admin'}" class="table-responsive">
                 <H1>Nový účet</H1>
-                <table >
+                <table class="table">
+
 
                     <thead>
                     <tr>
@@ -112,7 +138,7 @@
                         <td>Ulice</td>
                         <td>CP</td>
                         <td>Mesto</td>
-                        <td>PSC</td>
+                        <td>akce</td>
 
 
                     </tr>
@@ -120,43 +146,45 @@
                     <tbody>
                     <!-- Blog Post class="blog-post padding-bottom-20" -->
 
-                        <form id="RegistraceFormular" th:action="@{/admin/UpdateUcetSprava}" th:object="${ucet}"
-                              method="post" enctype="multipart/form-data">
-                            <tr>
-                                <input hidden readonly  name="ucetID" th:value="0">
-                                <td> <input  name="jmeno"></td>
-                                <td> <input  name="prijmeni"></td>
-                                <td> <input  name="login"></td>
-                                <td> <input  name="heslo"></td>
-                                <td> <input  name="ulice"></td>
-                                <td> <input  name="cp"></td>
-                                <td> <input  name="mesto"></td>
-                                <td> <input  name="psc"></td>
-                                <td><input name="action" type="submit" value="Create" /></td>
+                    <form th:if="${typuctu=='Admin'}" id="RegistraceFormular" th:action="@{/admin/UpdateUcetSprava}"
+                          th:object="${ucet}"
+                          method="post" enctype="multipart/form-data">
+                        <tr>
+                            <input hidden readonly name="ucetID" th:value="0">
+                            <td><input name="jmeno"></td>
+                            <td><input name="prijmeni"></td>
+                            <td><input name="login"></td>
+                            <td><input name="heslo"></td>
+                            <td><input name="ulice"></td>
+                            <td><input name="cp"></td>
+                            <td><input name="mesto"></td>
+                            <td><input name="psc"></td>
+                            <td><input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Create"/></td>
 
-                            </tr>  </form>
+                        </tr>
+                    </form>
                     </tbody>
 
                 </table>
-
-<!--
-                    <div class="col-md-2">
-                        <a class="blog-item-header float-right-icon cursor" th:href="@{/admin/ucetUpdate/__${ucet.getUcet_ID()}__}">
-                            <i class="fa fa-pencil-square fa-lg"></i>
-                        </a>
-                        <a
-                                class="blog-item-header float-right-icon cursor" th:href="@{/admin/__${ucet.getUcet_ID()}__/delete}"
-                        >
-                            <i class="fa fa-trash-o fa-lg"></i>
-                        </a>
-                    </div>                  -->
-
-
-                </div>
-
             </div>
+            <!--
+                                <div class="col-md-2">
+                                    <a class="blog-item-header float-right-icon cursor" th:href="@{/admin/ucetUpdate/__${ucet.getUcet_ID()}__}">
+                                        <i class="fa fa-pencil-square fa-lg"></i>
+                                    </a>
+                                    <a
+                                            class="blog-item-header float-right-icon cursor" th:href="@{/admin/__${ucet.getUcet_ID()}__/delete}"
+                                    >
+                                        <i class="fa fa-trash-o fa-lg"></i>
+                                    </a>
+                                </div>                  -->
+
+
         </div>
+
     </div>
-        </div>
+</div>
+</div>
+</div>
 </body>
 </html>

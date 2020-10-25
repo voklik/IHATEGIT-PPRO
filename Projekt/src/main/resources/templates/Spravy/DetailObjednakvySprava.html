@@ -32,11 +32,14 @@
                         </div>
 
                 <H1 th:text="'Objednávka číslo :  '+${objednavka.getObjednavka_ID()}"></H1>
-               <div th:if="${objednavka.getPolozky()!=null}">
+                ID UCTU     <input readonly th:value="${objednavka.getUcet().getUcet_ID()}"type="text"   required minlength="3" maxlength="50" name="jmeno"><br>
+
+
+                <div th:if="${objednavka.getPolozky()!=null}">
                         <form id="detailform" th:action="@{/admin/upravitadresu}"    method="post" enctype="multipart/form-data">
-
-
-
+                            Jmeno     <input th:value="${objednavka.getJmeno()}"type="text"   required minlength="3" maxlength="50" name="jmeno"><br>
+                            prijmeni     <input th:value="${objednavka.getPrijmeni()}"type="text"   required minlength="3" maxlength="50" name="prijmeni"><br>
+                            Email     <input th:value="${objednavka.getEmail()}"type="email"   required minlength="3" maxlength="50" name="email"><br>
                        Ulice     <input th:value="${objednavka.getAdresa().getUlice()}"type="text"   required minlength="3" maxlength="50" name="ulice"><br>
                             CP<input th:value="${objednavka.getAdresa().getCps()}"type="text"   required minlength="3" maxlength="50" name="cp"><br>
                             Mesto<input th:value="${objednavka.getAdresa().getMesto()}"type="text"   required minlength="3" maxlength="50" name="mesto"><br>

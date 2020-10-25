@@ -6,6 +6,7 @@ import com.PPROHORAK.Projekt.Model.Objednavka;
 import com.PPROHORAK.Projekt.Model.Produkt;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamObjednavek;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamProduktu;
+import com.PPROHORAK.Projekt.Model.Seznamy.SeznamTypyUctu;
 import com.PPROHORAK.Projekt.Model.Seznamy.SeznamUcet;
 import com.PPROHORAK.Projekt.Model.Ucet;
 import lombok.Data;
@@ -50,6 +51,8 @@ public @Data
         Pageable customPageable = PageRequest.of(currentPage, size);
         Page<Produkt> stranka = this.seznamUcty.findAllPagesUcty(customPageable);
 
+
+        new UtilControler().GetTypUcet(model,seznamUcty);
         model.put("UcetStranka", stranka);
 
         return "Spravy/Sprava_Ucty";
@@ -69,6 +72,20 @@ public @Data
            Ucet ucet= seznamUcty.findById((ucetID));
         ucet.setHeslo(passwordEncoder.encode(heslo));
 seznamUcty.save(ucet);
+        return DetailUctuAdmin(model,ucetID);
+
+    }
+    @PostMapping(value = {"/admin/updatetyp"})
+    public String updateUcetDetailHeslo( @RequestParam("id") Integer ucetID,
+                                         @RequestParam("typ") Integer typ,Map<String, Object> model
+
+    )  {
+
+
+
+        Ucet ucet= seznamUcty.findById((ucetID));
+         ucet.setTypUctu(seznamyTypyUcty.findById(typ));
+        seznamUcty.save(ucet);
         return DetailUctuAdmin(model,ucetID);
 
     }
@@ -249,7 +266,8 @@ ucet.setHeslo("test");
         novy.setJmeno(jmeno);
         novy.setUcet_login(login);
         novy.setEmail(email);
-
+        novy.setTypUctu(seznamyTypyUcty.findById(3));
+        novy.setAktivni(true);
         Ucet test= seznamUcty.findByLogin(login);
         if(test!=null)
         {
@@ -302,7 +320,8 @@ return"/Ucet/DetailUctu";
     public String DetailUctuAdmin( Map<String, Object> model,@RequestParam("id") Integer id) {
 
          Ucet ucet = seznamUcty.findById(id);
-
+         new UtilControler();
+        new UtilControler().GetTypUcet(model,seznamUcty);
         model.put("login",ucet.getUcet_login());
         model.put("jmeno",ucet.getJmeno());
         model.put("prijmeni",ucet.getPrijmeni());
@@ -312,7 +331,12 @@ return"/Ucet/DetailUctu";
         model.put("cp",ucet.getAdresa().getCps());
         model.put("mesto",ucet.getAdresa().getMesto());
         model.put("psc",ucet.getAdresa().getPsc());
+        model.put("typuctu1",ucet.getTypUctu().getTypUctu_ID());
 model.put("id",id);
+
+        SeznamTypyUctu seznamTypyUctu=new SeznamTypyUctu();
+        seznamTypyUctu.getSeznamTypyUctu().addAll(seznamyTypyUcty.findAll());
+        model.put("typy",seznamTypyUctu.getSeznamTypyUctu());
         return"/Spravy/DetailUcet";
 
     }
@@ -401,4 +425,6 @@ model.put("id",id);
         return "redirect:/ucet/detail";
 
     }
+
+
 }

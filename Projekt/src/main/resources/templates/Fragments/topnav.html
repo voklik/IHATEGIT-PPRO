@@ -3,59 +3,96 @@
      xmlns:sec="http://www.thymeleaf.org/extras/spring-security3"
 
 >
-    <div class="row" >
-        <div class="col-md-12 no-padding">
-            <div id="hornavZIndex" class="text-center visible-lg">
-                <ul id="hornavmenu" class="nav navbar-nav">
+    <H1 class="w-auto">E-shop Cestování po herních světech</H1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
-                    <div th:if="${!ListPlatformy.isEmpty()}"
-                         th:each="platforma : ${ListPlatformy} ">
-                        <!-- Blog Item Header -->
+            <a class="navbar-brand" text="SeznamHer" th:href="@{'/'}">Hlávní stránka</a>
 
 
+        <div class="navbar-expand-lg" id="navbarSupportedContent1">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" text="SeznamHer" th:href="@{'/SeznamHer'}">Všechny produkty</a>
+                </li>
+                <li class="nav-item">
+                    <a   <a class="nav-link" text="SeznamHer" th:href="@{'/Slevy'}">Slevy</a>      </li>
 
-                        <li> <a th:text="${platforma.getNazev()}" th:href="@{'SeznamHer'(id=${platforma.getPlatforma_ID()})}"></a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Platformy
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div th:if="${!ListPlatformy.isEmpty()}"
+                             th:each="platforma : ${ListPlatformy} ">
+                            <!-- Blog Item Header -->
+
+                            <a class="dropdown-item" th:text="${platforma.getNazev()}"
+                               th:href="@{'SeznamHer'(id=${platforma.getPlatforma_ID()})}"></a>
+
+
+                        </div>
 
                     </div>
+                </li>
+               <li class="nav-item">
+                <a class="nav-link" th:if="${#authentication.getPrincipal()== 'anonymousUser'}" text="SeznamHer" th:href="@{'/Slevy'}">Slevy</a>
+            </li> <li class="nav-item">
+                <a class="nav-link"  th:if="${#authentication.getPrincipal()== 'anonymousUser'}" text="registrace" th:href="@{'Registrace'}">Registrace</a>
+            </li> <li class="nav-item">
+                <a class="nav-link"  th:if="${#authentication.getPrincipal()== 'anonymousUser'}" text="Login" th:href="@{'Login'}">Přihlášení</a>
+            </li>
+                <li class="nav-item">
+                    <a class="nav-link"  th:if="${#authentication.getPrincipal()!= 'anonymousUser'}"  text="Odhlasit" href="/logout">Odhlasit se</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"text="SeznamHer" th:if="${#authentication.getPrincipal()!= 'anonymousUser'}" th:href="@{'/ucet/detail'}">Detail účtu</a>   </li>
 
-                </ul>
 
-                <a text="SeznamHer" th:href="@{'/'}">Hlávní stránka</a>
-                <a text="SeznamHer" th:href="@{'/SeznamHer'}">Všechny produkty</a>
-                <a text="SeznamHer" th:href="@{'/Slevy'}">Slevy</a>
-                <a text="registrace" th:href="@{'Registrace'}">registrace</a>
-                <div th:if="${#authentication.name == 'anonymousUser'}">
-                        <span>
-                           <a text="Login" th:href="@{'Login'}">Login</a>
-                        </span>
-                </div>
+                <li class="nav-item">
 
+                        <form id="Hledani" th:action="@{/HledaniProduktu}" th:object="${produkt}"
+                              class="form-inline my-2 my-lg-0"    method="post" enctype="multipart/form-data">
+                            <input  class="form-control mr-sm-2" type="search" name="nalezeno"  id="nalezeno">
+                            <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Hledat všechny shody"/>
+                        </form>  </li>
+            </ul>
 
-                <div th:if="${#authentication.getPrincipal()!= 'anonymousUser'}">
-                        <span>
-                             <a text="SeznamHer" th:href="@{'/ucet/detail'}">Detail účtu</a>
-                                   <a text="Odhlasit" href="/logout">Odhlasit se</a>
-                                    <label th:text= "${#authentication.name}" >
-                                   <a text="Sprava" th:href="@{'/admin/Sprava_Ucty'}">Sprava</a>
-                        </span>
-                </div>
-                <BR>
-                <label>Hledejte produkty v naší nabídce: </label>
-                <form id="Hledani" th:action="@{/HledaniProduktu}" th:object="${produkt}"
-                      method="post" enctype="multipart/form-data">
-                    <input name="nalezeno" type="text" id="nalezeno">
-                    <input name="action" type="submit" value="Hledat všechny shody" />
-                </form>
-                <ul name="vysledky" type="text" id="vysledky">
-                </ul>
-                <a text="SeznamHer" th:href="@{'/kosikcookies'}">sušenka</a>
-                <a text="SeznamHer" th:href="@{'/kos'}" >košík</a>
-                <p th:text="${pocetpolozekvkosiku} ?: 'Nemáte nic v košíku'"></p>
-                <p th:text="${pocetpolozek} ?: ''"></p>
-                <span th:text="${hodnote}" ></span><BR>
-                <p th:text="${typuctu} ?: ''"></p>
-                <p th:text="${hlaska} ?: ''"></p>
-            </div>
         </div>
-    </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+        <div class="navbar-expand-lg" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" text="Sprava" th:if="${typuctu=='Zamestnanec'||typuctu=='Admin'}" th:href="@{'/admin/Sprava_Ucty'}">Sprava</a>
+                </li>
+
+                <li class="nav-item">
+                    <a  class="nav-link" text="košík" th:href="@{'/kos'}">košík</a>
+                </li>
+                <li class="nav-item">
+                    <p  class="nav-link" th:text="${pocetpolozekvkosiku} ?: 'Nemáte nic v košíku'"></p>
+                </li>
+                <li class="nav-item">
+                    <p  class="nav-link" th:text="${pocetpolozek} ?: ''"></p>
+                </li>
+                <li class="nav-item">
+                    <span  class="nav-link" th:text="${hodnote}"></span><BR>
+                </li>
+
+
+                <p th:text="${hlaska} ?: ''"></p>
+
+            </ul>
+
+        </div>
+    </nav>
+    <ul name="vysledky" type="text" id="vysledky">
+    </ul>
+
+
 </div>

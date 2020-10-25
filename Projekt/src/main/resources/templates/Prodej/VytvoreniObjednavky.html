@@ -8,7 +8,7 @@
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-<head th:replace="fragments/importHead :: importTop(title = 'Potvrzeni Košiku')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'vytvořeni objednávky')">   </head>
 
 
 <!-- Top Menu -->
@@ -32,7 +32,9 @@
                             <label>Nebyly nalezeny žádné produkty</label>
                         </div>
                         <div th:if="${!SeznamPolozek.isEmpty()}" >
-                            <table >
+                            <div class="table-responsive">
+
+                                <table class="table">
 
                                 <thead>
                                 <tr>
@@ -71,7 +73,7 @@
 
                         </tr>    </div>
                     </tbody>
-                    </table></div>
+                    </table></div></div>
                 <form id="LoginFormular" th:action="@{/dokonceniobjednavky}"
                       method="post" enctype="multipart/form-data">
 
@@ -80,7 +82,7 @@
                     email:  <input th:value="${email} ?: ''"  type="email"   required minlength="3" maxlength="50" name="email"> <br>
                     ulice:  <input th:value="${ulice} ?: ''"  type="text"   required minlength="3" maxlength="50" name="ulice"> <br>
                     číslo popisné:  <input th:value="${cp} ?: ''"  type="text"   required minlength="3" maxlength="50" name="cp"> <br>
-                    město:  <input th:value="${mesto} ?: ''"  type="text"   required minlength="53" maxlength="50" name="mesto"> <br>
+                    město:  <input th:value="${mesto} ?: ''"  type="text"   required minlength="3" maxlength="50" name="mesto"> <br>
                     poštovní směrovací číslo:  <input th:value="${psc} ?: ''"  type="text"   required minlength="3" maxlength="30"  name="psc"> <br>
                     <label th:text="${hodnote}"> </label><label text="+ doprava a balné 100Kč"></label><BR>
                     <label text="Doručujeme jenom přes českou poštu"></label><BR>

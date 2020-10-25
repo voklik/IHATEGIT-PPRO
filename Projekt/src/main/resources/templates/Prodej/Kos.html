@@ -1,14 +1,16 @@
 <!-- === BEGIN HEADER === -->
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
 
 <html lang="en"
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-<head th:replace="fragments/importHead :: importTop(title = 'Kosik')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'Kosik')"></head>
 
 
 <!-- Top Menu -->
@@ -28,11 +30,13 @@
 
                 <div id="table-wrapper">
                     <div id="table-scroll">
-                        <div th:if="${SeznamPolozek.isEmpty()}" >
+                        <div th:if="${SeznamPolozek.isEmpty()}">
                             <label>Nebyly nalezeny žádné produkty</label>
                         </div>
-                        <div th:if="${!SeznamPolozek.isEmpty()}" >
-                            <table >
+                        <div th:if="${!SeznamPolozek.isEmpty()}">
+                            <div class="table-responsive">
+
+                                <table class="table">
 
                                 <thead>
                                 <tr>
@@ -56,24 +60,31 @@
 
                                     <tr>
 
-                                        <td> <a th:text="${polozka.getProdukt().getNazev()}" th:href="@{'/DetailProduktu'('produktID'=${polozka.getProdukt().getProdukt_ID()})}" ></span></td>
-                                        <td> <span th:text="${polozka.produkt.getCena()}" ></span></td>
-                                        <td> <span th:text="${polozka.produkt.getSleva()}" ></span></td>
-                                        <td> <span th:text="${polozka.getProdukt().getPlatforma().getNazev()}"></span></td>
-                                        <td>   <form id="KupProduktForm" th:action="@{/kosikadd}"
-                                                     method="post" enctype="multipart/form-data">
-                                            <input hidden readonly  name="id" th:value="${polozka.getProdukt().getProdukt_ID()}">
-                                            <input th:value="${polozka.getPocet()}"  type="number" min="0" step="1" value="1"   name="pocet">
-                                            <input name="action" type="submit" value="zmenit mnozstvy" />
-                                        </form></td>
+                                        <td><a th:text="${polozka.getProdukt().getNazev()}"
+                                               th:href="@{'/DetailProduktu'('produktID'=${polozka.getProdukt().getProdukt_ID()})}"></span>
+                                        </td>
+                                        <td><span th:text="${polozka.produkt.getCena()}"></span></td>
+                                        <td><span th:text="${polozka.produkt.getSleva()}"></span></td>
+                                        <td><span th:text="${polozka.getProdukt().getPlatforma().getNazev()}"></span>
+                                        </td>
+                                        <td>
+                                            <form id="KupProduktForm" th:action="@{/kosikadd}"
+                                                  method="post" enctype="multipart/form-data">
+                                                <input hidden readonly name="id"
+                                                       th:value="${polozka.getProdukt().getProdukt_ID()}">
+                                                <input th:value="${polozka.getPocet()}" type="number" min="0" step="1"
+                                                       value="1" name="pocet">
+                                                <input name="action" type="submit" value="zmenit mnozstvy"/>
+                                            </form>
+                                        </td>
 
                                         <td>
                                             <div th:if="${#authentication.getPrincipal()!= 'anonymousUser'}">
                         <span>
                                 <form id="updateform" th:action="@{/kosikremoveat}"
                                       method="post" enctype="multipart/form-data">
-                                            <input hidden readonly  name="id" th:value="${polozka.getPolozka_ID()}">
-                                                <input name="action" type="submit" value="smazat Položku" />
+                                            <input hidden readonly name="id" th:value="${polozka.getPolozka_ID()}">
+                                                <input name="action" type="submit" value="smazat Položku"/>
                                         </form>
                         </span>
                                             </div>
@@ -81,8 +92,9 @@
                         <span>
                                 <form id="smazatform" th:action="@{/kosikremoveat}"
                                       method="post" enctype="multipart/form-data">
-                                            <input hidden readonly  name="id" th:value="${polozka.getProdukt().getProdukt_ID()}">
-                                                <input name="action" type="submit" value="smazet Položku" />
+                                            <input hidden readonly name="id"
+                                                   th:value="${polozka.getProdukt().getProdukt_ID()}">
+                                                <input name="action" type="submit" value="smazet Položku"/>
                                         </form>
                         </span>
                                             </div>
@@ -90,24 +102,29 @@
 
                                         </td>
 
-                                    </tr>    </div>
+                                    </tr>
+                                </div>
                                 </tbody>
-                            </table></div><form id="smazallform" th:action="@{/kosikpotvrzeni}"
-                                                method="post" enctype="multipart/form-data">
+                            </table>
+                            </div>
+                        </div>
 
-                        <input name="action" type="submit" value="Vytvořit objednávku" />
-                    </form> <BR><BR>
-                        <form id="smazallform" th:action="@{/kosikremoveall}"
+
+                        <form th:if="${!SeznamPolozek.isEmpty()}" id="vytvoritorder" th:action="@{/kosikpotvrzeni}"
                               method="post" enctype="multipart/form-data">
 
-                            <input name="action" type="submit" value="Vymazat košík" />
+                            <input name="action" type="submit" value="Vytvořit objednávku"/>
+                        </form>
+                        <BR><BR>
+                        <form th:if="${!SeznamPolozek.isEmpty()}" id="smazatllform" th:action="@{/kosikremoveall}"
+                              method="post" enctype="multipart/form-data">
+
+                            <input name="action" type="submit" value="Vymazat košík"/>
                         </form>
 
 
                     </div>
                 </div>
-
-
 
 
             </div>

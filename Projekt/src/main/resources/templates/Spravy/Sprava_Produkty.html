@@ -1,13 +1,15 @@
 <!-- === BEGIN HEADER === -->
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
 
 <html lang="en"
       xmlns:th="https://www.thymeleaf.org"
 >
-<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'správa produkty')"></head>
 
 
 <!-- Top Menu -->
@@ -27,15 +29,17 @@
             <div class="col-md-12">
                 <form id="Hledani" th:action="@{/admin/hledaniproduktu}"
                       method="post" enctype="multipart/form-data">
-                    <input name="nalezeno" type="number" min="0" value="0" id="nalezeno">
-                    <input name="action" type="submit" value="Hledat přesně daný produkt ID" />
+                    <input class="form-control mr-sm-2"   name="nalezeno" type="number" min="0" value="0" id="nalezeno">
+                    <input class="btn btn-outline-success my-2 my-sm-0"   name="action" type="submit" value="Hledat přesně daný produkt ID"/>
                 </form>
 
                 <div id="table-wrapper">
                     <div id="table-scroll">
 
 
-                        <table >
+                        <div class="table-responsive">
+
+                            <table class="table">
 
                             <thead>
                             <tr>
@@ -54,106 +58,121 @@
                                  th:each="produkt : ${ProduktStranka} ">
                                 <!-- Blog Item Header -->
 
-                                <form id="UcetFormular" th:action="@{/admin/Sprava_ProduktyUpdate}" th:object="${produkt}"
+                                <form id="UcetFormular" th:action="@{/admin/Sprava_ProduktyUpdate}"
+                                      th:object="${produkt}"
                                       method="post" enctype="multipart/form-data">
                                     <tr>
 
-                                        <td><a th:href="@{'/admin/detailprodukt'('produktID'=${produkt.getProdukt_ID()})}" ><label readonly  name="produktID"  th:text="${produkt.getProdukt_ID()}"></label></a></td>
-                                        <td> <input  th:value="${produkt.getNazev()}"
-                                                     name="nazev"></td>
-                                        <td> <input  th:value="${produkt.getCena()}" type="number" min="0" step="1"   name="cena"></td>
-                                        <td> <input  th:value="${produkt.getSleva()}" type="number" min="0" step="1"  max="100"  name="sleva"></td>
                                         <td>
-                                        <select name="platforma" >
-                                            <div th:if="${!ListPlatformy.isEmpty()}"
-                                                 th:each="platforma : ${ListPlatformy} ">
+                                            <a th:href="@{'/admin/detailprodukt'('produktID'=${produkt.getProdukt_ID()})}"><label
+                                                    readonly name="produktID"
+                                                    th:text="${produkt.getProdukt_ID()}"></label></a></td>
+                                        <td><input th:value="${produkt.getNazev()}"
+                                                   name="nazev"></td>
+                                        <td><input th:value="${produkt.getCena()}" type="number" min="0" step="1"
+                                                   name="cena"></td>
+                                        <td><input th:value="${produkt.getSleva()}" type="number" min="0" step="1"
+                                                   max="100" name="sleva"></td>
+                                        <td>
+                                            <select name="platforma">
+                                                <div th:if="${!ListPlatformy.isEmpty()}"
+                                                     th:each="platforma : ${ListPlatformy} ">
 
-                                                <option  th:value="${platforma.getPlatforma_ID()}" th:selected="${platforma.getPlatforma_ID()==produkt.getPlatforma().getPlatforma_ID()}"  th:text="${platforma.getNazev()}"></option>
+                                                    <option th:value="${platforma.getPlatforma_ID()}"
+                                                            th:selected="${platforma.getPlatforma_ID()==produkt.getPlatforma().getPlatforma_ID()}"
+                                                            th:text="${platforma.getNazev()}"></option>
 
 
-                                            </div>
+                                                </div>
 
-                                        </select></td>
-                                        <td><input name="action" type="submit" value="Delete" /></td>
-                                        <td><input  name="action" type="submit" value="Update" /></td>
-                                    </tr>  </form>   </div>
+                                            </select></td>
+
+                                        <td><input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Update"/></td>
+                                    </tr>
+                                </form>
+                            </div>
                             </tbody>
 
                         </table>
+                        </div>
                     </div>
                 </div>
 
+                <div class="dropdown show">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Stránky
+                    </a>
 
-                <ul th:if="${ProduktStranka.totalPages > 0}">
-                    Nalezeno celkem stránek:
-
-                    <span th:text="${ProduktStranka.totalPages}"></span><BR>
-
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <span th:each="iterator : ${#numbers.sequence( 0, ProduktStranka.totalPages-1)}" class="pagination">
-                                    <li class="active pagination">
 
                                     <a th:text="${iterator+1}"
                                        th:href="@{/admin/sprava_produkty(page=${iterator})}"
-                                       th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
-                                       </a>
-                                    </li>
+                                       class="dropdown-item">
+
+                                    </a>
+
                                 </span>
-
-
-
-                </ul>
-
-                <H1>Nový produkt</H1>
-                <table >
-
-                    <thead>
-                    <tr>
-                        <td>Název</td>
-                        <td>Cena</td>
-                        <td>sleva</td>
-                        <td>Platforma</td>
-
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <!-- Blog Post class="blog-post padding-bottom-20" -->
-
-
-
-
-                    <form id="RegistraceFormular" th:action="@{/admin/Sprava_ProduktyUpdate}"
-                          method="post" enctype="multipart/form-data">
-                        <tr>
-                            <input hidden readonly  name="produktID" th:value="0">
-                            <td> <input  name="nazev"></td>
-                            <td> <input   type="number" min="0" step="1"   name="cena"></td>
-                            <td> <input   type="number" min="0" step="1"  max="100"  name="sleva"></td>
-                            <td>
-                            <select name="platforma" >
-                            <div th:if="${!ListPlatformy.isEmpty()}"
-                                 th:each="platforma : ${ListPlatformy} ">
-                                <!-- Blog Item Header -->
-
-
-                                <option  th:value="${platforma.getPlatforma_ID()}"  th:text="${platforma.getNazev()}"></option>
-
-
-                          </div>
-                            </select></td>
-                            <td><input name="action" type="submit" value="Create" /></td>
-
-                        </tr>  </form>
-                    </tbody>
-
-                </table>
-
-
-
+                </div>
+                <p th:text="'Aktuální stránka je'+${ProduktStranka.getNumber()+1}"></p>
             </div>
 
+
+            <H1>Nový produkt</H1>
+                <div class="table-responsive">
+
+                    <table class="table">
+
+                <thead>
+                <tr>
+                    <td>Název</td>
+                    <td>Cena</td>
+                    <td>sleva</td>
+                    <td>Platforma</td>
+
+
+                </tr>
+                </thead>
+                <tbody>
+
+                <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+
+                <form id="RegistraceFormular" th:action="@{/admin/Sprava_ProduktyUpdate}"
+                      method="post" enctype="multipart/form-data">
+                    <tr>
+                        <input hidden readonly name="produktID" th:value="0">
+                        <td><input name="nazev"></td>
+                        <td><input type="number" min="0" step="1" name="cena"></td>
+                        <td><input type="number" min="0" step="1" max="100" name="sleva"></td>
+                        <td>
+                            <select name="platforma">
+                                <div th:if="${!ListPlatformy.isEmpty()}"
+                                     th:each="platforma : ${ListPlatformy} ">
+                                    <!-- Blog Item Header -->
+
+
+                                    <option th:value="${platforma.getPlatforma_ID()}"
+                                            th:text="${platforma.getNazev()}"></option>
+
+
+                                </div>
+                            </select></td>
+                        <td><input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Create"/></td>
+
+                    </tr>
+                </form>
+                </tbody>
+
+
+            </table>
+                </div>
+
         </div>
+
     </div>
+</div>
 </div>
 </div>
 </body>

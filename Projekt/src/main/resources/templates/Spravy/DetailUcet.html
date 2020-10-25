@@ -8,7 +8,7 @@
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'Detail Učtu admin')">   </head>
 
 
 <!-- Top Menu -->
@@ -42,20 +42,41 @@
                          cp   <input th:value="${cp}" type="text" min="3" name="cp"><br>
                          mesto   <input th:value="${mesto}" type="text" min="3" name="mesto"><br>
                          psc  <input th:value="${psc}" type="text" min="3" name="psc"><br>
-                           <input name="action" type="submit" value="Upravit" /><br>
+                           <input class="btn btn-outline-success my-2 my-sm-0" th:if="${typuctu=='Admin'}" name="action" type="submit" value="Upravit" /><br>
 
                       </form>
 
 <Br>
-                <H2>Změnit heslo</H2>
-                <form id="passwordform" th:action="@{/admin/updateheslo}"
+                <H2 th:if="${typuctu=='Admin'}">Změnit heslo</H2>
+                <form th:if="${typuctu=='Admin'}"id="passwordform" th:action="@{/admin/updateheslo}"
                       method="post" enctype="multipart/form-data">
 
 
                    <input hidden readonly  name="id" th:value="${id}">
                     Nové heslo   <input th:value="${heslo}" type="text" min="3" name="heslo"><br>
 
-                    <input name="action" type="submit" value="Upravit" /><br>
+                    <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Upravit" /><br>
+                </form>
+
+                <H2 th:if="${typuctu=='Admin'}">Změnit Typ účtu</H2>
+                <form th:if="${typuctu=='Admin'}"id="typform" th:action="@{/admin/updatetyp}"
+                      method="post" enctype="multipart/form-data">
+
+                    <input hidden readonly  name="id" th:value="${id}">
+                    <select name="typ">
+                        <div th:if="${!typy.isEmpty()}"
+                             th:each="typ : ${typy} ">
+                            <!-- Blog Item Header -->
+
+
+                            <option th:value="${typ.getTypUctu_ID()}"
+                                    th:selected="${typ.getTypUctu_ID()==typuctu1}"
+                                    th:text="${typ.getNazev()}"></option>
+
+
+                        </div>
+                    </select>
+                    <input class="btn btn-outline-success my-2 my-sm-0" name="action" type="submit" value="Upravit" /><br>
                 </form>
             </div>
 

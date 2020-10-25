@@ -1,14 +1,16 @@
 <!-- === BEGIN HEADER === -->
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
 
 <html lang="en"
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-<head th:replace="fragments/importHead :: importTop(title = 'Seznam Her')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'Cestování po herních světech')"></head>
 
 
 <!-- Top Menu -->
@@ -29,83 +31,83 @@
 
                 <div id="table-wrapper">
                     <div id="table-scroll">
-                        <div th:if="${ProduktStranka.isEmpty()}" >
+                        <div th:if="${ProduktStranka.isEmpty()}">
                             <label>Nebyly nalezeny žádné produkty</label>
                         </div>
-                        <div th:if="${!ProduktStranka.isEmpty()}" >
-                        <table >
+                        <div th:if="${!ProduktStranka.isEmpty()}">
+                            <table>
 
-                            <thead>
-                            <tr>
+                                <thead>
+                                <tr>
 
-                                <td>Název</td>
-                                <td>Cena</td>
-                                <td>sleva</td>
-                                <td>Platforma</td>
+                                    <td>Název</td>
+                                    <td>Cena</td>
+                                    <td>sleva</td>
+                                    <td>Platforma</td>
 
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Blog Post class="blog-post padding-bottom-20" -->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!-- Blog Post class="blog-post padding-bottom-20" -->
 
-                            <div th:if="${!ProduktStranka.isEmpty()}"
-                                 th:each="produkt : ${ProduktStranka} ">
-                                <!-- Blog Item Header -->
+                                <div th:if="${!ProduktStranka.isEmpty()}"
+                                     th:each="produkt : ${ProduktStranka} ">
+                                    <!-- Blog Item Header -->
 
 
                                     <tr>
 
-                                        <td> <a th:text="${produkt.getNazev()}" th:href="@{'/DetailProduktu'('produktID'=${produkt.getProdukt_ID()})}" ></td>
-                                        <td> <span th:text="${produkt.getCena()}" ></td>
-                                        <td> <span th:text="${produkt.getSleva()}" ></td>
-                                        <td> <span th:text="${produkt.getPlatforma().getNazev()}"></td>
+                                        <td><a th:text="${produkt.getNazev()}"
+                                               th:href="@{'/DetailProduktu'('produktID'=${produkt.getProdukt_ID()})}">
+                                        </td>
+                                        <td><span th:text="${produkt.getCena()}"></td>
+                                        <td><span th:text="${produkt.getSleva()}"></td>
+                                        <td><span th:text="${produkt.getPlatforma().getNazev()}"></td>
 
-                                    </tr>    </div>
-                            </tbody>
+                                    </tr>
+                                </div>
+                                </tbody>
 
-                        </table></div>
+                            </table>
+                        </div>
+                        <div class="dropdown show">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Stránky
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 
-                        <ul th:if="${ProduktStranka.totalPages > 0}">
-                            Nalezeno celkem stránek:
+                        <span th:each="iterator : ${#numbers.sequence( 0, ProduktStranka.totalPages-1)}" class="pagination">
 
-                            <span th:text="${ProduktStranka.totalPages}"></span><BR>
 
-                            <span th:each="iterator : ${#numbers.sequence( 0, ProduktStranka.totalPages-1)}" class="pagination">
-                                    <li class="active pagination">
-                                       <span th:if="${typ =='ALL'}">
+                                    <span th:if="${typ =='ALL'}">
                                     <a th:text="${iterator+1}"
                                        th:href="@{/SeznamHer(page=${iterator})}"
-                                       th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
-                                       </a>
+                                       class="dropdown-item">   </a>
                                        </span>
                                          <span th:if="${typ =='HLEDANY'}">
                                     <a th:text="${iterator+1}"
                                        th:href="@{/HledaniProduktu(page=${iterator},nalezeno=${nalezeno})}"
-                                       th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
-                                       </a>
+                                       class="dropdown-item">   </a>
                                        </span>
                                     <span th:if="${typ =='SLEVY'}">
                                     <a th:text="${iterator+1}"
                                        th:href="@{/Slevy(page=${iterator})}"
-                                       th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
-                                       </a>
+                                       class="dropdown-item">       </a>
                                        </span>
                                            <span th:if="${typ =='PLATFORMA'}">
                                     <a th:text="${iterator+1}"
                                        th:href="@{/SeznamHer(page=${iterator},id=${id})}"
-                                       th:class="${ ProduktStranka.pageable.getPageNumber() ==iterator} ? active">
-                                       </a>
+                                       class="dropdown-item">  </a>
                                        </span>
-                                    </li>
                                 </span>
+                            </div>
+                            <p th:text="'Aktuální stránka je'+${ProduktStranka.getNumber()+1}"></p>
+                        </div>
 
 
-
-                        </ul>
                     </div>
                 </div>
-
-
 
 
             </div>

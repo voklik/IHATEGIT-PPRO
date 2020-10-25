@@ -32,7 +32,9 @@
                             <label>Nebyly nalezeny žádné produkty</label>
                         </div>
                         <div th:if="${!seznam.isEmpty()}" >
-                            <table >
+                            <div class="table-responsive">
+
+                                <table class="table">
 
                                 <thead>
                                 <tr>
@@ -76,6 +78,7 @@
                         </tr>    </div>
                     </tbody>
                     </table>
+                    </div>
 
 
 

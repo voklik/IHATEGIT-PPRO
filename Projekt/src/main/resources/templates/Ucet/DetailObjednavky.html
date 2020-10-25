@@ -1,14 +1,16 @@
 <!-- === BEGIN HEADER === -->
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
 
 <html lang="en"
       xmlns:th="https://www.thymeleaf.org"
 >
 <!--<![endif] th:replace="fragments/importHead :: importTop(title = 'Home')"-->
-<head th:replace="fragments/importHead :: importTop(title = 'Detail Objednavky')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'Detail Objednavky')"></head>
 
 
 <!-- Top Menu -->
@@ -26,80 +28,72 @@
             <!-- Main Column -->
             <div class="col-md-12">
 
-                <div id="table-wrapper">
-                    <div id="table-scroll">
-                        <div th:if="${objednavka.getPolozky().isEmpty()}" >
-                            <label>Nebyly nalezeny žádné produkty</label>
-                        </div>
-                        <div th:if="${!objednavka.getPolozky().isEmpty()}" >
-                            <label th:text="${objednavka.getAdresa().getUlice()}"></label>
-                            <label th:text="${objednavka.getAdresa().getCps()}"></label><br>
-                            <label th:text="${objednavka.getAdresa().getMesto()}"></label>
-                            <label th:text="${objednavka.getAdresa().getPsc()}"></label><br>
-                            <table >
 
-                                <thead>
+                <div th:if="${objednavka.getPolozky().isEmpty()}">
+                    <label>Nebyly nalezeny žádné produkty</label>
+                </div>
+                <div th:if="${!objednavka.getPolozky().isEmpty()}">
+                    <label th:text="${objednavka.getAdresa().getUlice()}"></label>
+                    <label th:text="${objednavka.getAdresa().getCps()}"></label><br>
+                    <label th:text="${objednavka.getAdresa().getMesto()}"></label>
+                    <label th:text="${objednavka.getAdresa().getPsc()}"></label><br>
+                    <div class="table-responsive">
+
+                        <table class="table">
+
+                            <thead>
+                            <tr>
+
+                                <td>Název produktu</td>
+                                <td>Platforma</td>
+                                <td>Počet</td>
+                                <td>cena za kus</td>
+                                <td>Výsledná cena</td>
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Blog Post class="blog-post padding-bottom-20" -->
+
+                            <div th:if="${!objednavka.getPolozky().isEmpty()}"
+                                 th:each="polozka : ${objednavka.getPolozky()} ">
+                                <!-- Blog Item Header -->
+
+
                                 <tr>
 
-                                    <td>Název produktu</td>
-                                    <td>Platforma</td>
-                                    <td>Počet</td>
-                                    <td>cena za kus</td>
-                                    <td>Výsledná cena</td>
+                                    <td><span th:text="${polozka.getProdukt().getNazev()}"></span></td>
+                                    <td><span th:text="${polozka.getProdukt().getPlatforma().getNazev()}"></span>
+                                    </td>
+                                    <td><span th:text="${polozka.getPocet()}"></span></td>
+                                    <td><span th:text="${polozka.getCena()/polozka.getPocet()}"></span></td>
+                                    <td><span th:text="${polozka.getCena()}"></span></td>
+                                    <td>
+
+                                    </td>
+                            </div>
 
 
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <!-- Blog Post class="blog-post padding-bottom-20" -->
+                            </td>
 
-                                <div th:if="${!objednavka.getPolozky().isEmpty()}"
-                                     th:each="polozka : ${objednavka.getPolozky()} ">
-                                    <!-- Blog Item Header -->
+                            </tr>
 
-
-                                    <tr>
-
-                                        <td> <span th:text="${polozka.getProdukt().getNazev()}" ></span></td>
-                                        <td> <span th:text="${polozka.getProdukt().getPlatforma().getNazev()}" ></span></td>
-                                        <td> <span th:text="${polozka.getPocet()}" ></span></td>
-                                        <td> <span th:text="${polozka.getCena()/polozka.getPocet()}" ></span></td>
-                                        <td> <span th:text="${polozka.getCena()}"></span></td>
-                                        <td>
-
-                                        </td>
-                                </div>
-
-                        </div>
-
-
-                        </td>
-
-                        </tr>    </div>
-                    </tbody>
-                    </table>
-
-
-
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
 
 
-
-
-
             </div>
+
+
         </div>
 
-
-
-
     </div>
+</div>
 
-</div>
-</div>
-</div>
-</div>
 
 </body>
 </html>

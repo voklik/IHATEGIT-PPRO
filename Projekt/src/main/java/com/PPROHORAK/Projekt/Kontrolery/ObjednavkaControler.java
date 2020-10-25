@@ -53,6 +53,9 @@ public class ObjednavkaControler {
             @RequestParam("psc") String psc,
             @RequestParam("ulice") String ulice,
             @RequestParam("cp") String cp,
+            @RequestParam("jmeno") String jmeno,
+            @RequestParam("prijmeni") String prijmeni,
+            @RequestParam("email") String email,
             @RequestParam("stav") Integer stav,
             @RequestParam Map<String, Object> model
             , RedirectAttributes redirectAttributes
@@ -73,14 +76,7 @@ public class ObjednavkaControler {
             }
         }
         seznamObjednavek.save(objednavka);
-        //  Objednavka objednavk2a= seznamObjednavek.findById(id);
-        //  model.clear();
 
-        // model.put("stavy",stavy.getSeznamStavu());
-        //  model.put("objednavka",objednavk2a);
-        // redirectAttributes.addAttribute("id",id);
-        //return "/Spravy/DetailObjednakvySprava";
-        //return   detailObjednavkySprava(id,model);
         return "redirect:/admin/sprava_objednavek";
 
     }

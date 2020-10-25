@@ -32,7 +32,9 @@
                             <label>Nebyly nalezeny žádné produkty</label>
                         </div>
                         <div th:if="${!SeznamPolozek.isEmpty()}" >
-                            <table >
+                            <div class="table-responsive">
+
+                                <table class="table">
 
                                 <thead>
                                 <tr>
@@ -72,14 +74,14 @@
                                     </tr>    </div>
                                 </tbody>
                             </table>
-
+                </div>
 
 
 
                 </div>
 
                 <BR><BR>
-                        <form id="createorderform" th:action="@{/vytvoreniobjednavky}"
+                        <form  th:if="${!SeznamPolozek.isEmpty()}" id="createorderform" th:action="@{/vytvoreniobjednavky}"
                               method="post" enctype="multipart/form-data">
 
                             <input name="action" type="submit" value="Vytvořit objednávku" />
