@@ -1,12 +1,14 @@
 <!-- === BEGIN HEADER === -->
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]>
+<html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!-->
 <html lang="en"
       xmlns:th="https://www.thymeleaf.org"
 >
-<head th:replace="fragments/importHead :: importTop(title = 'Home')">   </head>
+<head th:replace="fragments/importHead :: importTop(title = 'Home')"></head>
 <!--<![endif]-->
 <!-- Top Menu -->
 <div th:replace="~{fragments/topnav :: navbar}"></div>
@@ -23,25 +25,25 @@
         <div class="row margin-vert-30">
             <!-- Main Column -->
             <div class="col-md-12">
-                    <!-- Blog Post -->
+                <!-- Blog Post -->
 
-                    <H1> Vítejte v našem e-shopě</H1>
-                    <p> Máme pro Vás spoustu produktů v nabídce. Víme, jak je někdy otravné hledat něco přes stránkování a proto u nás vždy dostanete celou kategorii položek na jednu stránku a máte vše pohodlně po ruce. V případě extremného množství záznamů doporučuje použít CTRL + F pro vyhledání hledáné položky, anebo můžete použít náš vyhledavač, který Vám nabídce možné výsledky.</p>
+                <H1> Vítejte v našem e-shopě</H1>
+                <p> Máme pro Vás spoustu produktů v nabídce. Rádi Vám poskytneme náš velký sortiment produktů a pokud by se stalo,že bychom něco neměli v nabídce, co zrovna chcete, tak se neostýchejte nám napsat/zavolat a pokusíme se pro vás tento produkt zařadit do nabídky. </p>
 
-                    </div>
-
-
-
-                </div>
-                <!-- End Main Column -->
-                <!-- Side Column -->
-
-                <!-- End Side Column -->
             </div>
+
+
         </div>
+        <!-- End Main Column -->
+        <!-- Side Column -->
+
+        <!-- End Side Column -->
     </div>
-    <!-- === END CONTENT === -->
-    <!-- === BEGIN FOOTER === -->
+</div>
+</div>
+<!-- === END CONTENT === -->
+<div th:replace="~{fragments/footer :: footer}"></div>
+<!-- === BEGIN FOOTER === -->
 
 </body>
 </html>
